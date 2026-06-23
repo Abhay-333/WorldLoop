@@ -1,6 +1,7 @@
 import { config } from "dotenv";
 config();
 import { z } from "zod";
+import logger from "./logger.js";
 
 const envSchema = z.object({
   PORT: z.coerce.number(),
@@ -10,8 +11,7 @@ const envSchema = z.object({
 const parsed = envSchema.safeParse(process.env);
 
 if (!parsed.success) {
-  //logger error
-  console.log("Invalid env please check your env");
+  logger.error("Invalid env please check your env");
 }
 
 export default parsed.data;
