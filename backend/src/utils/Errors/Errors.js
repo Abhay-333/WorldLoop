@@ -34,3 +34,10 @@ export class NotFoundError extends AppError {
     Error.captureStackTrace?.(this, this.constructor);
   }
 }
+
+export class ConflictError extends AppError {
+  constructor(message = "Conflict error", details = null) {
+    super(message, StatusCodes.CONFLICT, details);
+    Error.captureStackTrace?.(this, this.constructor);
+  }
+}
