@@ -7,6 +7,7 @@ const envSchema = z.object({
   PORT: z.coerce.number(),
   MONGO_URI: z.string(),
   NODE_ENV: z.string(),
+  MORGAN_LOGGER:z.string(),
 });
 
 const parsed = envSchema.safeParse(process.env);
