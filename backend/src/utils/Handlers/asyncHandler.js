@@ -1,0 +1,1 @@
+const asyncHandler = (err,req,res,next)=>{}
