@@ -1,7 +1,11 @@
 import UserRepo from "../../repositories/user.repository";
-import { ConflictError } from "../../utils/Errors/Errors";
+import { ConflictError, NotFoundError } from "../../utils/Errors/Errors";
 import jwt from "jsonwebtoken";
 import env from "../../config/env.js";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+} from "../../utils/Token.js";
 
 export default class AuthService {
   constructor() {
@@ -21,22 +25,30 @@ export default class AuthService {
 
     const newUser = await this.userRepo.createUser(payload);
 
-    const accessToken = jwt.sign({ id: newUser._id }, env.ACCESS_TOKEN_SECRET, {
-      expiresIn: "1d",
-    });
+    const accessToken = generateAccessToken(newUser._id);
 
-    const refreshToken = jwt.sign(
-      { id: newUser._id },
-      env.REFRESH_TOKEN_SECRET,
-      { expiresIn: "7d" },
-    );
+    const refreshToken = generateRefreshToken(newUser._id);
 
     return {
-      user: {
-        id: newUser._id,
-        email: newUser.email,
-        username: newUser.username,
-      },
+      newUser,
+      accessToken,
+      refreshToken,
+    };
+  }
+
+  async loginService(payload) {
+    const user = await this.userRepo.find(payload.email);
+
+    if (!user) {
+      throw new NotFoundError("User not found.");
+    }
+
+    const accessToken = generateAccessToken(user._id);
+
+    const refreshToken = generateRefreshToken(user._id);
+
+    return {
+      user,
       accessToken,
       refreshToken,
     };
