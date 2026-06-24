@@ -6,6 +6,12 @@ import logger from "./logger.js";
 const envSchema = z.object({
   PORT: z.coerce.number(),
   MONGO_URI: z.string(),
+  NODE_ENV: z.string(),
+  MORGAN_LOGGER:z.string(),
+
+  JWT_SECRET:z.string(),
+  ACCESS_TOKEN_SECRET:z.string(),
+  REFRESH_TOKEN_SECRET:z.string(),
 });
 
 const parsed = envSchema.safeParse(process.env);
