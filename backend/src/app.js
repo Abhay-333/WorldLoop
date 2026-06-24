@@ -11,10 +11,11 @@ const createServer = () => {
   if (env.NODE_ENV === "development") {
     app.use(morgan(env.MORGAN_LOGGER));
   }
+  
+  securityMiddleware(app);
 
   app.use("/api", indexRouter);
 
-  securityMiddleware(app);
 
   // Error middleware should be used after all the routes
   app.use(errorMiddleware);

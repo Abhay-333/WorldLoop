@@ -1,6 +1,5 @@
-import UserRepo from "../../repositories/user.repository";
-import { ConflictError, NotFoundError } from "../../utils/Errors/Errors";
-import jwt from "jsonwebtoken";
+import UserRepo from "../../repositories/user.repository.js";
+import { ConflictError, NotFoundError } from "../../utils/Errors/app-errors.js";
 import env from "../../config/env.js";
 import {
   generateAccessToken,
@@ -12,8 +11,8 @@ export default class AuthService {
     this.userRepo = new UserRepo();
   }
 
-  async userExists(payload) {
-    return !!(await this.userRepo.find(payload)); // If user exists then true else false
+  async userExists(email) {
+    return await this.userRepo.findByEmail(email); // If user exists then true else false
   }
 
   async registerService(payload) {
