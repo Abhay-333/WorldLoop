@@ -1,4 +1,5 @@
 import { body, validationResult } from "express-validator";
+import validateRequest from "../../middlewares/validateRequest.js";
 
 export const registerValidation = [
   body("username")

@@ -1,5 +1,5 @@
 import { validationResult } from "express-validator";
-import { BadRequestError } from "../utils/Errors/app-errors";
+import { BadRequestError } from "../utils/Errors/app-errors.js";
 
 const validationMiddleware = (req, res, next) => {
   const errors = validationResult(req); // this collects all the errors in the app
