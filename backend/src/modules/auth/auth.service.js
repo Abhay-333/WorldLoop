@@ -36,7 +36,7 @@ export default class AuthService {
   }
 
   async loginService(payload) {
-    const user = await this.userRepo.find(payload.email);
+    const user = await this.userRepo.find({email: payload.email});
 
     if (!user) {
       throw new NotFoundError("User not found.");
