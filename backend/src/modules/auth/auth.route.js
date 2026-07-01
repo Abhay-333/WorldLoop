@@ -24,7 +24,6 @@ authRouter.post(
 
 authRouter.post(
   "/refresh",
-  // loginValidation,
   authController.refreshController.bind(authController),
 );
 
