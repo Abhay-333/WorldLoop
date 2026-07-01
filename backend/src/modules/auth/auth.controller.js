@@ -1,6 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import logger from "../../config/logger.js";
 import AuthService from "./auth.service.js";
+import { NotFoundError } from "../../utils/Errors/app-errors.js";
 
 export default class AuthController {
   constructor() {
@@ -28,14 +29,17 @@ export default class AuthController {
   }
 
   async refreshController(req, res) {
-    const { accessToken, refreshToken, user } =
-      await this.authService.loginService(req.body);
+    const { refreshToken } = req.cookies;
+
+    if (!refreshToken) throw new NotFoundError("Refresh Token not found.");
+    
+    const { newRefreshToken, accessToken } =
+      await this.authService.refreshService(refreshToken);
 
     return res.status(StatusCodes.OK).json({
-      message: "User Logged In Successfully.",
-      data: { user, accessToken, refreshToken },
+      message: "Tokens Generated Successfully.",
+      tokens: { accessToken, newRefreshToken },
     });
-
   }
 
   async logoutController(req, res) {
@@ -46,7 +50,5 @@ export default class AuthController {
       message: "User Logged In Successfully.",
       data: { user, accessToken, refreshToken },
     });
-
   }
-  
 }
