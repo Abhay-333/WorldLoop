@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema(
 
     fullName: {
       type: String,
-      // required: true,
       trim: true,
       maxlength: 100,
     },
@@ -71,7 +70,7 @@ const userSchema = new mongoose.Schema(
     refreshToken: {
       type: String,
       default: null,
-      select: false,
+      // select: false,
     },
 
     lastSeen: {
