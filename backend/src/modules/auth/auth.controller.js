@@ -23,12 +23,11 @@ export default class AuthController {
   }
 
   async loginController(req, res) {
-    const { accessToken, refreshToken, user } =
-      await this.authService.loginService(req.body);
+    const { accessToken, user } = await this.authService.loginService(req.body);
+    const refreshToken = user.refreshToken;
 
     res.cookie("refreshToken", refreshToken, appConfig.cookie.refreshToken);
     res.cookie("accessToken", accessToken, appConfig.cookie.accessToken);
-
     return res.status(StatusCodes.OK).json({
       message: "User Logged In Successfully.",
       data: { user, accessToken, refreshToken },
@@ -37,7 +36,6 @@ export default class AuthController {
 
   async refreshController(req, res) {
     const { refreshToken } = req.cookies;
-
     if (!refreshToken) throw new NotFoundError("Refresh Token not found.");
 
     const { newRefreshToken, accessToken } =
@@ -55,10 +53,10 @@ export default class AuthController {
   async logoutController(req, res) {
     const refreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
 
-    const tokenExists = await this.authService.logoutService(refreshToken);
+    await this.authService.logoutService(refreshToken);
 
-    res.clearCookie("refreshToken");
-    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken", appConfig.cookie.refreshToken);
+    res.clearCookie("accessToken", appConfig.cookie.accessToken);
 
     return res.status(StatusCodes.OK).json({
       message: "Logged out Successfully.",
