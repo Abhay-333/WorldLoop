@@ -2,6 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import logger from "../../config/logger.js";
 import AuthService from "./auth.service.js";
 import { NotFoundError } from "../../utils/Errors/app-errors.js";
+import { appConfig } from "../../config/app.config.js";
 
 export default class AuthController {
   constructor() {
@@ -11,6 +12,9 @@ export default class AuthController {
   async registerController(req, res) {
     const { accessToken, refreshToken, newUser } =
       await this.authService.registerService(req.body);
+
+    res.cookie("refreshToken", refreshToken, appConfig.cookie.refreshToken);
+    res.cookie("accessToken", accessToken, appConfig.cookie.accessToken);
 
     return res.status(StatusCodes.CREATED).json({
       message: "User registered Successfully.",
@@ -22,6 +26,9 @@ export default class AuthController {
     const { accessToken, refreshToken, user } =
       await this.authService.loginService(req.body);
 
+    res.cookie("refreshToken", refreshToken, appConfig.cookie.refreshToken);
+    res.cookie("accessToken", accessToken, appConfig.cookie.accessToken);
+
     return res.status(StatusCodes.OK).json({
       message: "User Logged In Successfully.",
       data: { user, accessToken, refreshToken },
@@ -32,9 +39,12 @@ export default class AuthController {
     const { refreshToken } = req.cookies;
 
     if (!refreshToken) throw new NotFoundError("Refresh Token not found.");
-    
+
     const { newRefreshToken, accessToken } =
       await this.authService.refreshService(refreshToken);
+
+    res.cookie("refreshToken", newRefreshToken, appConfig.cookie.refreshToken);
+    res.cookie("accessToken", accessToken, appConfig.cookie.accessToken);
 
     return res.status(StatusCodes.OK).json({
       message: "Tokens Generated Successfully.",

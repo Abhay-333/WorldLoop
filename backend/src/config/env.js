@@ -15,6 +15,8 @@ const envSchema = z.object({
   JWT_SECRET: z.string(),
   ACCESS_TOKEN_SECRET: z.string(),
   REFRESH_TOKEN_SECRET: z.string(),
+
+  
 });
 
 const parsed = envSchema.safeParse(process.env);
