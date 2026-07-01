@@ -199,4 +199,27 @@ export default class AuthController {
       message: message,
     });
   }
+
+  async refreshController(req, res) {
+    const { accessToken, refreshToken, user } =
+      await this.authService.loginService(req.body);
+
+    return res.status(StatusCodes.OK).json({
+      message: "User Logged In Successfully.",
+      data: { user, accessToken, refreshToken },
+    });
+
+  }
+
+  async logoutController(req, res) {
+    const { accessToken, refreshToken, user } =
+      await this.authService.loginService(req.body);
+
+    return res.status(StatusCodes.OK).json({
+      message: "User Logged In Successfully.",
+      data: { user, accessToken, refreshToken },
+    });
+
+  }
+  
 }

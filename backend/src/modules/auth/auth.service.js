@@ -54,7 +54,25 @@ export default class AuthService {
   }
 
   async loginService(payload) {
-    const user = await this.userRepo.findOne({ email: payload.email });
+    const user = await this.userRepo.find({ email: payload.email });
+
+    if (!user) {
+      throw new NotFoundError("User not found.");
+    }
+
+    const accessToken = generateAccessToken(user._id);
+
+    const refreshToken = generateRefreshToken(user._id);
+
+    return {
+      user,
+      accessToken,
+      refreshToken,
+    };
+  }
+
+  async refreshService(payload) {
+    const user = await this.userRepo.find({ email: payload.email });
 
     if (!user) {
       throw new NotFoundError("User not found.");
