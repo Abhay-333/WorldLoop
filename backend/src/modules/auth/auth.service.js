@@ -45,6 +45,7 @@ export default class AuthService {
     newUser.refreshToken = refreshToken;
     await newUser.save();
 
+    
     return {
       newUser,
       accessToken,

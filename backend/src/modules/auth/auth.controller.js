@@ -7,6 +7,7 @@ import env from "../../config/env.js";
 import { sendVerifyLink } from "../../utils/sendVerifyLink.js";
 import { SuccessResponse } from "../../utils/SuccessResponse/SuccessResponse.js";
 import { NotFoundError } from "../../utils/Errors/app-errors.js";
+import { appConfig } from "../../config/app.config.js";
 
 export default class AuthController {
   constructor() {
@@ -32,6 +33,13 @@ export default class AuthController {
           StatusCodes.CREATED,
         ),
       );
+    res.cookie("refreshToken", refreshToken, appConfig.cookie.refreshToken);
+    res.cookie("accessToken", accessToken, appConfig.cookie.accessToken);
+
+    return res.status(StatusCodes.CREATED).json({
+      message: "User registered Successfully.",
+      data: { newUser, accessToken, refreshToken },
+    });
   }
 
   async loginController(req, res) {
@@ -180,6 +188,9 @@ export default class AuthController {
 
     const result = await this.authService.verifyEmailService(token);
 
+    res.cookie("refreshToken", refreshToken, appConfig.cookie.refreshToken);
+    res.cookie("accessToken", accessToken, appConfig.cookie.accessToken);
+
     return res.status(StatusCodes.OK).json({
       message: result,
     });
@@ -205,9 +216,12 @@ export default class AuthController {
     const { refreshToken } = req.cookies;
 
     if (!refreshToken) throw new NotFoundError("Refresh Token not found.");
-    
+
     const { newRefreshToken, accessToken } =
       await this.authService.refreshService(refreshToken);
+
+    res.cookie("refreshToken", newRefreshToken, appConfig.cookie.refreshToken);
+    res.cookie("accessToken", accessToken, appConfig.cookie.accessToken);
 
     return res.status(StatusCodes.OK).json({
       message: "Tokens Generated Successfully.",
