@@ -20,13 +20,11 @@ authRouter.post(
 
 authRouter.post(
   "/refresh",
-  // loginValidation,
   authController.refreshController.bind(authController),
 );
 
 authRouter.post(
   "/logout",
-  // loginValidation,
   authController.logoutController.bind(authController),
 );
 

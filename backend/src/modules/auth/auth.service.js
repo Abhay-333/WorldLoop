@@ -34,7 +34,6 @@ export default class AuthService {
     newUser.refreshToken = refreshToken;
     await newUser.save();
 
-    
     return {
       newUser,
       accessToken,
@@ -86,5 +85,23 @@ export default class AuthService {
       accessToken,
       refreshToken: newRefreshToken,
     };
+  }
+
+  async logoutService(refreshToken) {
+    if (!refreshToken) {
+      return false;
+    }
+
+    const user = await this.userRepo.findUserByToken(refreshToken);
+
+    if (!user) {
+      throw new NotFoundError("User not found.");
+    }
+
+    user.refreshToken = null;
+
+    await user.save();
+
+    return true
   }
 }

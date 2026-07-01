@@ -53,12 +53,15 @@ export default class AuthController {
   }
 
   async logoutController(req, res) {
-    const { accessToken, refreshToken, user } =
-      await this.authService.loginService(req.body);
+    const refreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
+
+    const tokenExists = await this.authService.logoutService(refreshToken);
+
+    res.clearCookie("refreshToken");
+    res.clearCookie("accessToken");
 
     return res.status(StatusCodes.OK).json({
-      message: "User Logged In Successfully.",
-      data: { user, accessToken, refreshToken },
+      message: "Logged out Successfully.",
     });
   }
 }

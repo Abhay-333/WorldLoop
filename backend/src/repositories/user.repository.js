@@ -13,4 +13,7 @@ export default class UserRepo {
   async find(payload) {
     return await UserModel.findOne(payload);
   }
+  async findUserByToken(token) {
+    return await UserModel.findOne(token);
+  }
 }
