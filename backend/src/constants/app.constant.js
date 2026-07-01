@@ -1,5 +1,9 @@
 export default {
   PORT: 8080,
+  ACCESS_TOKEN_EXPIRY: "1h",
+  REFRESH_TOKEN_EXPIRY: "7d",
+  ACCESS_TOKEN_MAXAGE: 60 * 60 * 1000,
+  REFRESH_TOKEN_MAXAGE: 7 * 24 * 60 * 60 * 1000,
   MORGAN_LOGGER: "dev",
   LOGGER_LEVEL: "info",
 };
