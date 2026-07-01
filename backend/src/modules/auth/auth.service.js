@@ -1,9 +1,14 @@
 import UserRepo from "../../repositories/user.repository.js";
-import { ConflictError, NotFoundError } from "../../utils/Errors/app-errors.js";
+import {
+  ConflictError,
+  NotFoundError,
+  UnauthorizeError,
+} from "../../utils/Errors/app-errors.js";
 import env from "../../config/env.js";
 import {
   generateAccessToken,
   generateRefreshToken,
+  verifyRefreshToken,
 } from "../../utils/Token.js";
 
 export default class AuthService {
@@ -29,8 +34,7 @@ export default class AuthService {
     newUser.refreshToken = refreshToken;
     await newUser.save();
 
-    console.log(newUser);
-
+    
     return {
       newUser,
       accessToken,
@@ -56,21 +60,31 @@ export default class AuthService {
     };
   }
 
-  async refreshService(payload) {
-    const user = await this.userRepo.find({ email: payload.email });
+  async refreshService(oldRefreshToken) {
+    if (!oldRefreshToken) {
+      throw new UnauthorizeError("Refresh Token Missing.");
+    }
+
+    const decode = verifyRefreshToken(oldRefreshToken);
+
+    const user = await this.userRepo.findById(decode._id);
 
     if (!user) {
       throw new NotFoundError("User not found.");
     }
 
-    const accessToken = generateAccessToken(user._id);
+    if (user.refreshToken !== oldRefreshToken)
+      throw new UnauthorizeError("Invalid refresh Token.");
 
-    const refreshToken = generateRefreshToken(user._id);
+    const accessToken = generateAccessToken(user._id);
+    const newRefreshToken = generateRefreshToken(user._id);
+
+    user.refreshToken = newRefreshToken;
+    await user.save();
 
     return {
-      user,
       accessToken,
-      refreshToken,
+      refreshToken: newRefreshToken,
     };
   }
 }
