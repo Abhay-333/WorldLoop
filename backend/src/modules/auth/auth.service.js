@@ -64,10 +64,12 @@ export default class AuthService {
 
     const refreshToken = generateRefreshToken(user._id);
 
+    user.refreshToken = refreshToken;
+    await user.save();
+
     return {
       user,
       accessToken,
-      refreshToken,
     };
   }
 
@@ -78,8 +80,7 @@ export default class AuthService {
 
     const decode = verifyRefreshToken(oldRefreshToken);
 
-    const user = await this.userRepo.findById(decode._id);
-
+    const user = await this.userRepo.findById(decode.id);
     if (!user) {
       throw new NotFoundError("User not found.");
     }

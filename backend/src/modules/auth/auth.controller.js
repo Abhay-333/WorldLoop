@@ -190,7 +190,6 @@ export default class AuthController {
 
     res.cookie("refreshToken", refreshToken, appConfig.cookie.refreshToken);
     res.cookie("accessToken", accessToken, appConfig.cookie.accessToken);
-
     return res.status(StatusCodes.OK).json({
       message: result,
     });
@@ -214,7 +213,6 @@ export default class AuthController {
 
   async refreshController(req, res) {
     const { refreshToken } = req.cookies;
-
     if (!refreshToken) throw new NotFoundError("Refresh Token not found.");
 
     const { newRefreshToken, accessToken } =
@@ -232,10 +230,10 @@ export default class AuthController {
   async logoutController(req, res) {
     const refreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
 
-    const tokenExists = await this.authService.logoutService(refreshToken);
+    await this.authService.logoutService(refreshToken);
 
-    res.clearCookie("refreshToken");
-    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken", appConfig.cookie.refreshToken);
+    res.clearCookie("accessToken", appConfig.cookie.accessToken);
 
     return res.status(StatusCodes.OK).json({
       message: "Logged out Successfully.",
