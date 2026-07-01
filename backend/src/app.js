@@ -14,7 +14,7 @@ const createServer = () => {
   
   securityMiddleware(app);
 
-  app.use("/api", indexRouter);
+  app.use("/api/v1", indexRouter);
 
 
   // Error middleware should be used after all the routes

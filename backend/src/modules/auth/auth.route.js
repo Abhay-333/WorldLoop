@@ -18,4 +18,16 @@ authRouter.post(
   authController.loginController.bind(authController),
 );
 
+authRouter.post(
+  "/refresh",
+  // loginValidation,
+  authController.refreshController.bind(authController),
+);
+
+authRouter.post(
+  "/logout",
+  // loginValidation,
+  authController.logoutController.bind(authController),
+);
+
 export default authRouter;
