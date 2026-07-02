@@ -33,4 +33,9 @@ authRouter.post(
   authController.forgetPasswordController.bind(authController),
 );
 
+authRouter.post(
+  "/reset-password/:token",
+  authController.resetPasswordController.bind(authController),
+);
+
 export default authRouter;
