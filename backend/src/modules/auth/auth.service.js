@@ -153,7 +153,9 @@ export default class AuthService {
       await user.save();
       throw AppError(error);
     }
+  }
 
-    return true;
+  async resetPasswordService(user){
+
   }
 }
