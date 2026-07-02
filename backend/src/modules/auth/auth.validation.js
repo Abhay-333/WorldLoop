@@ -8,7 +8,6 @@ export const registerValidation = [
     .withMessage("Username is required")
     .isLength({ min: 3, max: 30 })
     .withMessage("Username must be between 3 and 30 characters")
-    .isLowercase()
     .withMessage("Username must be lowercase"),
 
   body("fullName")

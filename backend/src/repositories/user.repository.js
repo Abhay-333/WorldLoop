@@ -10,7 +10,10 @@ export default class UserRepo {
   async findById(id) {
     return await UserModel.findById(id);
   }
-  async find(payload) {
+  async findOne(payload) {
     return await UserModel.findOne(payload);
+  }
+  async findUserByToken(token) {
+    return await UserModel.findOne(token);
   }
 }

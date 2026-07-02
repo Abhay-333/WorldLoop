@@ -18,4 +18,24 @@ authRouter.post(
   authController.loginController.bind(authController),
 );
 
+authRouter.post(
+  "/refresh",
+  authController.refreshController.bind(authController),
+);
+
+authRouter.post(
+  "/logout",
+  authController.logoutController.bind(authController),
+);
+
+authRouter.post(
+  "/forget-password",
+  authController.forgetPasswordController.bind(authController),
+);
+
+authRouter.post(
+  "/reset-password/:token",
+  authController.resetPasswordController.bind(authController),
+);
+
 export default authRouter;

@@ -12,3 +12,9 @@ export const generateRefreshToken = (userId) => {
     expiresIn: "7d",
   });
 };
+
+export const verifyRefreshToken = (refreshToken) => {
+  const decodeID = jwt.verify(refreshToken, env.REFRESH_TOKEN_SECRET);
+
+  return decodeID;
+};

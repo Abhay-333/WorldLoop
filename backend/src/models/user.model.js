@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
@@ -7,14 +8,12 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       trim: true,
-      lowercase: true,
       minlength: 3,
       maxlength: 30,
     },
 
     fullName: {
       type: String,
-      // required: true,
       trim: true,
       maxlength: 100,
     },
@@ -71,7 +70,19 @@ const userSchema = new mongoose.Schema(
     refreshToken: {
       type: String,
       default: null,
-      select: false,
+      // select: false,
+    },
+
+    passwordResetToken: {
+      type: String,
+      default: null,
+      // select: false,
+    },
+
+    passwordResetExpires: {
+      type: String,
+      default: null,
+      // select: false,
     },
 
     lastSeen: {
@@ -81,8 +92,14 @@ const userSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
+
+userSchema.pre("save", function (next) {
+  if (!this.isModified("password")) return next();
+  this.password = bcrypt.hashSync(this.password, 10);
+  next();
+});
 
 const UserModel = mongoose.model("User", userSchema);
 
