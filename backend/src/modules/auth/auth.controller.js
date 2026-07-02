@@ -64,7 +64,7 @@ export default class AuthController {
   }
 
   async forgetPasswordController(req, res) {
-    const email = req.body;
+    const {email} = req.body;
 
     await this.authService.forgetPasswordService(email);
 
