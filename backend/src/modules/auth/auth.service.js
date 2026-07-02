@@ -54,7 +54,7 @@ export default class AuthService {
   }
 
   async loginService(payload) {
-    const user = await this.userRepo.find({ email: payload.email });
+    const user = await this.userRepo.findOne({ email: payload.email });
 
     if (!user) {
       throw new NotFoundError("User not found.");
@@ -177,6 +177,7 @@ export default class AuthService {
     user.passwordResetExpires = Date.now() + 5 * 60 * 1000;
 
     await user.save();
+    console.log(user)
 
     const resetLink = `${env.CLIENT_URL}/reset-password/${resetToken}`;
 
@@ -209,7 +210,7 @@ export default class AuthService {
       .digest("hex");
 
     // yaha pe compare hoga resetToken jo params mey mil raha hai aur crypto se naya hashedToken. agar dono equal hai toh agli condition check karo. jo ki humari resetToken Expiry time check krti hai. passwordResetExpires pichle wala expire time check karega aur check karega.
-    const user = await this.userRepo.find({
+    const user = await this.userRepo.findOne({
       passwordResetToken: hashedToken,
       passwordResetExpires: { $gt: Date.now() },
     });
