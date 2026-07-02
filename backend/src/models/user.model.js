@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
@@ -71,11 +72,13 @@ const userSchema = new mongoose.Schema(
       default: null,
       // select: false,
     },
+
     passwordResetToken: {
       type: String,
       default: null,
       // select: false,
     },
+
     passwordResetExpires: {
       type: String,
       default: null,
@@ -91,6 +94,12 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
+
+userSchema.pre("save", function (next) {
+  if (!this.isModified("password")) return next();
+  this.password = bcrypt.hashSync(this.password, 10);
+  next();
+});
 
 const UserModel = mongoose.model("User", userSchema);
 

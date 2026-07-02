@@ -168,8 +168,6 @@ export default class AuthService {
       passwordResetExpires: { $gt: Date.now() },
     });
 
-    console.log(user)
-
     if (!user) throw new UnauthorizeError("Token is invalid or expired");
 
     user.password = password;
