@@ -28,9 +28,7 @@ export default class AuthController {
 
     res.cookie("refreshToken", refreshToken, appConfig.cookie.refreshToken);
     res.cookie("accessToken", accessToken, appConfig.cookie.accessToken);
-    const { accessToken, refreshToken, user } =
-      await this.authService.loginService(req.body);
-
+    
     return res.status(StatusCodes.OK).json({
       message: "User Logged In Successfully.",
       data: { user, accessToken, refreshToken },
