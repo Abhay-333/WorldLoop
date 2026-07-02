@@ -209,7 +209,7 @@ export default class AuthService {
       .digest("hex");
 
     // yaha pe compare hoga resetToken jo params mey mil raha hai aur crypto se naya hashedToken. agar dono equal hai toh agli condition check karo. jo ki humari resetToken Expiry time check krti hai. passwordResetExpires pichle wala expire time check karega aur check karega.
-    const user = await this.userRepo.findOne({
+    const user = await this.userRepo.find({
       passwordResetToken: hashedToken,
       passwordResetExpires: { $gt: Date.now() },
     });
