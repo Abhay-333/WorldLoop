@@ -20,14 +20,22 @@ authRouter.post(
 
 authRouter.post(
   "/refresh",
-  // loginValidation,
   authController.refreshController.bind(authController),
 );
 
 authRouter.post(
   "/logout",
-  // loginValidation,
   authController.logoutController.bind(authController),
+);
+
+authRouter.post(
+  "/forget-password",
+  authController.forgetPasswordController.bind(authController),
+);
+
+authRouter.post(
+  "/reset-password/:token",
+  authController.resetPasswordController.bind(authController),
 );
 
 export default authRouter;
