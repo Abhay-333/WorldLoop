@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import logger from "../../config/logger.js";
 import AuthService from "./auth.service.js";
-import { NotFoundError } from "../../utils/Errors/app-errors.js";
+import { AppError, NotFoundError } from "../../utils/Errors/app-errors.js";
 import { appConfig } from "../../config/app.config.js";
 
 export default class AuthController {
@@ -74,15 +74,16 @@ export default class AuthController {
   }
 
   async resetPasswordController(req, res) {
-    const { email } = req.body;
+    const { token } = req.params;
+    const { password } = req.body;
 
-    await this.authService.forgetPasswordService(email);
+    if (!token) throw new NotFoundError("Token not found in reset-password.");
+    if (!password) throw new AppError("Password not receive.");
 
-    res.clearCookie("refreshToken", appConfig.cookie.refreshToken);
-    res.clearCookie("accessToken", appConfig.cookie.accessToken);
+    await this.authService.resetPasswordService(token, password);
 
     return res.status(StatusCodes.OK).json({
-      message: "Link sent Successfully.",
+      message: "Password reset Successfully.",
     });
   }
 }
