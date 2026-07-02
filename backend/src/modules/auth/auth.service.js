@@ -131,7 +131,6 @@ export default class AuthService {
     user.passwordResetExpires = Date.now() + 5 * 60 * 1000;
 
     await user.save();
-    console.log(user)
 
     const resetLink = `${env.CLIENT_URL}/reset-password/${resetToken}`;
 
