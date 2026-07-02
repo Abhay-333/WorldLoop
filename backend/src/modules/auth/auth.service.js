@@ -1,5 +1,7 @@
+import crypto from "crypto";
 import UserRepo from "../../repositories/user.repository.js";
 import {
+  AppError,
   ConflictError,
   NotFoundError,
   UnauthorizeError,
@@ -10,6 +12,7 @@ import {
   generateRefreshToken,
   verifyRefreshToken,
 } from "../../utils/Token.js";
+import sendEmail from "../../utils/sendMail.js";
 
 export default class AuthService {
   constructor() {
@@ -106,20 +109,50 @@ export default class AuthService {
     return true;
   }
 
-  async forgetPasswordService(refreshToken) {
-    if (!refreshToken) {
-      return false;
-    }
+  //   Ek aur question:
+  // Password ke liye bcrypt aur token ke liye SHA-256 kyu?
+  // Password → bcrypt (slow, brute-force resistant)
+  // Reset token → sha256 (fast, one-time token lookup)
 
-    const user = await this.userRepo.findUserByToken(refreshToken);
+  async forgetPasswordService(email) {
+    const user = await this.userRepo.findByEmail(email);
 
     if (!user) {
-      throw new NotFoundError("User not found.");
+      throw new NotFoundError("Email not found.");
     }
 
-    user.refreshToken = null;
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    user.passwordResetToken = hashedToken;
+    user.passwordResetExpires = Date.now() + 5 * 60 * 1000;
 
     await user.save();
+
+    const resetLink = `${env.CLIENT_URL}/reset-password/${resetToken}`;
+
+    try {
+      await sendEmail({
+        to: user.email,
+        subject: "Password Reset",
+        html: `<h2>Reset Password</h2>
+    <p>Click the button below to reset your password.</p>
+
+    <a href="${resetLink}">
+      Reset Password
+    </a>
+
+    <p>This link will expire in 5 minutes.</p>`,
+      });
+    } catch (error) {
+      user.passwordResetToken = undefined;
+      user.passwordResetExpires = undefined;
+      await user.save();
+      throw AppError(error);
+    }
 
     return true;
   }
