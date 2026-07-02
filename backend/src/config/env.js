@@ -16,7 +16,11 @@ const envSchema = z.object({
   ACCESS_TOKEN_SECRET: z.string(),
   REFRESH_TOKEN_SECRET: z.string(),
 
-  
+  MAIL_PORT: z.coerce.number(), // SMTP server port number used in TLS(transport layer security)
+  MAIL_HOST: z.string(), //SMTP Server address from which nodemailer will connect and send the email
+  MAIL_USER: z.string(), // from which email the mail will be sent
+  MAIL_APP_PASSWORD: z.string(), // Google App password
+  MAIL_FROM: z.string(), // In Email to show the "From: " field
 });
 
 const parsed = envSchema.safeParse(process.env);
