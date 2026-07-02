@@ -62,4 +62,17 @@ export default class AuthController {
       message: "Logged out Successfully.",
     });
   }
+
+  async forgetPasswordController(req, res) {
+    const email = req.body;
+
+    await this.authService.forgetPasswordService(email);
+
+    res.clearCookie("refreshToken", appConfig.cookie.refreshToken);
+    res.clearCookie("accessToken", appConfig.cookie.accessToken);
+
+    return res.status(StatusCodes.OK).json({
+      message: "Link sent Successfully.",
+    });
+  }
 }
