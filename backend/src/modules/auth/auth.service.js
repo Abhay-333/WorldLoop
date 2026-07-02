@@ -105,4 +105,22 @@ export default class AuthService {
 
     return true;
   }
+
+  async forgetPasswordService(refreshToken) {
+    if (!refreshToken) {
+      return false;
+    }
+
+    const user = await this.userRepo.findUserByToken(refreshToken);
+
+    if (!user) {
+      throw new NotFoundError("User not found.");
+    }
+
+    user.refreshToken = null;
+
+    await user.save();
+
+    return true;
+  }
 }
