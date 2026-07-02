@@ -28,4 +28,9 @@ authRouter.post(
   authController.logoutController.bind(authController),
 );
 
+authRouter.post(
+  "/forget-password",
+  authController.forgetPasswordController.bind(authController),
+);
+
 export default authRouter;
