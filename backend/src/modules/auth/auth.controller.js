@@ -241,7 +241,17 @@ export default class AuthController {
   }
 
   async forgetPasswordController(req, res) {
-    const {email} = req.body;
+    const { email } = req.body;
+
+    await this.authService.forgetPasswordService(email);
+
+    return res.status(StatusCodes.OK).json({
+      message: "Link sent Successfully.",
+    });
+  }
+
+  async resetPasswordController(req, res) {
+    const { email } = req.body;
 
     await this.authService.forgetPasswordService(email);
 
