@@ -38,4 +38,9 @@ authRouter.post(
   authController.resetPasswordController.bind(authController),
 );
 
+authRouter.post(
+  "/verify-email/:token",
+  authController.verifyEmailController.bind(authController),
+);
+
 export default authRouter;
