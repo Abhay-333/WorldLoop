@@ -263,4 +263,18 @@ export default class AuthController {
       message: "Password reset Successfully.",
     });
   }
+
+  async verifyEmailController(req, res) {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    if (!token) throw new NotFoundError("Token not found in reset-password.");
+    if (!password) throw new AppError("Password not receive.");
+
+    await this.authService.verifyEmailService(token, password);
+
+    return res.status(StatusCodes.OK).json({
+      message: "Password reset Successfully.",
+    });
+  }
 }
