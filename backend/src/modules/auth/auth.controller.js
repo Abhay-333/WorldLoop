@@ -163,4 +163,40 @@ export default class AuthController {
         new SuccessResponse("User fetch Successfully.", user, StatusCodes.OK),
       );
   }
+
+  /**
+   * Handles user email verification via the token sent during registration.
+   *
+   * @param {Object} req - Express request object.
+   * @param {Object} res - Express response object.
+   * @returns {Promise<Object>} JSON response confirming successful verification.
+   */
+  
+  async verifyEmailController(req, res) {
+    const { token } = req.params;
+
+    if (!token) throw new NotFoundError("Token not found.");
+
+    const result = await this.authService.verifyEmailService(token);
+
+    return res.status(StatusCodes.OK).json({
+      message: result,
+    });
+  }
+
+  async resendVerificationController(req, res) {
+    const { email } = req.body;
+
+    if (!email) throw new NotFoundError("Email not found.");
+
+    const { user, verificationToken, message } =
+      await this.authService.resendVerificationService(email);
+
+    const verifyLink = `${env.CLIENT_URL}/verify-email/${verificationToken}`;
+
+    await sendVerifyLink(user, verifyLink);
+    return res.status(StatusCodes.OK).json({
+      message: message,
+    });
+  }
 }
