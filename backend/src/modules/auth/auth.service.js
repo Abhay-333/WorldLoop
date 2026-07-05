@@ -60,6 +60,12 @@ export default class AuthService {
       throw new NotFoundError("User not found.");
     }
 
+    if (!user.isEmailVerified) {
+      throw new UnauthorizeError(
+        "Please verify your email first. Check your mailbox",
+      );
+    }
+
     const accessToken = generateAccessToken(user._id);
 
     const refreshToken = generateRefreshToken(user._id);
