@@ -89,15 +89,13 @@ export default class AuthController {
 
   async verifyEmailController(req, res) {
     const { token } = req.params;
-    const { password } = req.body;
 
-    if (!token) throw new NotFoundError("Token not found in reset-password.");
-    if (!password) throw new AppError("Password not receive.");
+    if (!token) throw new NotFoundError("Token not found.");
 
-    await this.authService.verifyEmailService(token, password);
+    const result = await this.authService.verifyEmailService(token);
 
     return res.status(StatusCodes.OK).json({
-      message: "Password reset Successfully.",
+      message: result,
     });
   }
 }

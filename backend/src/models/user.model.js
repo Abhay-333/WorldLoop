@@ -104,9 +104,8 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.pre("save", function (next) {
-  if (!this.isModified("password")) return next();
+  if (!this.isModified("password")) return;
   this.password = bcrypt.hashSync(this.password, 10);
-  next();
 });
 
 const UserModel = mongoose.model("User", userSchema);
