@@ -45,7 +45,7 @@ authRouter.get(
 
 authRouter.post(
   "/resend-verification",
-  authController.resendVerification.bind(authController),
+  authController.resendVerificationController.bind(authController),
 );
 
 export default authRouter;
