@@ -281,11 +281,14 @@ export default class AuthController {
 
     if (!email) throw new NotFoundError("Email not found.");
 
-    const result = await this.authService.resendVerificationService(email);
-    const verifyLink = `${env.CLIENT_URL}/resend-verification`;
-    await sendVerifyLink(result.user, verifyLink);
+    const { user, verificationToken, message } =
+      await this.authService.resendVerificationService(email);
+
+    const verifyLink = `${env.CLIENT_URL}/verify-email/${verificationToken}`;
+
+    await sendVerifyLink(user, verifyLink);
     return res.status(StatusCodes.OK).json({
-      message: result,
+      message: message,
     });
   }
 }
