@@ -17,7 +17,7 @@ export default class AuthController {
 
     const verifyLink = `${env.CLIENT_URL}/verify-email/${verificationToken}`;
     await sendVerifyLink(newUser, verifyLink);
-    
+
     res.cookie("refreshToken", refreshToken, appConfig.cookie.refreshToken);
     res.cookie("accessToken", accessToken, appConfig.cookie.accessToken);
 
@@ -98,6 +98,18 @@ export default class AuthController {
     if (!token) throw new NotFoundError("Token not found.");
 
     const result = await this.authService.verifyEmailService(token);
+
+    return res.status(StatusCodes.OK).json({
+      message: result,
+    });
+  }
+
+  async resendVerificationController(req, res) {
+    const { email } = req.body;
+
+    if (!email) throw new NotFoundError("Email not found.");
+
+    const result = await this.authService.resendVerification(email);
 
     return res.status(StatusCodes.OK).json({
       message: result,
