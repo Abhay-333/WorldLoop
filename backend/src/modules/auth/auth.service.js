@@ -25,11 +25,18 @@ export default class AuthService {
 
   async registerService(payload) {
     const isExist = await this.userExists(payload.email);
-
     if (isExist) {
       throw new ConflictError("User already Exists.");
     }
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(verificationToken)
+      .digest("hex");
+
     const newUser = await this.userRepo.createUser(payload);
+    newUser.emailVerificationToken = hashedToken;
+    newUser.emailVerificationExpires = Date.now() + 15 * 60 * 1000;
 
     const accessToken = generateAccessToken(newUser._id);
     const refreshToken = generateRefreshToken(newUser._id);
@@ -41,6 +48,7 @@ export default class AuthService {
       newUser,
       accessToken,
       refreshToken,
+      verificationToken,
     };
   }
 
@@ -190,7 +198,6 @@ export default class AuthService {
       emailVerificationExpires: { $gt: Date.now() },
     });
 
-    console.log(first)
     if (!user) throw new UnauthorizeError("Token is invalid or expired");
 
     user.isEmailVerified = true;
