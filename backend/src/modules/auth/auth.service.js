@@ -2,6 +2,7 @@ import crypto from "crypto";
 import UserRepo from "../../repositories/user.repository.js";
 import {
   AppError,
+  BadRequestError,
   ConflictError,
   NotFoundError,
   UnauthorizeError,
@@ -25,11 +26,18 @@ export default class AuthService {
 
   async registerService(payload) {
     const isExist = await this.userExists(payload.email);
-
     if (isExist) {
       throw new ConflictError("User already Exists.");
     }
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(verificationToken)
+      .digest("hex");
+
     const newUser = await this.userRepo.createUser(payload);
+    newUser.emailVerificationToken = hashedToken;
+    newUser.emailVerificationExpires = Date.now() + 15 * 60 * 1000;
 
     const accessToken = generateAccessToken(newUser._id);
     const refreshToken = generateRefreshToken(newUser._id);
@@ -41,6 +49,7 @@ export default class AuthService {
       newUser,
       accessToken,
       refreshToken,
+      verificationToken,
     };
   }
 
@@ -49,6 +58,12 @@ export default class AuthService {
 
     if (!user) {
       throw new NotFoundError("User not found.");
+    }
+
+    if (!user.isEmailVerified) {
+      throw new UnauthorizeError(
+        "Please verify your email first. Check your mailbox",
+      );
     }
 
     const accessToken = generateAccessToken(user._id);
@@ -180,5 +195,47 @@ export default class AuthService {
 
     await user.save();
     return true;
+  }
+
+  async verifyEmailService(token) {
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+    const user = await this.userRepo.findOne({
+      emailVerificationToken: hashedToken,
+      emailVerificationExpires: { $gt: Date.now() },
+    });
+
+    if (!user) throw new UnauthorizeError("Token is invalid or expired");
+    
+    user.isEmailVerified = true;
+
+    user.emailVerificationToken = undefined;
+    user.emailVerificationExpires = undefined;
+
+    await user.save();
+
+    return "Email verified successfully.";
+  }
+
+  async resendVerificationService(email) {
+    const user = await this.userRepo.findByEmail(email);
+
+    if (!user) throw new NotFoundError("Email not Found.");
+    if (user.isEmailVerified)
+      throw new BadRequestError("Email already Verified");
+
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+
+    user.isEmailVerified = true;
+    user.emailVerificationToken = crypto
+      .createHash("sha256")
+      .update(verificationToken)
+      .digest("hex");
+
+    user.emailVerificationExpires = Date.now() + 15 * 60 * 1000;
+
+    await user.save();
+
+    return { message: "Link Resent successfully.", user, verificationToken };
   }
 }

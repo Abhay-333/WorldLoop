@@ -38,4 +38,14 @@ authRouter.post(
   authController.resetPasswordController.bind(authController),
 );
 
+authRouter.get(
+  "/verify-email/:token",
+  authController.verifyEmailController.bind(authController),
+);
+
+authRouter.post(
+  "/resend-verification",
+  authController.resendVerificationController.bind(authController),
+);
+
 export default authRouter;
