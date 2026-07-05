@@ -236,6 +236,6 @@ export default class AuthService {
 
     await user.save();
 
-    return { message: "Link Resent successfully.", user };
+    return { message: "Link Resent successfully.", user, verificationToken };
   }
 }
