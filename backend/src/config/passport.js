@@ -1,6 +1,7 @@
 import passport from "passport";
 import { GoggleStragey as Strategy } from "passport-google-oauth20";
 import env from "./env.js";
+import UserModel from "../models/user.model.js";
 passport.use(
   new GoogleStrategy(
     {
