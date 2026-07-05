@@ -60,6 +60,12 @@ export default class AuthService {
       throw new NotFoundError("User not found.");
     }
 
+    if (!user.isEmailVerified) {
+      throw new UnauthorizeError(
+        "Please verify your email first. Check your mailbox",
+      );
+    }
+
     const accessToken = generateAccessToken(user._id);
 
     const refreshToken = generateRefreshToken(user._id);
@@ -230,6 +236,6 @@ export default class AuthService {
 
     await user.save();
 
-    return "Link Resent successfully.";
+    return { message: "Link Resent successfully.", user };
   }
 }
