@@ -62,11 +62,6 @@ const userSchema = new mongoose.Schema(
       },
     ],
 
-    isVerified: {
-      type: Boolean,
-      default: false,
-    },
-
     refreshToken: {
       type: String,
       default: null,
@@ -89,14 +84,14 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    
+
     isEmailVerified: {
       type: Boolean,
       default: false,
     },
 
-    emailVerificationToken: String,
-    emailVerificationExpires: Date,
+    emailVerificationToken: { type: String, default: null },
+    emailVerificationExpires: { type: Date, default: null },
   },
   {
     timestamps: true,
