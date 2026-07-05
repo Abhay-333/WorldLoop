@@ -1,6 +1,7 @@
 import passport from "passport";
 import { GoggleStragey as Strategy } from "passport-google-oauth20";
 import env from "./env.js";
+import UserModel from "../models/user.model.js";
 passport.use(
   new GoogleStrategy(
     {
@@ -18,4 +19,16 @@ passport.use(
       }
     },
   ),
+);
+
+// Session handling ke liye
+// serializeUser (Login ke waqt)
+passport.serializeUser((user, done) => done(null, user.id)); // Sirf user.id ko session mein store karo
+
+//  deserializeUser (Har request ke waqt)
+// Session se ID lo aur DB se pura user dhundo
+passport.deserializeUser((id, done) =>
+  UserModel.findById(id, (err, user) => {
+    done(err, user);
+  }),
 );
