@@ -22,6 +22,14 @@ const envSchema = z.object({
   MAIL_APP_PASSWORD: z.string(), // Google App password
   MAIL_FROM: z.string(), // In Email to show the "From: " field
   CLIENT_URL: z.string(), // After the forget-password user will be redirected to this url
+
+  /**
+   * @description Google Credentials
+   */
+
+  GOOGLE_CLIENT_ID: z.string(),
+  GOOGLE_CLIENT_SECRET: z.string(),
+  GOOGLE_CALLBACK_URL: z.string(),
 });
 
 const parsed = envSchema.safeParse(process.env);
