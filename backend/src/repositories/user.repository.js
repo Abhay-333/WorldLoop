@@ -14,6 +14,8 @@ export default class UserRepo {
     return await UserModel.findOne(payload);
   }
   async findUserByToken(token) {
-    return await UserModel.findOne(token);
+    return await UserModel.findOne({
+      refreshToken: token,
+    });
   }
 }

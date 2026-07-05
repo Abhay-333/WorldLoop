@@ -3,6 +3,8 @@ import logger from "../../config/logger.js";
 import AuthService from "./auth.service.js";
 import { AppError, NotFoundError } from "../../utils/Errors/app-errors.js";
 import { appConfig } from "../../config/app.config.js";
+import env from "../../config/env.js";
+import { sendVerifyLink } from "../../utils/sendVerifyLink.js";
 
 export default class AuthController {
   constructor() {
@@ -10,9 +12,12 @@ export default class AuthController {
   }
 
   async registerController(req, res) {
-    const { accessToken, refreshToken, newUser } =
+    const { accessToken, refreshToken, newUser, verificationToken } =
       await this.authService.registerService(req.body);
 
+    const verifyLink = `${env.CLIENT_URL}/verify-email/${verificationToken}`;
+    await sendVerifyLink(newUser, verifyLink);
+    
     res.cookie("refreshToken", refreshToken, appConfig.cookie.refreshToken);
     res.cookie("accessToken", accessToken, appConfig.cookie.accessToken);
 
@@ -87,6 +92,18 @@ export default class AuthController {
 
     return res.status(StatusCodes.OK).json({
       message: "Password reset Successfully.",
+    });
+  }
+
+  async verifyEmailController(req, res) {
+    const { token } = req.params;
+
+    if (!token) throw new NotFoundError("Token not found.");
+
+    const result = await this.authService.verifyEmailService(token);
+
+    return res.status(StatusCodes.OK).json({
+      message: result,
     });
   }
 }

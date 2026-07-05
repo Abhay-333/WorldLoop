@@ -80,7 +80,7 @@ const userSchema = new mongoose.Schema(
     },
 
     passwordResetExpires: {
-      type: String,
+      type: Date,
       default: null,
       // select: false,
     },
@@ -89,6 +89,14 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
+
+    emailVerificationToken: String,
+    emailVerificationExpires: Date,
   },
   {
     timestamps: true,
@@ -96,9 +104,8 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.pre("save", function (next) {
-  if (!this.isModified("password")) return next();
+  if (!this.isModified("password")) return;
   this.password = bcrypt.hashSync(this.password, 10);
-  next();
 });
 
 const UserModel = mongoose.model("User", userSchema);
