@@ -264,6 +264,14 @@ export default class AuthController {
     });
   }
 
+  /**
+   * Handles user email verification via the token sent during registration.
+   *
+   * @param {Object} req - Express request object.
+   * @param {Object} res - Express response object.
+   * @returns {Promise<Object>} JSON response confirming successful verification.
+   */
+  
   async verifyEmailController(req, res) {
     const { token } = req.params;
 

@@ -243,7 +243,7 @@ export default class AuthService {
     });
 
     if (!user) throw new UnauthorizeError("Token is invalid or expired");
-
+    
     user.isEmailVerified = true;
 
     user.emailVerificationToken = undefined;
