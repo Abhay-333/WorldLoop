@@ -38,7 +38,7 @@ authRouter.post(
   authController.resetPasswordController.bind(authController),
 );
 
-authRouter.post(
+authRouter.get(
   "/verify-email/:token",
   authController.verifyEmailController.bind(authController),
 );
