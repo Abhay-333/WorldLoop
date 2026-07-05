@@ -275,23 +275,21 @@ export default class AuthService {
       .update(resetToken)
       .digest("hex");
 
-    // yaha pe compare hoga resetToken jo params mey mil raha hai aur crypto se naya hashedToken. agar dono equal hai toh agli condition check karo. jo ki humari resetToken Expiry time check krti hai. passwordResetExpires pichle wala expire time check karega aur check karega.
     const user = await this.userRepo.findOne({
-      passwordResetToken: hashedToken,
-      passwordResetExpires: { $gt: Date.now() },
+      emailVerificationToken: hashedToken,
+      emailVerificationExpires: { $gt: Date.now() },
     });
 
+    console.log(first)
     if (!user) throw new UnauthorizeError("Token is invalid or expired");
 
-    user.password = password;
+    user.isEmailVerified = true;
 
-    user.passwordResetToken = undefined;
-    user.passwordResetExpires = undefined;
-
-    //Logout from all devices
-    user.refreshToken = null;
+    user.emailVerificationToken = undefined;
+    user.emailVerificationExpires = undefined;
 
     await user.save();
-    return true;
+
+    return "Email verified successfully.";
   }
 }
