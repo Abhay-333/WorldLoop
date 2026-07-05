@@ -80,7 +80,7 @@ const userSchema = new mongoose.Schema(
     },
 
     passwordResetExpires: {
-      type: String,
+      type: Date,
       default: null,
       // select: false,
     },
