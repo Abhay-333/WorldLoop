@@ -275,4 +275,16 @@ export default class AuthController {
       message: result,
     });
   }
+
+  async resendVerificationController(req, res) {
+    const { email } = req.body;
+
+    if (!email) throw new NotFoundError("Email not found.");
+
+    const result = await this.authService.resendVerification(email);
+
+    return res.status(StatusCodes.OK).json({
+      message: result,
+    });
+  }
 }
