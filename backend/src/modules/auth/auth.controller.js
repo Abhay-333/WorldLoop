@@ -281,7 +281,7 @@ export default class AuthController {
 
     if (!email) throw new NotFoundError("Email not found.");
 
-    const result = await this.authService.resendVerification(email);
+    const result = await this.authService.resendVerificationService(email);
 
     return res.status(StatusCodes.OK).json({
       message: result,
