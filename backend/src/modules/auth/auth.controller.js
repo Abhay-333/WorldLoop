@@ -195,12 +195,12 @@ export default class AuthController {
   }
 
   async getMeController(req, res) {
-    const { accessToken } = req.cookies;
-
-    const { message, user } = await this.authService.getMeService(accessToken);
+    const user = await this.authService.userRepo.findById(req.user.id);
 
     res
       .status(StatusCodes.OK)
-      .json(new SuccessResponse(message, user, StatusCodes.OK));
+      .json(
+        new SuccessResponse("User fetch successfully.", user, StatusCodes.OK),
+      );
   }
 }

@@ -5,6 +5,7 @@ import { loginValidation, registerValidation } from "./auth.validation.js";
 import passport from "passport";
 import googleOAuthMiddleware from "../../middlewares/googleOAuth.middleware.js";
 import env from "../../config/env.js";
+import authenticateMiddleware from "../../middlewares/auth.middleware.js";
 const authRouter = express.Router();
 const authController = new AuthController();
 
@@ -63,6 +64,10 @@ authRouter.get(
 /**
  * @params /auth/me -> give the data of currently logged-in user to the frontend
  */
-authRouter.get("/me", authController.getMeController.bind(authController));
+authRouter.get(
+  "/me",
+  authenticateMiddleware,
+  authController.getMeController.bind(authController),
+);
 
 export default authRouter;

@@ -239,16 +239,4 @@ export default class AuthService {
 
     return { message: "Link Resent successfully.", user, verificationToken };
   }
-
-  async getMeService(token) {
-    if (!token) throw new UnauthorizeError("Token is missing.");
-
-    const decode = verifyAccessToken(token);
-    console.log(decode);
-    
-    const user = await this.userRepo.findById(decode.id);
-    if (!user) throw new NotFoundError("User not Found.");
-
-    return { message: "User fetch Successfully.", user };
-  }
 }
