@@ -22,13 +22,15 @@ export default class AuthController {
     res.cookie("refreshToken", refreshToken, appConfig.cookie.refreshToken);
     res.cookie("accessToken", accessToken, appConfig.cookie.accessToken);
 
-    return res.status(StatusCodes.CREATED).json(
-      new SuccessResponse(
-        "User registered Successfully.",
-        { newUser, accessToken, refreshToken },
-        StatusCodes.CREATED
-      )
-    );
+    return res
+      .status(StatusCodes.CREATED)
+      .json(
+        new SuccessResponse(
+          "User registered Successfully.",
+          { newUser, accessToken, refreshToken },
+          StatusCodes.CREATED,
+        ),
+      );
   }
 
   async loginController(req, res) {
@@ -37,13 +39,15 @@ export default class AuthController {
 
     res.cookie("refreshToken", refreshToken, appConfig.cookie.refreshToken);
     res.cookie("accessToken", accessToken, appConfig.cookie.accessToken);
-    return res.status(StatusCodes.OK).json(
-      new SuccessResponse(
-        "User Logged In Successfully.",
-        { user, accessToken, refreshToken },
-        StatusCodes.OK
-      )
-    );
+    return res
+      .status(StatusCodes.OK)
+      .json(
+        new SuccessResponse(
+          "User Logged In Successfully.",
+          { user, accessToken, refreshToken },
+          StatusCodes.OK,
+        ),
+      );
   }
 
   async refreshController(req, res) {
@@ -56,13 +60,15 @@ export default class AuthController {
     res.cookie("refreshToken", newRefreshToken, appConfig.cookie.refreshToken);
     res.cookie("accessToken", accessToken, appConfig.cookie.accessToken);
 
-    return res.status(StatusCodes.OK).json(
-      new SuccessResponse(
-        "Tokens Generated Successfully.",
-        { tokens: { accessToken, newRefreshToken } },
-        StatusCodes.OK
-      )
-    );
+    return res
+      .status(StatusCodes.OK)
+      .json(
+        new SuccessResponse(
+          "Tokens Generated Successfully.",
+          { tokens: { accessToken, newRefreshToken } },
+          StatusCodes.OK,
+        ),
+      );
   }
 
   async logoutController(req, res) {
@@ -73,9 +79,11 @@ export default class AuthController {
     res.clearCookie("refreshToken", appConfig.cookie.refreshToken);
     res.clearCookie("accessToken", appConfig.cookie.accessToken);
 
-    return res.status(StatusCodes.OK).json(
-      new SuccessResponse("Logged out Successfully.", null, StatusCodes.OK)
-    );
+    return res
+      .status(StatusCodes.OK)
+      .json(
+        new SuccessResponse("Logged out Successfully.", null, StatusCodes.OK),
+      );
   }
 
   async forgetPasswordController(req, res) {
@@ -83,9 +91,11 @@ export default class AuthController {
 
     await this.authService.forgetPasswordService(email);
 
-    return res.status(StatusCodes.OK).json(
-      new SuccessResponse("Link sent Successfully.", null, StatusCodes.OK)
-    );
+    return res
+      .status(StatusCodes.OK)
+      .json(
+        new SuccessResponse("Link sent Successfully.", null, StatusCodes.OK),
+      );
   }
 
   async resetPasswordController(req, res) {
@@ -97,9 +107,15 @@ export default class AuthController {
 
     await this.authService.resetPasswordService(token, password);
 
-    return res.status(StatusCodes.OK).json(
-      new SuccessResponse("Password reset Successfully.", null, StatusCodes.OK)
-    );
+    return res
+      .status(StatusCodes.OK)
+      .json(
+        new SuccessResponse(
+          "Password reset Successfully.",
+          null,
+          StatusCodes.OK,
+        ),
+      );
   }
 
   /**
@@ -117,9 +133,9 @@ export default class AuthController {
 
     const result = await this.authService.verifyEmailService(token);
 
-    return res.status(StatusCodes.OK).json(
-      new SuccessResponse(result, null, StatusCodes.OK)
-    );
+    return res
+      .status(StatusCodes.OK)
+      .json(new SuccessResponse(result, null, StatusCodes.OK));
   }
 
   async resendVerificationController(req, res) {
@@ -133,9 +149,19 @@ export default class AuthController {
     const verifyLink = `${env.CLIENT_URL}/verify-email/${verificationToken}`;
 
     await sendVerifyLink(user, verifyLink);
-    return res.status(StatusCodes.OK).json(
-      new SuccessResponse(message, null, StatusCodes.OK)
-    );
+    return res
+      .status(StatusCodes.OK)
+      .json(new SuccessResponse(message, null, StatusCodes.OK));
+  }
+
+  async getMeController(req, res) {
+    const { decoded } = req;
+    const user = await this.authService.userRepo.findById(decoded.id);
+    res
+      .status(StatusCodes.OK)
+      .json(
+        new SuccessResponse("User fetch Successfully.", user, StatusCodes.OK),
+      );
   }
 
   /**
