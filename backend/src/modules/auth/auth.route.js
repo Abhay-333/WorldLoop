@@ -5,6 +5,8 @@ import { loginValidation, registerValidation } from "./auth.validation.js";
 import passport from "passport";
 import googleOAuthMiddleware from "../../middlewares/googleOAuth.middleware.js";
 import env from "../../config/env.js";
+import authenticateMiddleware from "../../middlewares/auth.middleware.js";
+
 const authRouter = express.Router();
 const authController = new AuthController();
 
@@ -58,6 +60,12 @@ authRouter.get(
 authRouter.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: env.FAILURE_REDIRECT }),
+);
+
+authRouter.get(
+  "/me",
+  authenticateMiddleware, // Ensure the user is authenticated before accessing this route
+  authController.getMeController.bind(authController),
 );
 
 export default authRouter;
