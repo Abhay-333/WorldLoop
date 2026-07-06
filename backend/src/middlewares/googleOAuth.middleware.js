@@ -1,4 +1,5 @@
-import passport, { session } from "passport";
+import passport from "passport";
+import session from "express-session";
 import env from "../config/env.js";
 
 const googleOAuthMiddleware = (app) => {

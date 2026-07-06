@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import env from "./config/env.js";
+import "./config/passport.js";
 import indexRouter from "./routes/index.route.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
 import securityMiddleware from "./middlewares/security.middlware.js";
