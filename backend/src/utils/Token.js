@@ -15,6 +15,5 @@ export const generateRefreshToken = (userId) => {
 
 export const verifyRefreshToken = (refreshToken) => {
   const decodeID = jwt.verify(refreshToken, env.REFRESH_TOKEN_SECRET);
-
   return decodeID;
 };

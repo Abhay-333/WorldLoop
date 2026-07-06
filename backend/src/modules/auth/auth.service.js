@@ -206,7 +206,7 @@ export default class AuthService {
     });
 
     if (!user) throw new UnauthorizeError("Token is invalid or expired");
-    
+
     user.isEmailVerified = true;
 
     user.emailVerificationToken = undefined;
@@ -237,5 +237,12 @@ export default class AuthService {
     await user.save();
 
     return { message: "Link Resent successfully.", user, verificationToken };
+  }
+
+  async getMeService(token) {
+    if (!token) throw new UnauthorizeError("Token is missing.");
+    
+    const decode = ver
+    return { message: "User fetch Successfully.", user };
   }
 }

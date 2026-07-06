@@ -60,4 +60,9 @@ authRouter.get(
   passport.authenticate("google", { failureRedirect: env.FAILURE_REDIRECT }),
 );
 
+/**
+ * @params /auth/me -> give the data of currently logged-in user to the frontend
+ */
+authRouter.get("/me", authController.getMeController.bind(authController));
+
 export default authRouter;
