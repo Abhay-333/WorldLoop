@@ -11,6 +11,7 @@ import env from "../../config/env.js";
 import {
   generateAccessToken,
   generateRefreshToken,
+  verifyAccessToken,
   verifyRefreshToken,
 } from "../../utils/Token.js";
 import sendEmail from "../../utils/sendMail.js";
@@ -241,8 +242,13 @@ export default class AuthService {
 
   async getMeService(token) {
     if (!token) throw new UnauthorizeError("Token is missing.");
+
+    const decode = verifyAccessToken(token);
+    console.log(decode);
     
-    const decode = ver
+    const user = await this.userRepo.findById(decode.id);
+    if (!user) throw new NotFoundError("User not Found.");
+
     return { message: "User fetch Successfully.", user };
   }
 }
