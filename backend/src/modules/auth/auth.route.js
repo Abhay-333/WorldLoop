@@ -2,7 +2,9 @@ import express from "express";
 import AuthController from "./auth.controller.js";
 import validationMiddleware from "../../middlewares/validation.middleware.js";
 import { loginValidation, registerValidation } from "./auth.validation.js";
-
+import passport from "passport";
+import googleOAuthMiddleware from "../../middlewares/googleOAuth.middleware.js";
+import env from "../../config/env.js";
 const authRouter = express.Router();
 const authController = new AuthController();
 
@@ -46,6 +48,16 @@ authRouter.get(
 authRouter.post(
   "/resend-verification",
   authController.resendVerificationController.bind(authController),
+);
+
+authRouter.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] }),
+);
+
+authRouter.get(
+  "/google/callback",
+  passport.authenticate("google", { failureRedirect: env.FAILURE_REDIRECT }),
 );
 
 export default authRouter;

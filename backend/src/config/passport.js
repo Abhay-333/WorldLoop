@@ -1,0 +1,35 @@
+import passport from "passport";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import env from "./env.js";
+import UserModel from "../models/user.model.js";
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+      callbackURL: env.GOOGLE_CALLBACK_URL,
+    },
+    async (accessToken, refresh, profile, done) => {
+      try {
+        // Yahan aap profile.id se user ko apne MongoDB database mein check/save kar sakte hain
+        // const user = await User.findOneAndUpdate({ googleId: profile.id }, { name: profile.displayName, email: profile.emails[0].value }, { upsert: true, new: true });
+        return done(null, profile);
+      } catch (err) {
+        return done(err, null);
+      }
+    },
+  ),
+);
+
+// Session handling ke liye
+// serializeUser (Login ke waqt)
+passport.serializeUser((user, done) => done(null, user.id)); // Sirf user.id ko session mein store karo
+
+//  deserializeUser (Har request ke waqt)
+// Session se ID lo aur DB se pura user dhundo
+passport.deserializeUser((id, done) =>
+  UserModel.findById(id, (err, user) => {
+    done(err, user);
+  }),
+);
