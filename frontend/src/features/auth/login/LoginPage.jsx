@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useFonts } from "../hooks/useFonts"
-
+import { Link } from "react-router"
 /**
  * WorldLoop — Sign In
  *
@@ -27,7 +27,7 @@ export default function LoginPage() {
   return (
     <div
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-      className="flex min-h-screen w-full items-center justify-center bg-white px-4 py-10"
+      className="flex h-full w-full items-center justify-center bg-white px-4"
     >
       <div className="w-full max-w-md">
         <div className="relative overflow-hidden rounded-3xl border border-[#F0E9E3] bg-white shadow-[0_20px_60px_-15px_rgba(31,27,36,0.15)]">
@@ -88,12 +88,12 @@ export default function LoginPage() {
                   >
                     Password
                   </Label>
-                  <a
-                    href="#"
+                  <Link
+                    to="/forgot-password"
                     className="text-xs font-medium text-[#FF5C7A] hover:underline"
                   >
                     Forgot?
-                  </a>
+                  </Link>
                 </div>
                 <div className="relative flex items-center">
                   <Lock className="absolute left-3 h-4 w-4 text-[#B7AFB9]" />
@@ -145,79 +145,16 @@ export default function LoginPage() {
 
             <p className="mt-6 text-sm text-[#8A8390]">
               New to WorldLoop?{" "}
-              <a
-                href="#"
+              <Link
+                to="/register"
                 className="font-semibold text-[#FF3D66] hover:underline"
               >
                 Create account
-              </a>
+              </Link>
             </p>
           </div>
         </div>
       </div>
     </div>
-  )
-}
-
-/** Small floating connection graph inside the cover banner — friends/nodes linked, gently drifting. */
-function ConnectionGraph() {
-  const nodes = [
-    { cx: 40, cy: 40, r: 10, dur: 3.2, delay: 0 },
-    { cx: 120, cy: 74, r: 6, dur: 3.8, delay: 0.6 },
-    { cx: 205, cy: 28, r: 8, dur: 3.4, delay: 1.1 },
-    { cx: 262, cy: 82, r: 5, dur: 4.2, delay: 0.3 },
-    { cx: 322, cy: 46, r: 9, dur: 3.6, delay: 0.9 },
-    { cx: 90, cy: 104, r: 5, dur: 4, delay: 1.4 },
-  ]
-
-  return (
-    <div className="absolute inset-0">
-      <style>{`
-        @keyframes WorldLoop-float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-8px); }
-        }
-      `}</style>
-      <svg
-        viewBox="0 0 360 140"
-        className="h-full w-full"
-        preserveAspectRatio="none"
-      >
-        <g stroke="rgba(255,255,255,0.45)" strokeWidth="1">
-          <line x1="40" y1="40" x2="120" y2="74" />
-          <line x1="120" y1="74" x2="205" y2="28" />
-          <line x1="205" y1="28" x2="262" y2="82" />
-          <line x1="262" y1="82" x2="322" y2="46" />
-          <line x1="90" y1="104" x2="120" y2="74" />
-          <line x1="90" y1="104" x2="40" y2="40" />
-        </g>
-        {nodes.map((n, i) => (
-          <circle
-            key={i}
-            cx={n.cx}
-            cy={n.cy}
-            r={n.r}
-            fill="rgba(255,255,255,0.92)"
-            style={{
-              animation: `WorldLoop-float ${n.dur}s ease-in-out infinite`,
-              animationDelay: `${n.delay}s`,
-              transformBox: "fill-box",
-              transformOrigin: "center",
-            }}
-          />
-        ))}
-      </svg>
-    </div>
-  )
-}
-
-function GoogleIcon(props) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" {...props}>
-      <path
-        d="M21.35 11.1h-9.17v2.98h5.4c-.23 1.4-1.62 4.1-5.4 4.1a5.9 5.9 0 1 1 0-11.8 5.3 5.9 0 0 1 3.75 1.46l2.28-2.2A9.1 9.1 0 0 0 12.18 3a9.18 9.18 0 1 0 0 18.36c5.3 0 8.8-3.72 8.8-8.96 0-.6-.07-1.06-.15-1.5Z"
-        fill="currentColor"
-      />
-    </svg>
   )
 }

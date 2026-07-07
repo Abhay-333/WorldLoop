@@ -22,7 +22,7 @@ export default function RegisterPage() {
   return (
     <div
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-      className="flex min-h-screen w-full items-center justify-center bg-white px-4 py-10"
+      className="flex min-h-screen w-full items-center justify-center bg-white px-4"
     >
       <div className="w-full max-w-md">
         <div className="relative overflow-hidden rounded-3xl border border-[#F0E9E3] bg-white shadow-[0_20px_60px_-15px_rgba(31,27,36,0.15)]">
