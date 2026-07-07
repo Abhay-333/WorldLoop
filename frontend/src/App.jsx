@@ -1,5 +1,6 @@
-import LoginPage from "./features/auth/login/LoginPage"
-import RegisterPage from "./features/auth/register/RegisterPage"
+import LoginPage from "./features/auth/login/LoginPage.jsx"
+import RegisterPage from "./features/auth/register/RegisterPage.jsx"
+
 export function App() {
   return (
     <div className="flex max-h-screen">
