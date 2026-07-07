@@ -1,9 +1,8 @@
-import { Button } from "@/components/ui/button"
-import LoginPage from "@/features/auth/login/LoginPage.jsx" 
+import LoginPage from "./features/auth/login/LoginPage"
 
 export function App() {
   return (
-    <div className="flex min-h-svh p-6">
+    <div className="flex max-h-screen">
       {/* <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
         <div>
           <h1 className="font-medium">Project ready!</h1>
