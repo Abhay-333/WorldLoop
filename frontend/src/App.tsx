@@ -15,7 +15,7 @@ export function App() {
         </div>
       </div> */}
 
-      <LoginPage></LoginPage>
+      {/* <LoginPage></LoginPage> */}
       <RegisterPage></RegisterPage>
     </div>
   )
