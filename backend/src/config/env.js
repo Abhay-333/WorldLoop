@@ -32,6 +32,7 @@ const envSchema = z.object({
   GOOGLE_CALLBACK_URL: z.string(),
   SESSION_SECRET: z.string(),
   FAILURE_REDIRECT: z.string(),
+  
 });
 
 const parsed = envSchema.safeParse(process.env);

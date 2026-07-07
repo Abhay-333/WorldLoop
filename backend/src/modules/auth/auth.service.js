@@ -91,6 +91,43 @@ export default class AuthService {
       throw new NotFoundError("User not found.");
     }
 
+    if (!user.isEmailVerified) {
+      throw new UnauthorizeError(
+        "Please verify your email first. Check your mailbox",
+      );
+    }
+
+    const accessToken = generateAccessToken(user._id);
+    if (user.refreshToken !== oldRefreshToken)
+      throw new UnauthorizeError("Invalid refresh Token.");
+
+    const accessToken = generateAccessToken(user._id);
+    const newRefreshToken = generateRefreshToken(user._id);
+
+    user.refreshToken = newRefreshToken;
+    await user.save();
+
+    user.refreshToken = refreshToken;
+    await user.save();
+
+    return {
+      accessToken,
+      refreshToken: newRefreshToken,
+    };
+  }
+
+  async refreshService(oldRefreshToken) {
+    if (!oldRefreshToken) {
+      throw new UnauthorizeError("Refresh Token Missing.");
+    }
+
+    const decode = verifyRefreshToken(oldRefreshToken);
+
+    const user = await this.userRepo.findById(decode.id);
+    if (!user) {
+      throw new NotFoundError("User not found.");
+    }
+
     if (user.refreshToken !== oldRefreshToken)
       throw new UnauthorizeError("Invalid refresh Token.");
 
@@ -237,5 +274,28 @@ export default class AuthService {
     await user.save();
 
     return { message: "Link Resent successfully.", user, verificationToken };
+  }
+  async resetPasswordService(resetToken, password) {
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    const user = await this.userRepo.findOne({
+      emailVerificationToken: hashedToken,
+      emailVerificationExpires: { $gt: Date.now() },
+    });
+
+    console.log(first)
+    if (!user) throw new UnauthorizeError("Token is invalid or expired");
+
+    user.isEmailVerified = true;
+
+    user.emailVerificationToken = undefined;
+    user.emailVerificationExpires = undefined;
+
+    await user.save();
+
+    return "Email verified successfully.";
   }
 }
