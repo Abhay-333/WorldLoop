@@ -3,6 +3,7 @@ import { Mail, Lock, Eye, EyeOff } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useFonts } from "../hooks/useFonts"
 
 /**
  * WorldLoop — Sign In
@@ -18,19 +19,6 @@ import { Label } from "@/components/ui/label"
  * Colors are inlined as arbitrary Tailwind values (bg-[#...]) so this
  * renders identically regardless of your tailwind.config.
  */
-
-function useFonts() {
-  useEffect(() => {
-    const id = "WorldLoop-fonts"
-    if (document.getElementById(id)) return
-    const link = document.createElement("link")
-    link.id = id
-    link.rel = "stylesheet"
-    link.href =
-      "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-    document.head.appendChild(link)
-  }, [])
-}
 
 export default function LoginPage() {
   useFonts()
@@ -57,7 +45,7 @@ export default function LoginPage() {
           {/* Overlapping avatar badge */}
           <div className="relative flex justify-center">
             <div className="absolute -top-10 flex h-20 w-20 items-center justify-center rounded-full border-4 border-white bg-[#1F1B24] shadow-lg">
-              <span className="text-2xl font-extrabold text-white">WL</span>
+              <span className="text-2xl font-extrabold text-white">W</span>
               <span className="absolute right-1 bottom-1 h-3.5 w-3.5 rounded-full border-2 border-white bg-[#12B8A6]" />
             </div>
           </div>
@@ -148,7 +136,7 @@ export default function LoginPage() {
 
             <Button
               type="button"
-            //   variant="outline"
+              //   variant="outline"
               className="h-11 w-full border-[#EFE7E1] text-[#1F1B24] hover:bg-[#FAF7F4] hover:text-[#1F1B24] focus-visible:ring-[#FF5C7A]"
             >
               <GoogleIcon className="mr-2 h-4 w-4 text-[#8A8390]" />
