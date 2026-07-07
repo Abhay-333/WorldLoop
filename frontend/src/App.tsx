@@ -1,5 +1,5 @@
 import LoginPage from "./features/auth/login/LoginPage"
-
+import RegisterPage from "./features/auth/register/RegisterPage"
 export function App() {
   return (
     <div className="flex max-h-screen">
@@ -16,6 +16,7 @@ export function App() {
       </div> */}
 
       <LoginPage></LoginPage>
+      <RegisterPage></RegisterPage>
     </div>
   )
 }
