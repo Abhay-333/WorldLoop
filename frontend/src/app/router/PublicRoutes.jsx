@@ -1,8 +1,10 @@
-import React from 'react'
-
+import React from "react"
+import { Outlet } from "react-router"
 const PublicRoutes = () => {
   return (
-    <div>PublicRoutes</div>
+    <div>
+      <Outlet></Outlet>
+    </div>
   )
 }
 
