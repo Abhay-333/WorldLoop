@@ -7,6 +7,8 @@ import { useFonts } from "../hooks/useFonts"
 import { Link } from "react-router"
 import ConnectionGraph from "../components/ConnectionGraph"
 import GoogleIcon from "../components/GoogleIcon"
+import { useForm, Controller } from "react-hook-form"
+
 /**
  * WorldLoop — Sign In
  *
@@ -25,7 +27,21 @@ import GoogleIcon from "../components/GoogleIcon"
 export default function LoginPage() {
   useFonts()
   const [showPassword, setShowPassword] = useState(false)
+  const {
+    handleSubmit,
+    register,
+    control,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  })
 
+  const handleFormSubmit = (data) => {
+    console.log(data)
+  }
   return (
     <div
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
@@ -69,14 +85,21 @@ export default function LoginPage() {
                   htmlFor="identifier"
                   className="text-xs font-semibold text-[#5C5560]"
                 >
-                  Email or username
+                  Email
                 </Label>
                 <div className="relative flex items-center">
                   <Mail className="absolute left-3 h-4 w-4 text-[#B7AFB9]" />
                   <Input
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: {
+                        value: /^\S+@\S+$/i,
+                        message: "Invalid email address",
+                      },
+                    })}
                     id="identifier"
                     type="text"
-                    placeholder="you@WorldLoop.app"
+                    placeholder="you@gmail.com"
                     className="h-11 border-[#EFE7E1] bg-[#FAF7F4] pl-10 text-sm text-[#1F1B24] placeholder:text-[#B7AFB9] focus-visible:ring-[#FF5C7A]"
                   />
                 </div>
@@ -94,12 +117,15 @@ export default function LoginPage() {
                     to="/forgot-password"
                     className="text-xs font-medium text-[#FF5C7A] hover:underline"
                   >
-                    Forgot?
+                    Forgot Password?
                   </Link>
                 </div>
                 <div className="relative flex items-center">
                   <Lock className="absolute left-3 h-4 w-4 text-[#B7AFB9]" />
                   <Input
+                    {...register("password", {
+                      required: "Password is required",
+                    })}
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
@@ -121,7 +147,7 @@ export default function LoginPage() {
 
               <Button
                 type="submit"
-                className="h-11 w-full bg-[#FF3D66] font-semibold text-white hover:bg-[#ff2857]"
+                className="h-11 w-full cursor-pointer bg-[#FF3D66] font-semibold text-white hover:bg-[#ff2857]"
               >
                 Sign in
               </Button>
@@ -139,7 +165,7 @@ export default function LoginPage() {
             <Button
               type="button"
               //   variant="outline"
-              className="h-11 w-full border-[#EFE7E1] text-[#1F1B24] hover:bg-[#FAF7F4] hover:text-[#1F1B24] focus-visible:ring-[#FF5C7A]"
+              className="h-11 w-full cursor-pointer border-[#EFE7E1] text-[#1F1B24] hover:bg-[#FAF7F4] hover:text-[#1F1B24] focus-visible:ring-[#FF5C7A]"
             >
               <GoogleIcon className="mr-2 h-4 w-4 text-[#8A8390]" />
               Continue with Google
