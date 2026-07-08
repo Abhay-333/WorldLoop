@@ -8,7 +8,7 @@ import { useFonts } from "../hooks/useFonts"
 import ConnectionGraph from "../components/ConnectionGraph"
 import GoogleIcon from "../components/GoogleIcon"
 import { Link } from "react-router"
-import { useForm } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
 /**
  * WorldLoop — Register
  *
@@ -24,9 +24,7 @@ export default function RegisterPage() {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm()
-
-  const form = useForm({
+  } = useForm({
     defaultValues: {
       username: "",
       email: "",
@@ -96,6 +94,11 @@ export default function RegisterPage() {
                     className="h-11 border-[#EFE7E1] bg-[#FAF7F4] pl-8 text-sm text-[#1F1B24] placeholder:text-[#B7AFB9] focus-visible:ring-[#FF5C7A]"
                   />
                 </div>
+                {errors.username && (
+                  <span className="right absolute text-xs text-red-500">
+                    {errors.username.message}
+                  </span>
+                )}
               </div>
 
               <div className="space-y-1.5">
@@ -112,10 +115,15 @@ export default function RegisterPage() {
 
                     id="email"
                     type="email"
-                    placeholder="you@worldloop.io"
+                    placeholder="you@gmail.com"
                     className="h-11 border-[#EFE7E1] bg-[#FAF7F4] pl-10 text-sm text-[#1F1B24] placeholder:text-[#B7AFB9] focus-visible:ring-[#FF5C7A]"
                   />
                 </div>
+                {errors.email && (
+                  <span className="right absolute text-xs text-red-500">
+                    {errors.email.message}
+                  </span>
+                )}
               </div>
 
               <div className="space-y-1.5">
@@ -140,11 +148,7 @@ export default function RegisterPage() {
                     placeholder="••••••••"
                     className="h-11 border-[#EFE7E1] bg-[#FAF7F4] pr-10 pl-10 text-sm text-[#1F1B24] placeholder:text-[#B7AFB9] focus-visible:ring-[#FF5C7A]"
                   />
-                  {errors.password && (
-                    <span className="absolute right-3 text-xs text-red-500">
-                      {errors.password.message}
-                    </span>
-                  )}
+
                   <button
                     type="button"
                     onClick={() => setShowPassword((v) => !v)}
@@ -157,9 +161,14 @@ export default function RegisterPage() {
                     )}
                   </button>
                 </div>
+                {errors.password && (
+                  <span className="right absolute text-xs text-red-500">
+                    {errors.password.message}
+                  </span>
+                )}
               </div>
 
-              <div className="flex items-start gap-2 pt-1">
+              <div className="flex items-start gap-2 pt-3">
                 <Checkbox
                   {...register("terms", { required: true })}
                   id="terms"
@@ -175,9 +184,8 @@ export default function RegisterPage() {
                   </a>{" "}
                   and{" "}
                   <a href="#" className="text-[#FF5C7A] hover:underline">
-                    Privacy Policy
+                    Privacy Policy.
                   </a>
-                  .
                 </Label>
               </div>
 
