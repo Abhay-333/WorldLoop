@@ -67,7 +67,6 @@ export default class AuthService {
     }
 
     const accessToken = generateAccessToken(user._id);
-
     const refreshToken = generateRefreshToken(user._id);
 
     user.refreshToken = refreshToken;
@@ -109,33 +108,6 @@ export default class AuthService {
     return {
       accessToken,
       refreshToken: newRefreshToken,
-    };
-  }
-
-  async refreshService(oldRefreshToken) {
-    if (!oldRefreshToken) {
-      throw new UnauthorizeError("Refresh Token Missing.");
-    }
-
-    const decode = verifyRefreshToken(oldRefreshToken);
-
-    const user = await this.userRepo.findById(decode.id);
-    if (!user) {
-      throw new NotFoundError("User not found.");
-    }
-
-    if (user.refreshToken !== oldRefreshToken)
-      throw new UnauthorizeError("Invalid refresh Token.");
-
-    const accessToken = generateAccessToken(user._id);
-    const newRefreshToken = generateRefreshToken(user._id);
-
-    user.refreshToken = newRefreshToken;
-    await user.save();
-
-    return {
-      accessToken,
-      newRefreshToken,
     };
   }
 
@@ -271,6 +243,7 @@ export default class AuthService {
 
     return { message: "Link Resent successfully.", user, verificationToken };
   }
+
   async resetPasswordService(resetToken, password) {
     const hashedToken = crypto
       .createHash("sha256")
