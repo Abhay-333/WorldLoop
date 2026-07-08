@@ -6,8 +6,7 @@ import { appConfig } from "../../config/app.config.js";
 import env from "../../config/env.js";
 import { sendVerifyLink } from "../../utils/sendVerifyLink.js";
 import { SuccessResponse } from "../../utils/SuccessResponse/SuccessResponse.js";
-import { NotFoundError } from "../../utils/Errors/app-errors.js";
-import { appConfig } from "../../config/app.config.js";
+
 
 export default class AuthController {
   constructor() {
