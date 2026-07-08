@@ -10,7 +10,7 @@ import GoogleIcon from "../components/GoogleIcon"
 import { Link } from "react-router"
 import { useForm, Controller } from "react-hook-form"
 import apiInstance, { registerApi } from "../api/apiInstance"
-
+import { toast } from "react-hot-toast"
 /**
  * WorldLoop — Register
  *
@@ -40,6 +40,9 @@ export default function RegisterPage() {
     console.log(data)
     const result = await registerApi(data)
     console.log(result)
+    toast.success(
+      "Registration successful! Please check your email to verify your account."
+    )
   }
 
   return (
