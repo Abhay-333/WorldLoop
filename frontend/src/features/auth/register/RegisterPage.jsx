@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import { User, Mail, Lock, Eye, EyeOff } from "lucide-react"
+import { useState } from "react"
+import { Mail, Lock, Eye, EyeOff } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -7,6 +7,10 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { useFonts } from "../hooks/useFonts"
 import ConnectionGraph from "../components/ConnectionGraph"
 import GoogleIcon from "../components/GoogleIcon"
+import { Link } from "react-router"
+import { useForm, Controller } from "react-hook-form"
+import apiInstance, { registerApi } from "../api/apiInstance"
+
 /**
  * WorldLoop — Register
  *
@@ -18,6 +22,25 @@ import GoogleIcon from "../components/GoogleIcon"
 export default function RegisterPage() {
   useFonts()
   const [showPassword, setShowPassword] = useState(false)
+  const {
+    handleSubmit,
+    register,
+    control,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+      terms: false,
+    },
+  })
+
+  const handleFormSubmit = async (data) => {
+    console.log(data)
+    const result = await registerApi(data)
+    console.log(result)
+  }
 
   return (
     <div
@@ -54,61 +77,105 @@ export default function RegisterPage() {
             </p>
 
             <form
+              method="POST"
               className="mt-4 space-y-4 text-left"
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={handleSubmit(handleFormSubmit)}
+              noValidate
             >
-              <div className="space-y-1.5">
+              {/* Username */}
+              <div>
                 <Label
                   htmlFor="username"
                   className="text-xs font-semibold text-[#5C5560]"
                 >
                   Username
                 </Label>
-                <div className="relative flex items-center">
+                <div className="relative mt-1.5 flex items-center">
                   <span className="absolute left-3 text-sm text-[#B7AFB9]">
                     @
                   </span>
                   <Input
+                    {...register("username", {
+                      required: "Username is required",
+                    })}
                     id="username"
                     type="text"
-                    placeholder="abhaydev"
-                    className="h-11 border-[#EFE7E1] bg-[#FAF7F4] pl-8 text-sm text-[#1F1B24] placeholder:text-[#B7AFB9] focus-visible:ring-[#FF5C7A]"
+                    placeholder="Username"
+                    aria-invalid={errors.username ? "true" : "false"}
+                    className={`h-11 bg-[#FAF7F4] pl-8 text-sm text-[#1F1B24] placeholder:text-[#B7AFB9] focus-visible:ring-[#FF5C7A] ${
+                      errors.username
+                        ? "border-red-400 focus-visible:ring-red-400"
+                        : "border-[#EFE7E1]"
+                    }`}
                   />
                 </div>
+                {/* Reserved space so the layout doesn't jump when the error appears/disappears */}
+                <p className="mt-1 min-h-[16px] text-xs text-red-500">
+                  {errors.username?.message}
+                </p>
               </div>
 
-              <div className="space-y-1.5">
+              {/* Email */}
+              <div>
                 <Label
                   htmlFor="email"
                   className="text-xs font-semibold text-[#5C5560]"
                 >
                   Email
                 </Label>
-                <div className="relative flex items-center">
+                <div className="relative mt-1.5 flex items-center">
                   <Mail className="absolute left-3 h-4 w-4 text-[#B7AFB9]" />
                   <Input
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: "Enter a valid email address",
+                      },
+                    })}
                     id="email"
                     type="email"
-                    placeholder="you@worldloop.io"
-                    className="h-11 border-[#EFE7E1] bg-[#FAF7F4] pl-10 text-sm text-[#1F1B24] placeholder:text-[#B7AFB9] focus-visible:ring-[#FF5C7A]"
+                    placeholder="you@gmail.com"
+                    aria-invalid={errors.email ? "true" : "false"}
+                    className={`h-11 bg-[#FAF7F4] pl-10 text-sm text-[#1F1B24] placeholder:text-[#B7AFB9] focus-visible:ring-[#FF5C7A] ${
+                      errors.email
+                        ? "border-red-400 focus-visible:ring-red-400"
+                        : "border-[#EFE7E1]"
+                    }`}
                   />
                 </div>
+                <p className="mt-1 min-h-[16px] text-xs text-red-500">
+                  {errors.email?.message}
+                </p>
               </div>
 
-              <div className="space-y-1.5">
+              {/* Password */}
+              <div>
                 <Label
                   htmlFor="password"
                   className="text-xs font-semibold text-[#5C5560]"
                 >
                   Password
                 </Label>
-                <div className="relative flex items-center">
+                <div className="relative mt-1.5 flex items-center">
                   <Lock className="absolute left-3 h-4 w-4 text-[#B7AFB9]" />
                   <Input
+                    {...register("password", {
+                      required: "Password is required",
+                      minLength: {
+                        value: 6,
+                        message: "Password must be at least 6 characters",
+                      },
+                    })}
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
-                    className="h-11 border-[#EFE7E1] bg-[#FAF7F4] pr-10 pl-10 text-sm text-[#1F1B24] placeholder:text-[#B7AFB9] focus-visible:ring-[#FF5C7A]"
+                    aria-invalid={errors.password ? "true" : "false"}
+                    className={`h-11 bg-[#FAF7F4] pr-10 pl-10 text-sm text-[#1F1B24] placeholder:text-[#B7AFB9] focus-visible:ring-[#FF5C7A] ${
+                      errors.password
+                        ? "border-red-400 focus-visible:ring-red-400"
+                        : "border-[#EFE7E1]"
+                    }`}
                   />
                   <button
                     type="button"
@@ -122,27 +189,46 @@ export default function RegisterPage() {
                     )}
                   </button>
                 </div>
+                <p className="mt-1 min-h-[16px] text-xs text-red-500">
+                  {errors.password?.message}
+                </p>
               </div>
 
-              <div className="flex items-start gap-2 pt-1">
-                <Checkbox
-                  id="terms"
-                  className="mt-0.5 border-[#EFE7E1] data-[state=checked]:border-[#FF3D66] data-[state=checked]:bg-[#FF3D66]"
-                />
-                <Label
-                  htmlFor="terms"
-                  className="text-xs leading-relaxed font-normal text-[#8A8390]"
-                >
-                  I agree to WorldLoop's{" "}
-                  <a href="#" className="text-[#FF5C7A] hover:underline">
-                    Terms
-                  </a>{" "}
-                  and{" "}
-                  <a href="#" className="text-[#FF5C7A] hover:underline">
-                    Privacy Policy
-                  </a>
-                  .
-                </Label>
+              {/* Terms checkbox — Controller only, don't also spread register() on it */}
+              <div>
+                <div className="flex items-start gap-2">
+                  <Controller
+                    name="terms"
+                    control={control}
+                    rules={{ required: "Please accept the terms." }}
+                    render={({ field }) => (
+                      <Checkbox
+                        id="terms"
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        className={`mt-0.5 border-[#EFE7E1] data-[state=checked]:border-[#FF3D66] data-[state=checked]:bg-[#FF3D66] ${
+                          errors.terms ? "border-red-400" : ""
+                        }`}
+                      />
+                    )}
+                  />
+                  <Label
+                    htmlFor="terms"
+                    className="text-xs leading-relaxed font-normal text-[#8A8390]"
+                  >
+                    I agree to WorldLoop's{" "}
+                    <a href="#" className="text-[#FF5C7A] hover:underline">
+                      Terms
+                    </a>{" "}
+                    and{" "}
+                    <a href="#" className="text-[#FF5C7A] hover:underline">
+                      Privacy Policy.
+                    </a>
+                  </Label>
+                </div>
+                <p className="mt-1 min-h-[16px] text-xs text-red-500">
+                  {errors.terms?.message}
+                </p>
               </div>
 
               <Button
@@ -164,8 +250,8 @@ export default function RegisterPage() {
 
             <Button
               type="button"
-              //   variant="outline"
-              className="h-11 w-full border-[#EFE7E1] text-[#1F1B24] hover:bg-[#FAF7F4]"
+              // variant="outline"
+              className="h-11 w-full cursor-pointer border-[#EFE7E1] text-[#1F1B24] hover:bg-[#FAF7F4]"
             >
               <GoogleIcon className="mr-2 h-4 w-4 text-[#8A8390]" />
               Continue with Google
@@ -173,12 +259,12 @@ export default function RegisterPage() {
 
             <p className="mt-3 text-sm text-[#8A8390]">
               Already on WorldLoop?{" "}
-              <a
-                href="#"
+              <Link
+                to="/"
                 className="font-semibold text-[#FF3D66] hover:underline"
               >
                 Sign in
-              </a>
+              </Link>
             </p>
           </div>
         </div>

@@ -8,6 +8,7 @@ const envSchema = z.object({
   PORT: z.coerce.number(),
   MONGO_URI: z.string(),
   NODE_ENV: z.string(),
+  CORS_ORIGIN: z.string(),
 
   MORGAN_LOGGER: z.string().default(appConstant.MORGAN_LOGGER),
   LOGGER_LEVEL: z.string().default(appConstant.LOGGER_LEVEL),
@@ -32,7 +33,6 @@ const envSchema = z.object({
   GOOGLE_CALLBACK_URL: z.string(),
   SESSION_SECRET: z.string(),
   FAILURE_REDIRECT: z.string(),
-  
 });
 
 const parsed = envSchema.safeParse(process.env);

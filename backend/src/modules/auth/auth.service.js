@@ -98,16 +98,12 @@ export default class AuthService {
     }
 
     const accessToken = generateAccessToken(user._id);
+    const newRefreshToken = generateRefreshToken(user._id);
+
     if (user.refreshToken !== oldRefreshToken)
       throw new UnauthorizeError("Invalid refresh Token.");
 
-    const accessToken = generateAccessToken(user._id);
-    const newRefreshToken = generateRefreshToken(user._id);
-
     user.refreshToken = newRefreshToken;
-    await user.save();
-
-    user.refreshToken = refreshToken;
     await user.save();
 
     return {
@@ -243,7 +239,7 @@ export default class AuthService {
     });
 
     if (!user) throw new UnauthorizeError("Token is invalid or expired");
-    
+
     user.isEmailVerified = true;
 
     user.emailVerificationToken = undefined;
@@ -286,7 +282,7 @@ export default class AuthService {
       emailVerificationExpires: { $gt: Date.now() },
     });
 
-    console.log(first)
+    console.log(first);
     if (!user) throw new UnauthorizeError("Token is invalid or expired");
 
     user.isEmailVerified = true;
