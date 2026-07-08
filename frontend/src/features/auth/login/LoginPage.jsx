@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useFonts } from "../hooks/useFonts"
 import { Link } from "react-router"
+import ConnectionGraph from "../components/ConnectionGraph"
+import GoogleIcon from "../components/GoogleIcon"
 /**
  * WorldLoop — Sign In
  *

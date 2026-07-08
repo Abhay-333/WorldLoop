@@ -8,7 +8,7 @@ const routes = [
     path: "/",
     element: <PublicRoutes />,
     children: [
-      { path: "/", index: true, element: <LoginPage /> },
+      { path: "/", element: <LoginPage /> },
       { path: "/register", element: <RegisterPage /> },
     ],
   },
@@ -18,7 +18,11 @@ const routes = [
 const router = createBrowserRouter(routes)
 
 function App() {
-  return <div className="flex items-center justify-center min-h-screen bg-[#FCFCFC]"><RouterProvider router={router} /></div>
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-[#FCFCFC]">
+      <RouterProvider router={router} />
+    </div>
+  )
 }
 
 export default App

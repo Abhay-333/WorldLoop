@@ -7,6 +7,8 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { useFonts } from "../hooks/useFonts"
 import ConnectionGraph from "../components/ConnectionGraph"
 import GoogleIcon from "../components/GoogleIcon"
+import { Link } from "react-router"
+import { useForm } from "react-hook-form"
 /**
  * WorldLoop — Register
  *
@@ -18,6 +20,24 @@ import GoogleIcon from "../components/GoogleIcon"
 export default function RegisterPage() {
   useFonts()
   const [showPassword, setShowPassword] = useState(false)
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm()
+
+  const form = useForm({
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+      terms: false,
+    },
+  })
+
+  const handleFormSubmit = (data) => {
+    console.log(data)
+  }
 
   return (
     <div
@@ -55,7 +75,7 @@ export default function RegisterPage() {
 
             <form
               className="mt-4 space-y-4 text-left"
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={handleSubmit(handleFormSubmit)}
             >
               <div className="space-y-1.5">
                 <Label
@@ -69,9 +89,10 @@ export default function RegisterPage() {
                     @
                   </span>
                   <Input
+                    {...register("username", { required: true })}
                     id="username"
                     type="text"
-                    placeholder="abhaydev"
+                    placeholder="Username"
                     className="h-11 border-[#EFE7E1] bg-[#FAF7F4] pl-8 text-sm text-[#1F1B24] placeholder:text-[#B7AFB9] focus-visible:ring-[#FF5C7A]"
                   />
                 </div>
@@ -87,6 +108,8 @@ export default function RegisterPage() {
                 <div className="relative flex items-center">
                   <Mail className="absolute left-3 h-4 w-4 text-[#B7AFB9]" />
                   <Input
+                    {...register("email", { required: true })}
+
                     id="email"
                     type="email"
                     placeholder="you@worldloop.io"
@@ -105,11 +128,23 @@ export default function RegisterPage() {
                 <div className="relative flex items-center">
                   <Lock className="absolute left-3 h-4 w-4 text-[#B7AFB9]" />
                   <Input
+                    {...register("password", {
+                      required: true,
+                      minLength: {
+                        value: 6,
+                        message: "Password must be at least 6 characters",
+                      },
+                    })}
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
                     className="h-11 border-[#EFE7E1] bg-[#FAF7F4] pr-10 pl-10 text-sm text-[#1F1B24] placeholder:text-[#B7AFB9] focus-visible:ring-[#FF5C7A]"
                   />
+                  {errors.password && (
+                    <span className="absolute right-3 text-xs text-red-500">
+                      {errors.password.message}
+                    </span>
+                  )}
                   <button
                     type="button"
                     onClick={() => setShowPassword((v) => !v)}
@@ -126,6 +161,7 @@ export default function RegisterPage() {
 
               <div className="flex items-start gap-2 pt-1">
                 <Checkbox
+                  {...register("terms", { required: true })}
                   id="terms"
                   className="mt-0.5 border-[#EFE7E1] data-[state=checked]:border-[#FF3D66] data-[state=checked]:bg-[#FF3D66]"
                 />
@@ -173,12 +209,12 @@ export default function RegisterPage() {
 
             <p className="mt-3 text-sm text-[#8A8390]">
               Already on WorldLoop?{" "}
-              <a
-                href="#"
+              <Link
+                to="/"
                 className="font-semibold text-[#FF3D66] hover:underline"
               >
                 Sign in
-              </a>
+              </Link>
             </p>
           </div>
         </div>
