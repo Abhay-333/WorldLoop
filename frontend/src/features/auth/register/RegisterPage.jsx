@@ -9,6 +9,7 @@ import ConnectionGraph from "../components/ConnectionGraph"
 import GoogleIcon from "../components/GoogleIcon"
 import { Link } from "react-router"
 import { useForm, Controller } from "react-hook-form"
+import apiInstance, { registerApi } from "../api/apiInstance"
 
 /**
  * WorldLoop — Register
@@ -35,8 +36,10 @@ export default function RegisterPage() {
     },
   })
 
-  const handleFormSubmit = (data) => {
+  const handleFormSubmit = async (data) => {
     console.log(data)
+    const result = await registerApi(data)
+    console.log(result)
   }
 
   return (
@@ -74,6 +77,7 @@ export default function RegisterPage() {
             </p>
 
             <form
+              method="POST"
               className="mt-4 space-y-4 text-left"
               onSubmit={handleSubmit(handleFormSubmit)}
               noValidate
