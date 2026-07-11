@@ -1,4 +1,8 @@
+import { Avatar } from "../components/Avatar"
+import { SUGGESTIONS } from "../utils/componentsUtils"
+
 function SuggestionsPanel() {
+
   return (
     <div className="space-y-5">
       <div className="flex items-center gap-3">

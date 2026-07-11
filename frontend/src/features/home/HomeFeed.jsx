@@ -16,6 +16,13 @@ import { useFonts } from "../../styles/hooks/useFonts"
 import SuggestionsPanel from "./components/SuggestionsPanel"
 import PostCard from "./components/PostCard"
 import Sidebar from "./components/Sidebar"
+import {
+  AVATAR_COLORS,
+  POSTS,
+  STORIES,
+  NAV_ITEMS,
+} from "./utils/componentsUtils"
+import { Avatar } from "./components/Avatar"
 // import { Link } from "react-router"
 
 /**
@@ -34,105 +41,7 @@ import Sidebar from "./components/Sidebar"
  * user photos from your API.
  */
 
-const STORIES = [
-  { name: "Priya", viewed: false },
-  { name: "Rohit", viewed: false },
-  { name: "Meera", viewed: true },
-  { name: "Karan", viewed: false },
-  { name: "Sana", viewed: true },
-  { name: "Dev", viewed: false },
-]
 
-const POSTS = [
-  {
-    id: 1,
-    user: "priya.codes",
-    time: "2h",
-    image: "https://picsum.photos/seed/wl1/600/600",
-    likes: 234,
-    caption: "Shipped the new onboarding flow today 🚀",
-    comments: 12,
-  },
-  {
-    id: 2,
-    user: "karan.designs",
-    time: "5h",
-    image: "https://picsum.photos/seed/wl2/600/600",
-    likes: 891,
-    caption: "Sunset from the office rooftop 🌅",
-    comments: 47,
-  },
-  {
-    id: 3,
-    user: "sana.builds",
-    time: "1d",
-    image: "https://picsum.photos/seed/wl3/600/600",
-    likes: 156,
-    caption: "First open source PR merged today. Feels good!",
-    comments: 8,
-  },
-]
-
-const SUGGESTIONS = [
-  { username: "rohit.dev", subtitle: "Followed by karan.designs" },
-  { username: "meera.ux", subtitle: "Suggested for you" },
-  { username: "dev.ops", subtitle: "New to WorldLoop" },
-  { username: "ananya.ml", subtitle: "Followed by priya.codes" },
-  { username: "vikram.js", subtitle: "Suggested for you" },
-]
-
-const AVATAR_COLORS = [
-  "#FF5C7A",
-  "#FF8A5B",
-  "#FFC24B",
-  "#12B8A6",
-  "#6C63FF",
-  "#1F1B24",
-]
-
-function getAvatarColor(name) {
-  const sum = [...name].reduce((acc, ch) => acc + ch.charCodeAt(0), 0)
-  return AVATAR_COLORS[sum % AVATAR_COLORS.length]
-}
-
-function Avatar({ name, size = 44 }) {
-  const initial = name?.[0]?.toUpperCase() ?? "?"
-  return (
-    <div
-      className="flex shrink-0 items-center justify-center rounded-full font-semibold text-white"
-      style={{
-        width: size,
-        height: size,
-        backgroundColor: getAvatarColor(name),
-        fontSize: size * 0.4,
-      }}
-    >
-      {initial}
-    </div>
-  )
-}
-
-function StoryAvatar({ name, viewed }) {
-  return (
-    <div className="flex w-16 shrink-0 flex-col items-center gap-1.5">
-      <div
-        className="rounded-full p-[2.5px]"
-        style={{
-          background: viewed
-            ? "#EFE7E1"
-            : "linear-gradient(135deg, #FF5C7A, #FFC24B)",
-        }}
-      >
-        <div className="rounded-full bg-white p-[2px]">
-          <Avatar name={name} size={56} />
-        </div>
-      </div>
-      <span className="w-full truncate text-center text-[11px] text-[#5C5560]">
-        {name}
-      </span>
-    </div>
-  )
-}
 
 function OwnStory() {
   return (

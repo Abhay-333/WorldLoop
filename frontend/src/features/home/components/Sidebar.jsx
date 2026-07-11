@@ -7,19 +7,11 @@ import {
   PlusSquare,
   User,
 } from "lucide-react"
-import { Avatar } from "../../../components/ui/Avatar"
+import { Avatar } from "../components/Avatar"
+import { NAV_ITEMS } from "../utils/componentsUtils"
 
 function Sidebar() {
   const [active, setActive] = useState("Home")
-
-  const NAV_ITEMS = [
-    { icon: Home, label: "Home" },
-    { icon: Search, label: "Explore" },
-    { icon: MessageCircle, label: "Messages" },
-    { icon: Heart, label: "Notifications" },
-    { icon: PlusSquare, label: "Create" },
-    { icon: User, label: "Profile" },
-  ]
 
   return (
     <aside className="fixed top-0 left-0 hidden h-screen w-64 flex-col justify-between border-r border-[#F0E9E3] bg-white px-4 py-6 md:flex">
