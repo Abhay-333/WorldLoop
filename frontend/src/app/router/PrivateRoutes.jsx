@@ -1,9 +1,9 @@
 import React from 'react'
 
-const PrivateRoute = () => {
+const PrivateRoutes = () => {
   return (
-    <div>PrivateRoute</div>
+    <div>PrivateRoutes</div>
   )
 }
 
-export default PrivateRoute
+export default PrivateRoutes

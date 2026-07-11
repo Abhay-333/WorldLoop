@@ -2,17 +2,24 @@ import { createBrowserRouter, RouterProvider } from "react-router"
 import LoginPage from "@/features/auth/login/LoginPage"
 import RegisterPage from "./features/auth/register/RegisterPage"
 import PublicRoutes from "./app/router/PublicRoutes"
+import HomeFeed from "./features/home/HomeFeed"
+import PrivateRoutes from "./app/router/PrivateRoutes"
 
 const routes = [
   {
     path: "/",
     element: <PublicRoutes />,
     children: [
-      { path: "/", element: <LoginPage /> },
+      { path: "", element: <LoginPage /> },
       { path: "/register", element: <RegisterPage /> },
     ],
   },
-  //   { path: "/private", element: <PrivateRoute /> },
+
+  {
+    path: "/private",
+    element: <PrivateRoutes />,
+    children: [{ path: "", element: <HomeFeed /> }],
+  },
 ]
 
 const router = createBrowserRouter(routes)
