@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Avatar } from "../../../components/ui/Avatar"
+import { Avatar } from "./Avatar"
 import {
   Heart,
   MessageCircle,
