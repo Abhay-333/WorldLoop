@@ -23,6 +23,10 @@ import {
   NAV_ITEMS,
 } from "./utils/componentsUtils"
 import { Avatar } from "./components/Avatar"
+import StoryAvatar from "./components/StoryAvatar"
+import OwnStory from "./components/OwnStory"
+import MobileNav from "./components/MobileNav"
+
 // import { Link } from "react-router"
 
 /**
@@ -40,38 +44,6 @@ import { Avatar } from "./components/Avatar"
  * copyright concern — swap Avatar's img fallback in when you have real
  * user photos from your API.
  */
-
-
-
-function OwnStory() {
-  return (
-    <div className="flex w-16 shrink-0 flex-col items-center gap-1.5">
-      <div className="relative">
-        <div className="rounded-full bg-[#EFE7E1] p-[2.5px]">
-          <div className="rounded-full bg-white p-[2px]">
-            <Avatar name="Abhay Sharma" size={56} />
-          </div>
-        </div>
-        <div className="absolute -right-1 -bottom-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-[#FF3D66]">
-          <Plus className="h-3 w-3 text-white" strokeWidth={3} />
-        </div>
-      </div>
-      <span className="text-[11px] text-[#5C5560]">Your story</span>
-    </div>
-  )
-}
-
-function MobileNav() {
-  return (
-    <nav className="fixed bottom-0 left-0 z-10 flex w-full items-center justify-around border-t border-[#F0E9E3] bg-white py-2 md:hidden">
-      {NAV_ITEMS.slice(0, 5).map(({ icon: Icon, label }) => (
-        <button key={label} className="p-2 text-[#1F1B24]" aria-label={label}>
-          <Icon className="h-6 w-6" />
-        </button>
-      ))}
-    </nav>
-  )
-}
 
 export default function HomeFeed() {
   useFonts()
