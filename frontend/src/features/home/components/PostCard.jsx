@@ -1,3 +1,14 @@
+import { useState } from "react"
+import { Avatar } from "../../../components/ui/Avatar"
+import {
+  Heart,
+  MessageCircle,
+  Send,
+  Bookmark,
+  MoreHorizontal,
+} from "lucide-react"
+import { Input } from "../../../components/ui/input"
+
 function PostCard({ post }) {
   const [liked, setLiked] = useState(false)
   const [saved, setSaved] = useState(false)
