@@ -4,13 +4,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
-import { useFonts } from "../hooks/useFonts"
+import { useFonts } from "../../../styles/hooks/useFonts"
 import ConnectionGraph from "../components/ConnectionGraph"
 import GoogleIcon from "../components/GoogleIcon"
 import { Link } from "react-router"
 import { useForm, Controller } from "react-hook-form"
 import apiInstance, { registerApi } from "../api/apiInstance"
-
+import { toast } from "react-hot-toast"
 /**
  * WorldLoop — Register
  *
@@ -40,6 +40,9 @@ export default function RegisterPage() {
     console.log(data)
     const result = await registerApi(data)
     console.log(result)
+    toast.success(
+      "Registration successful! Please check your email to verify your account."
+    )
   }
 
   return (
