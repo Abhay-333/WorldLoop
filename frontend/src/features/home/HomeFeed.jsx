@@ -26,7 +26,7 @@ import { Avatar } from "./components/Avatar"
 import StoryAvatar from "./components/StoryAvatar"
 import OwnStory from "./components/OwnStory"
 import MobileNav from "./components/MobileNav"
-
+import ThemeButton from "../theme/ThemeButton"
 // import { Link } from "react-router"
 
 /**
@@ -81,6 +81,7 @@ export default function HomeFeed() {
         </div>
       </div>
 
+      <ThemeButton></ThemeButton>
       <MobileNav />
     </div>
   )
