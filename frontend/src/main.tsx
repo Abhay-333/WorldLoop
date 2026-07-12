@@ -5,7 +5,7 @@ import { createRoot } from "react-dom/client"
 import { Toaster } from "react-hot-toast"
 import { ThemeProvider } from "./app/theme-provider"
 import { Provider } from "react-redux"
-import { store } from "./app/store/store"
+import { store } from "./app/store/store.js"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
