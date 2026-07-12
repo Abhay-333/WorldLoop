@@ -9,10 +9,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu"
-import { useDispatch, useSelector } from "react-redux"
-import { setTheme } from "./themeSlice"
+import { useDispatch } from "react-redux"
+import { changeTheme } from "../theme/themeSlice"
 
 function ThemeButton() {
+  const { setTheme, theme } = useTheme()
   const dispatch = useDispatch()
 
   return (
@@ -25,13 +26,28 @@ function ThemeButton() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => dispatch(setTheme("light"))}>
+        <DropdownMenuItem
+          onClick={() => {
+            setTheme("light")
+            dispatch(changeTheme("light"))
+          }}
+        >
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => dispatch(setTheme("dark"))}>
+        <DropdownMenuItem
+          onClick={() => {
+            setTheme("dark")
+            dispatch(changeTheme("dark"))
+          }}
+        >
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => dispatch(setTheme("system"))}>
+        <DropdownMenuItem
+          onClick={() => {
+            setTheme("system")
+            dispatch(changeTheme("system"))
+          }}
+        >
           System
         </DropdownMenuItem>
       </DropdownMenuContent>
