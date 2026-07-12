@@ -4,7 +4,6 @@ import RegisterPage from "./features/auth/register/RegisterPage"
 import PublicRoutes from "./app/router/PublicRoutes"
 import HomeFeed from "./features/home/HomeFeed"
 import PrivateRoutes from "./app/router/PrivateRoutes"
-import ThemeButton from "./features/theme/ThemeButton"
 const routes = [
   {
     path: "/",
@@ -18,7 +17,7 @@ const routes = [
   {
     path: "/home",
     element: <PrivateRoutes />,
-    children: [{ path: "", element: <ThemeButton /> }],
+    children: [{ path: "", element: <HomeFeed /> }],
   },
 ]
 
