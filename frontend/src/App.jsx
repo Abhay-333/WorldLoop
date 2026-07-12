@@ -16,7 +16,7 @@ const routes = [
   },
 
   {
-    path: "/private",
+    path: "/home",
     element: <PrivateRoutes />,
     children: [{ path: "", element: <HomeFeed /> }],
   },

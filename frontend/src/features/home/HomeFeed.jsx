@@ -51,7 +51,7 @@ export default function HomeFeed() {
   return (
     <div
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-      className="min-h-screen bg-[#FAF7F4]"
+      className="flex min-h-screen w-full items-center justify-center bg-[#FAF7F4]"
     >
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
