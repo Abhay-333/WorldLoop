@@ -4,12 +4,16 @@ import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import { Toaster } from "react-hot-toast"
 import { ThemeProvider } from "@/components/theme-provider.tsx"
+import { Provider } from "react-redux"
+import { store } from "./app/store/store.js"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ThemeProvider>
-      <Toaster />
-      <App />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider>
+        <Toaster />
+        <App />
+      </ThemeProvider>
+    </Provider>
   </StrictMode>
 )
