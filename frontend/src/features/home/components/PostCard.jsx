@@ -25,11 +25,11 @@ function PostCard({ post }) {
         <div className="flex items-center gap-3">
           <Avatar name={post.user} size={36} />
           <div>
-            <p className="text-sm font-semibold text-[#1F1B24]">{post.user}</p>
-            <p className="text-xs text-[#B7AFB9]">{post.time}</p>
+            <p className="text-sm font-semibold text-foreground">{post.user}</p>
+            <p className="text-xs text-muted-foreground">{post.time}</p>
           </div>
         </div>
-        <button className="text-[#8A8390] hover:text-[#1F1B24]">
+        <button className="text-muted-foreground hover:text-foreground">
           <MoreHorizontal className="h-5 w-5" />
         </button>
       </div>
@@ -45,15 +45,15 @@ function PostCard({ post }) {
           <button onClick={toggleLike} aria-label="Like">
             <Heart
               className={`h-6 w-6 transition-colors ${
-                liked ? "fill-[#FF3D66] text-[#FF3D66]" : "text-[#1F1B24]"
+                liked ? "fill-accent text-accent" : "text-foreground"
               }`}
             />
           </button>
           <button aria-label="Comment">
-            <MessageCircle className="h-6 w-6 text-[#1F1B24]" />
+            <MessageCircle className="h-6 w-6 text-foreground" />
           </button>
           <button aria-label="Share">
-            <Send className="h-6 w-6 text-[#1F1B24]" />
+            <Send className="h-6 w-6 text-foreground" />
           </button>
           <button
             onClick={() => setSaved((v) => !v)}
@@ -62,20 +62,20 @@ function PostCard({ post }) {
           >
             <Bookmark
               className={`h-6 w-6 transition-colors ${
-                saved ? "fill-[#1F1B24] text-[#1F1B24]" : "text-[#1F1B24]"
+                saved ? "fill-foreground text-foreground" : "text-foreground"
               }`}
             />
           </button>
         </div>
 
-        <p className="mt-2 text-sm font-semibold text-[#1F1B24]">
+        <p className="mt-2 text-sm font-semibold text-foreground">
           {likeCount.toLocaleString()} likes
         </p>
-        <p className="mt-1 text-sm text-[#1F1B24]">
+        <p className="mt-1 text-sm text-foreground">
           <span className="font-semibold">{post.user}</span> {post.caption}
         </p>
         {post.comments > 0 && (
-          <button className="mt-1 text-sm text-[#8A8390] hover:text-[#5C5560]">
+          <button className="mt-1 text-sm text-muted-foreground hover:text-muted-foreground">
             View all {post.comments} comments
           </button>
         )}
@@ -85,7 +85,7 @@ function PostCard({ post }) {
             placeholder="Add a comment..."
             className="h-9 border-none bg-transparent px-0 text-sm shadow-none focus-visible:ring-0"
           />
-          <button className="shrink-0 text-sm font-semibold text-[#FF3D66] hover:text-[#ff2857]">
+          <button className="shrink-0 text-sm font-semibold text-accent hover:text-accent">
             Post
           </button>
         </div>

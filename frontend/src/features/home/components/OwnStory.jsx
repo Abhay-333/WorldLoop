@@ -10,11 +10,11 @@ function OwnStory() {
             <Avatar name="Abhay Sharma" size={56} />
           </div>
         </div>
-        <div className="absolute -right-1 -bottom-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-[#FF3D66]">
+        <div className="absolute -right-1 -bottom-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-accent">
           <Plus className="h-3 w-3 text-white" strokeWidth={3} />
         </div>
       </div>
-      <span className="text-[11px] text-[#5C5560]">Your story</span>
+      <span className="text-[11px] text-muted-foreground">Your story</span>
     </div>
   )
 }

@@ -9,6 +9,7 @@ import {
 } from "lucide-react"
 import { Avatar } from "../components/Avatar"
 import { NAV_ITEMS } from "../utils/componentsUtils"
+import ThemeSwitch from "../../theme/ThemeSwitch"
 
 function Sidebar() {
   const [active, setActive] = useState("Home")
@@ -17,10 +18,12 @@ function Sidebar() {
     <aside className="fixed top-0 left-0 hidden h-screen w-64 flex-col justify-between border-r border-border bg-card px-4 py-6 text-card-foreground md:flex">
       <div>
         <div className="mb-8 flex items-center gap-2 px-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#1F1B24]">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sidebar">
             <span className="text-sm font-extrabold text-white">W</span>
           </div>
-          <span className="text-lg font-bold text-[#1F1B24]">WorldLoop</span>
+          <div className="flex items-center gap-2">
+            <span className="text-lg font-bold text-foreground">WorldLoop</span>
+          </div>
         </div>
         <nav className="space-y-1">
           {NAV_ITEMS.map(({ icon: Icon, label }) => (
@@ -41,7 +44,8 @@ function Sidebar() {
       </div>
       <div className="flex items-center gap-2 rounded-xl px-2 py-2 hover:bg-muted">
         <Avatar name="Abhay Sharma" size={32} />
-        <span className="text-sm font-medium text-[#1F1B24]">abhaydev</span>
+        <span className="text-sm font-medium text-foreground">abhaydev</span>
+        <ThemeSwitch />
       </div>
     </aside>
   )

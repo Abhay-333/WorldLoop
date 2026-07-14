@@ -8,10 +8,10 @@ function SuggestionsPanel() {
       <div className="flex items-center gap-3">
         <Avatar name="Abhay Sharma" size={44} />
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-semibold text-[#1F1B24]">
+          <p className="truncate text-sm font-semibold text-foreground">
             abhaydev
           </p>
-          <p className="truncate text-xs text-[#8A8390]">Abhay Sharma</p>
+          <p className="truncate text-xs text-muted-foreground">Abhay Sharma</p>
         </div>
         <button className="shrink-0 text-xs font-semibold text-[#FF3D66]">
           Switch
@@ -19,10 +19,10 @@ function SuggestionsPanel() {
       </div>
 
       <div className="flex items-center justify-between">
-        <p className="text-sm font-semibold text-[#8A8390]">
+        <p className="text-sm font-semibold text-muted-foreground">
           Suggested for you
         </p>
-        <button className="text-xs font-semibold text-[#1F1B24] hover:text-[#5C5560]">
+        <button className="text-xs font-semibold text-foreground hover:text-muted-foreground">
           See All
         </button>
       </div>
@@ -32,12 +32,12 @@ function SuggestionsPanel() {
           <div key={s.username} className="flex items-center gap-3">
             <Avatar name={s.username} size={40} />
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold text-[#1F1B24]">
+              <p className="truncate text-sm font-semibold text-foreground">
                 {s.username}
               </p>
-              <p className="truncate text-xs text-[#8A8390]">{s.subtitle}</p>
+              <p className="truncate text-xs text-muted-foreground">{s.subtitle}</p>
             </div>
-            <button className="shrink-0 text-xs font-semibold text-[#FF3D66] hover:text-[#ff2857]">
+            <button className="shrink-0 text-xs font-semibold text-accent hover:text-accent">
               Follow
             </button>
           </div>
