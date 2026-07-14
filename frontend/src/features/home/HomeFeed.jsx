@@ -51,7 +51,7 @@ export default function HomeFeed() {
   return (
     <div
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-      className="flex min-h-screen w-full items-center justify-center bg-[#FAF7F4]"
+      className="flex min-h-screen w-full items-center justify-center bg-background text-foreground"
     >
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -63,7 +63,7 @@ export default function HomeFeed() {
       <div className="md:pl-64">
         <div className="mx-auto flex max-w-6xl gap-8 px-4 pt-6 pb-20 md:pb-6">
           <main className="mx-auto w-full max-w-[470px] lg:mx-0">
-            <div className="mb-6 no-scrollbar flex gap-4 overflow-x-auto rounded-2xl border border-[#F0E9E3] bg-white p-4">
+            <div className="mb-6 no-scrollbar flex gap-4 overflow-x-auto rounded-2xl border border-border bg-card p-4 text-card-foreground">
               <OwnStory />
               {STORIES.map((s) => (
                 <StoryAvatar key={s.name} {...s} />

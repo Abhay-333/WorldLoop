@@ -20,7 +20,7 @@ function PostCard({ post }) {
   }
 
   return (
-    <div className="mb-6 overflow-hidden rounded-2xl border border-[#F0E9E3] bg-white">
+    <div className="mb-6 overflow-hidden rounded-2xl border border-border bg-card text-card-foreground">
       <div className="flex items-center justify-between px-4 py-3">
         <div className="flex items-center gap-3">
           <Avatar name={post.user} size={36} />
@@ -80,7 +80,7 @@ function PostCard({ post }) {
           </button>
         )}
 
-        <div className="mt-3 flex items-center gap-2 border-t border-[#F0E9E3] pt-3">
+        <div className="mt-3 flex items-center gap-2 border-t border-border pt-3">
           <Input
             placeholder="Add a comment..."
             className="h-9 border-none bg-transparent px-0 text-sm shadow-none focus-visible:ring-0"

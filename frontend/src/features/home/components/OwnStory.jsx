@@ -5,8 +5,8 @@ function OwnStory() {
   return (
     <div className="flex w-16 shrink-0 flex-col items-center gap-1.5">
       <div className="relative">
-        <div className="rounded-full bg-[#EFE7E1] p-[2.5px]">
-          <div className="rounded-full bg-white p-[2px]">
+        <div className="rounded-full bg-muted p-[2.5px]">
+          <div className="rounded-full bg-background p-[2px]">
             <Avatar name="Abhay Sharma" size={56} />
           </div>
         </div>

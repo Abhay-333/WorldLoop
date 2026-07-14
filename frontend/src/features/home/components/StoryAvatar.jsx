@@ -11,7 +11,7 @@ function StoryAvatar({ name, viewed }) {
             : "linear-gradient(135deg, #FF5C7A, #FFC24B)",
         }}
       >
-        <div className="rounded-full bg-white p-[2px]">
+        <div className="rounded-full bg-background p-[2px]">
           <Avatar name={name} size={56} />
         </div>
       </div>
