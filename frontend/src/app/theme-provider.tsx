@@ -1,5 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import * as React from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { changeTheme } from "../features/theme/themeSlice"
 
 type Theme = "dark" | "light" | "system"
 type ResolvedTheme = "dark" | "light"
@@ -84,21 +86,17 @@ export function ThemeProvider({
   disableTransitionOnChange = true,
   ...props
 }: ThemeProviderProps) {
-  const [theme, setThemeState] = React.useState<Theme>(() => {
-    const storedTheme = localStorage.getItem(storageKey)
-    if (isTheme(storedTheme)) {
-      return storedTheme
-    }
-
-    return defaultTheme
-  })
+  const dispatch = useDispatch()
+  const theme = useSelector(
+    (state: { theme: { theme: Theme } }) => state.theme.theme
+  )
 
   const setTheme = React.useCallback(
     (nextTheme: Theme) => {
       localStorage.setItem(storageKey, nextTheme)
-      setThemeState(nextTheme)
+      dispatch(changeTheme(nextTheme))
     },
-    [storageKey]
+    [dispatch, storageKey]
   )
 
   const applyTheme = React.useCallback(
@@ -119,6 +117,16 @@ export function ThemeProvider({
     },
     [disableTransitionOnChange]
   )
+
+  React.useEffect(() => {
+    const storedTheme = localStorage.getItem(storageKey)
+
+    if (isTheme(storedTheme)) {
+      dispatch(changeTheme(storedTheme))
+    } else if (theme !== defaultTheme) {
+      dispatch(changeTheme(defaultTheme))
+    }
+  }, [defaultTheme, dispatch, storageKey, theme])
 
   React.useEffect(() => {
     applyTheme(theme)
@@ -157,19 +165,18 @@ export function ThemeProvider({
         return
       }
 
-      setThemeState((currentTheme) => {
-        const nextTheme =
-          currentTheme === "dark"
-            ? "light"
-            : currentTheme === "light"
-              ? "dark"
-              : getSystemTheme() === "dark"
-                ? "light"
-                : "dark"
+      const currentTheme = theme
+      const nextTheme =
+        currentTheme === "dark"
+          ? "light"
+          : currentTheme === "light"
+            ? "dark"
+            : getSystemTheme() === "dark"
+              ? "light"
+              : "dark"
 
-        localStorage.setItem(storageKey, nextTheme)
-        return nextTheme
-      })
+      localStorage.setItem(storageKey, nextTheme)
+      dispatch(changeTheme(nextTheme))
     }
 
     window.addEventListener("keydown", handleKeyDown)
@@ -190,11 +197,11 @@ export function ThemeProvider({
       }
 
       if (isTheme(event.newValue)) {
-        setThemeState(event.newValue)
+        dispatch(changeTheme(event.newValue))
         return
       }
 
-      setThemeState(defaultTheme)
+      dispatch(changeTheme(defaultTheme))
     }
 
     window.addEventListener("storage", handleStorageChange)
