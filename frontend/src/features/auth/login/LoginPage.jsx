@@ -4,10 +4,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useFonts } from "../../../styles/hooks/useFonts"
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 import ConnectionGraph from "../components/ConnectionGraph"
 import GoogleIcon from "../components/GoogleIcon"
 import { useForm, Controller } from "react-hook-form"
+import { loginApi } from "../api/apiInstance"
+import toast from "react-hot-toast"
 
 /**
  * WorldLoop — Sign In
@@ -27,6 +29,7 @@ import { useForm, Controller } from "react-hook-form"
 export default function LoginPage() {
   useFonts()
   const [showPassword, setShowPassword] = useState(false)
+  const navigate = useNavigate()
   const {
     handleSubmit,
     register,
@@ -34,14 +37,34 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: "",
-      password: "",
+      email: "rdha2209@gmail.com",
+      password: "123456",
     },
   })
 
-  const handleFormSubmit = (data) => {
-    console.log(data)
+  const handleFormSubmit = async (data) => {
+    try {
+      console.log(data)
+      const result = await loginApi(
+        {
+          email: data.email,
+          password: data.password,
+        },
+        { withCredentials: true }
+      )
+      toast.success("Login successful!")
+      navigate("/home")
+    } catch (error) {
+      console.error(
+        "Login error:",
+        error.response?.data.message || error.message
+      )
+      toast.error(
+        `Login failed. ${error.response?.data.message || error.message}`
+      )
+    }
   }
+
   return (
     <div
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
@@ -77,8 +100,9 @@ export default function LoginPage() {
             </p>
 
             <form
+              method="POST"
               className="mt-7 space-y-4 text-left"
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={handleSubmit(handleFormSubmit)}
             >
               <div className="space-y-1.5">
                 <Label
@@ -164,7 +188,7 @@ export default function LoginPage() {
 
             <Button
               type="button"
-                variant="outline"
+              variant="outline"
               className="h-11 w-full cursor-pointer border-[#EFE7E1] text-[#1F1B24] hover:bg-[#FAF7F4] hover:text-[#1F1B24] focus-visible:ring-[#FF5C7A]"
             >
               <GoogleIcon className="mr-2 h-4 w-4 text-[#8A8390]" />

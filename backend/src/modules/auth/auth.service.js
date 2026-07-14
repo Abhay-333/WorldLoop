@@ -209,6 +209,7 @@ export default class AuthService {
       emailVerificationToken: hashedToken,
       emailVerificationExpires: { $gt: Date.now() },
     });
+    console.log(user)
 
     if (!user) throw new UnauthorizeError("Token is invalid or expired");
 
@@ -242,29 +243,5 @@ export default class AuthService {
     await user.save();
 
     return { message: "Link Resent successfully.", user, verificationToken };
-  }
-
-  async resetPasswordService(resetToken, password) {
-    const hashedToken = crypto
-      .createHash("sha256")
-      .update(resetToken)
-      .digest("hex");
-
-    const user = await this.userRepo.findOne({
-      emailVerificationToken: hashedToken,
-      emailVerificationExpires: { $gt: Date.now() },
-    });
-
-    console.log(first);
-    if (!user) throw new UnauthorizeError("Token is invalid or expired");
-
-    user.isEmailVerified = true;
-
-    user.emailVerificationToken = undefined;
-    user.emailVerificationExpires = undefined;
-
-    await user.save();
-
-    return "Email verified successfully.";
   }
 }

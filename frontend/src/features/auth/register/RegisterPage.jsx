@@ -32,8 +32,8 @@ export default function RegisterPage() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      username: "Akash Sharma",
-      email: "akash@example.com",
+      username: "Rahul",
+      email: "rdha2209@gmail.com",
       password: "123456",
       terms: true,
     },
@@ -50,7 +50,6 @@ export default function RegisterPage() {
         },
         { withCredentials: true }
       )
-      console.log(result)
       toast.success(
         "Registration successful! Please check your email to verify your account."
       )

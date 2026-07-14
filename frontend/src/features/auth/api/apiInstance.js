@@ -8,12 +8,12 @@ const apiInstance = axios.create({
   withCredentials: true,
 })
 
-const loginApi = async (email, password) => {
+const loginApi = async (userData) => {
   try {
-    const response = await apiInstance.post("/auth/login", { email, password })
+    const response = await apiInstance.post("/auth/login", userData)
     return response.data
   } catch (error) {
-    console.error("Login error:", error.response?.data.message || error.message)
+    console.error("Login error:", error.response || error.message)
     throw error
   }
 }
