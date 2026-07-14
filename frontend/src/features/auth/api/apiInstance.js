@@ -5,6 +5,7 @@ const apiInstance = axios.create({
   headers: {
     "Content-Type": "application/json", // Content-Type HTTP header server ko batata hai ki request body kis format me bheji ja rahi hai.
   },
+  withCredentials: true,
 })
 
 const loginApi = async (email, password) => {

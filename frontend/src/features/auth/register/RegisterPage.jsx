@@ -37,16 +37,24 @@ export default function RegisterPage() {
   })
 
   const handleFormSubmit = async (data) => {
-    console.log(data)
-    const result = await registerApi({
-      email: data.email,
-      password: data.password,
-      username: data.username,
-    })
-    console.log(result)
-    toast.success(
-      "Registration successful! Please check your email to verify your account."
-    )
+    try {
+      console.log(data)
+      const result = await registerApi(
+        {
+          email: data.email,
+          password: data.password,
+          username: data.username,
+        },
+        { withCredentials: true }
+      )
+      console.log(result)
+      toast.success(
+        "Registration successful! Please check your email to verify your account."
+      )
+    } catch (error) {
+      console.error("Registration error:", error)
+      toast.error("Registration failed. Please try again.")
+    }
   }
 
   return (
