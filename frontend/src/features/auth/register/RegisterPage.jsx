@@ -11,6 +11,8 @@ import { Link } from "react-router"
 import { useForm, Controller } from "react-hook-form"
 import apiInstance, { registerApi } from "../api/apiInstance"
 import { toast } from "react-hot-toast"
+import { useNavigate } from "react-router"
+
 /**
  * WorldLoop — Register
  *
@@ -22,6 +24,7 @@ import { toast } from "react-hot-toast"
 export default function RegisterPage() {
   useFonts()
   const [showPassword, setShowPassword] = useState(false)
+  const navigate = useNavigate()
   const {
     handleSubmit,
     register,
@@ -29,20 +32,38 @@ export default function RegisterPage() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      username: "",
-      email: "",
-      password: "",
-      terms: false,
+      username: "Akash Sharma",
+      email: "akash@example.com",
+      password: "123456",
+      terms: true,
     },
   })
 
   const handleFormSubmit = async (data) => {
-    console.log(data)
-    const result = await registerApi(data)
-    console.log(result)
-    toast.success(
-      "Registration successful! Please check your email to verify your account."
-    )
+    try {
+      console.log(data)
+      const result = await registerApi(
+        {
+          email: data.email,
+          password: data.password,
+          username: data.username,
+        },
+        { withCredentials: true }
+      )
+      console.log(result)
+      toast.success(
+        "Registration successful! Please check your email to verify your account."
+      )
+      navigate("/")
+    } catch (error) {
+      console.error(
+        "Registration error:",
+        error.response?.data.message || error.message
+      )
+      toast.error(
+        `Registration failed. ${error.response?.data.message || error.message}`
+      )
+    }
   }
 
   return (
@@ -253,7 +274,7 @@ export default function RegisterPage() {
 
             <Button
               type="button"
-              // variant="outline"
+              variant="outline"
               className="h-11 w-full cursor-pointer border-[#EFE7E1] text-[#1F1B24] hover:bg-[#FAF7F4]"
             >
               <GoogleIcon className="mr-2 h-4 w-4 text-[#8A8390]" />
