@@ -13,7 +13,7 @@ const loginApi = async (email, password) => {
     const response = await apiInstance.post("/auth/login", { email, password })
     return response.data
   } catch (error) {
-    console.error("Login error:", error)
+    console.error("Login error:", error.response?.data.message || error.message)
     throw error
   }
 }
@@ -23,7 +23,10 @@ const registerApi = async (userData) => {
     const response = await apiInstance.post("/auth/register", userData)
     return response.data
   } catch (error) {
-    console.error("Register error:", error)
+    console.error(
+      "Register error:",
+      error.response?.data.message || error.message
+    )
     throw error
   }
 }

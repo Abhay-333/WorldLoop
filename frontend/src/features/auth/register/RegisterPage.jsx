@@ -11,6 +11,8 @@ import { Link } from "react-router"
 import { useForm, Controller } from "react-hook-form"
 import apiInstance, { registerApi } from "../api/apiInstance"
 import { toast } from "react-hot-toast"
+import { useNavigate } from "react-router"
+
 /**
  * WorldLoop — Register
  *
@@ -22,6 +24,7 @@ import { toast } from "react-hot-toast"
 export default function RegisterPage() {
   useFonts()
   const [showPassword, setShowPassword] = useState(false)
+  const navigate = useNavigate()
   const {
     handleSubmit,
     register,
@@ -51,9 +54,15 @@ export default function RegisterPage() {
       toast.success(
         "Registration successful! Please check your email to verify your account."
       )
+      navigate("/")
     } catch (error) {
-      console.error("Registration error:", error)
-      toast.error("Registration failed. Please try again.")
+      console.error(
+        "Registration error:",
+        error.response?.data.message || error.message
+      )
+      toast.error(
+        `Registration failed. ${error.response?.data.message || error.message}`
+      )
     }
   }
 
