@@ -29,16 +29,20 @@ export default function RegisterPage() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      username: "",
-      email: "",
-      password: "",
-      terms: false,
+      username: "Akash Sharma",
+      email: "akash@example.com",
+      password: "123456",
+      terms: true,
     },
   })
 
   const handleFormSubmit = async (data) => {
     console.log(data)
-    const result = await registerApi(data)
+    const result = await registerApi({
+      email: data.email,
+      password: data.password,
+      username: data.username,
+    })
     console.log(result)
     toast.success(
       "Registration successful! Please check your email to verify your account."
