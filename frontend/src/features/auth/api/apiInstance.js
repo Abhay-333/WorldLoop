@@ -5,14 +5,15 @@ const apiInstance = axios.create({
   headers: {
     "Content-Type": "application/json", // Content-Type HTTP header server ko batata hai ki request body kis format me bheji ja rahi hai.
   },
+  withCredentials: true,
 })
 
-const loginApi = async (email, password) => {
+const loginApi = async (userData) => {
   try {
-    const response = await apiInstance.post("/auth/login", { email, password })
+    const response = await apiInstance.post("/auth/login", userData)
     return response.data
   } catch (error) {
-    console.error("Login error:", error)
+    console.error("Login error:", error.response || error.message)
     throw error
   }
 }
@@ -22,7 +23,10 @@ const registerApi = async (userData) => {
     const response = await apiInstance.post("/auth/register", userData)
     return response.data
   } catch (error) {
-    console.error("Register error:", error)
+    console.error(
+      "Register error:",
+      error.response?.data.message || error.message
+    )
     throw error
   }
 }
