@@ -15,15 +15,17 @@ function Sidebar() {
   const [active, setActive] = useState("Home")
 
   return (
-    <aside className="fixed top-0 left-0 hidden h-screen w-64 flex-col justify-between border-r border-border bg-card px-4 py-6 text-card-foreground md:flex">
+    <aside
+      className="group fixed top-0 left-0 hidden h-screen w-20 flex-col justify-between overflow-hidden border-r border-border bg-card px-4 py-6 text-card-foreground transition-[width] duration-300 ease-in-out hover:w-64 md:flex"
+    >
       <div>
         <div className="mb-8 flex items-center gap-2 px-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sidebar">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sidebar">
             <span className="text-sm font-extrabold text-white">W</span>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-lg font-bold text-foreground">WorldLoop</span>
-          </div>
+          <span className="whitespace-nowrap text-lg font-bold text-foreground opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+            WorldLoop
+          </span>
         </div>
         <nav className="space-y-1">
           {NAV_ITEMS.map(({ icon: Icon, label }) => (
@@ -36,16 +38,23 @@ function Sidebar() {
                   : "text-foreground hover:bg-muted"
               }`}
             >
-              <Icon className="h-5 w-5" />
-              {label}
+              <Icon className="h-5 w-5 shrink-0" />
+              <span className="whitespace-nowrap opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                {label}
+              </span>
             </button>
           ))}
         </nav>
       </div>
+
       <div className="flex items-center gap-2 rounded-xl px-2 py-2 hover:bg-muted">
         <Avatar name="Abhay Sharma" size={32} />
-        <span className="text-sm font-medium text-foreground">abhaydev</span>
-        <ThemeSwitch />
+        <span className="whitespace-nowrap text-sm font-medium text-foreground opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+          abhaydev
+        </span>
+        <span className="opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+          <ThemeSwitch />
+        </span>
       </div>
     </aside>
   )

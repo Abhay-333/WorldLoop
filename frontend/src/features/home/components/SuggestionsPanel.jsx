@@ -37,7 +37,7 @@ function SuggestionsPanel() {
               </p>
               <p className="truncate text-xs text-muted-foreground">{s.subtitle}</p>
             </div>
-            <button className="shrink-0 text-xs font-semibold text-accent hover:text-accent">
+            <button className="shrink-0 text-xs font-semibold">
               Follow
             </button>
           </div>
