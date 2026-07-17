@@ -13,19 +13,19 @@ import {
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { useFonts } from "../../styles/hooks/useFonts"
-import SuggestionsPanel from "./components/SuggestionsPanel"
-import PostCard from "./components/PostCard"
-import Sidebar from "./components/Sidebar"
+import SuggestionsPanel from "../../components/custom/SuggestionsPanel"
+import PostCard from "../../components/custom/PostCard"
+import Sidebar from "../../components/custom/Sidebar"
 import {
   AVATAR_COLORS,
   POSTS,
   STORIES,
   NAV_ITEMS,
-} from "./utils/componentsUtils"
-import { Avatar } from "./components/Avatar"
-import StoryAvatar from "./components/StoryAvatar"
-import OwnStory from "./components/OwnStory"
-import MobileNav from "./components/MobileNav"
+} from "../../components/utils/componentsUtils"
+import { Avatar } from "../../components/custom/Avatar"
+import StoryAvatar from "../../components/custom/StoryAvatar"
+import OwnStory from "../../components/custom/OwnStory"
+import MobileNav from "../../components/custom/MobileNav"
 import ThemeButton from "../theme/ThemeButton"
 // import { Link } from "react-router"
 
@@ -81,7 +81,6 @@ export default function HomeFeed() {
         </div>
       </div>
 
-      <ThemeButton></ThemeButton>
       <MobileNav />
     </div>
   )

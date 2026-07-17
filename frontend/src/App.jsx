@@ -2,8 +2,9 @@ import { createBrowserRouter, RouterProvider } from "react-router"
 import LoginPage from "@/features/auth/login/LoginPage"
 import RegisterPage from "./features/auth/register/RegisterPage"
 import PublicRoutes from "./app/router/PublicRoutes"
-import HomeFeed from "./features/home/HomeFeed"
+import Feed from "./features/feed/Feed"
 import PrivateRoutes from "./app/router/PrivateRoutes"
+import MainLayout from "./app/layouts/MainLayout"
 
 const routes = [
   {
@@ -18,7 +19,13 @@ const routes = [
   {
     path: "/home",
     element: <PrivateRoutes />,
-    children: [{ path: "", element: <HomeFeed /> }],
+    children: [
+      {
+        path: "",
+        element: <MainLayout />,
+        children: [{ path: "", element: <Feed /> }],
+      },
+    ],
   },
 ]
 
