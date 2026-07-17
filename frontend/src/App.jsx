@@ -4,6 +4,7 @@ import RegisterPage from "./features/auth/register/RegisterPage"
 import PublicRoutes from "./app/router/PublicRoutes"
 import HomeFeed from "./features/home/HomeFeed"
 import PrivateRoutes from "./app/router/PrivateRoutes"
+
 const routes = [
   {
     path: "/",
