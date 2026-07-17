@@ -1,4 +1,4 @@
-import { Avatar } from "../components/Avatar"
+import { Avatar } from "./Avatar"
 import { SUGGESTIONS } from "../utils/componentsUtils"
 
 function SuggestionsPanel() {

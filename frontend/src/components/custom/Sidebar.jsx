@@ -7,9 +7,9 @@ import {
   PlusSquare,
   User,
 } from "lucide-react"
-import { Avatar } from "../components/Avatar"
+import { Avatar } from "./Avatar"
 import { NAV_ITEMS } from "../utils/componentsUtils"
-import ThemeSwitch from "../../theme/ThemeSwitch"
+import ThemeSwitch from "../../features/theme/ThemeSwitch"
 
 function Sidebar() {
   const [active, setActive] = useState("Home")
