@@ -7,7 +7,7 @@ import {
   Bookmark,
   MoreHorizontal,
 } from "lucide-react"
-import { Input } from "../../../components/ui/input"
+import { Input } from "../ui/input"
 
 function PostCard({ post }) {
   const [liked, setLiked] = useState(false)

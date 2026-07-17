@@ -1,4 +1,4 @@
-import { Avatar } from "../components/Avatar"
+import { Avatar } from "./Avatar"
 
 function StoryAvatar({ name, viewed }) {
   return (
