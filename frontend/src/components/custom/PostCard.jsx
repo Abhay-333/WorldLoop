@@ -20,7 +20,7 @@ function PostCard({ post }) {
   }
 
   return (
-    <div className="mb-6 overflow-hidden rounded-2xl border border-border bg-card text-card-foreground">
+    <div className="mx-auto mb-6 w-full max-w-[500px] overflow-hidden rounded-2xl border border-border bg-card text-card-foreground">
       <div className="flex items-center justify-between px-4 py-3">
         <div className="flex items-center gap-3">
           <Avatar name={post.user} size={36} />
