@@ -16,12 +16,12 @@ const SUGGESTIONS = [
 ]
 
 const NAV_ITEMS = [
-  { icon: Home, label: "Home" },
-  { icon: Search, label: "Explore" },
-  { icon: MessageCircle, label: "Messages" },
-  { icon: Heart, label: "Notifications" },
-  { icon: PlusSquare, label: "Create" },
-  { icon: User, label: "Profile" },
+  { icon: Home, label: "Home", navigateTo: "/home" },
+  { icon: Search, label: "Explore", navigateTo: "/home/explore" },
+  { icon: MessageCircle, label: "Messages", navigateTo: "/home/messages" },
+  { icon: Heart, label: "Notifications", navigateTo: "/home/notifications" },
+  { icon: PlusSquare, label: "Create", navigateTo: "/home/create" },
+  { icon: User, label: "Profile", navigateTo: "/home/profile" },
 ]
 
 const AVATAR_COLORS = [

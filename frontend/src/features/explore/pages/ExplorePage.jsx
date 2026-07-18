@@ -1,7 +1,7 @@
 // src/features/explore/components/ExplorePage.tsx
 import { useState } from "react"
 import { Search } from "lucide-react"
-import ExploreGridItem from "./ExploreGridItem"
+import ExploreGridItem from "../components/ExploreGridItem"
 
 // TODO: replace with TanStack Query hook -> GET /api/posts/explore (cursor-paginated per SRS)
 const MOCK_POSTS = [
