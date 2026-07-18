@@ -2,9 +2,14 @@ import { Outlet } from "react-router"
 import Sidebar from "../../components/custom/Sidebar"
 import { Avatar } from "../../components/custom/Avatar"
 import MobileNav from "../../components/custom/MobileNav"
+import SuggestionsPanel from "@/components/custom/SuggestionsPanel"
 
 const SUGGESTIONS = [
-  { id: "1", username: "priya.codes", subtext: "Followed by rahul_dev + 3 more" },
+  {
+    id: "1",
+    username: "priya.codes",
+    subtext: "Followed by rahul_dev + 3 more",
+  },
   { id: "2", username: "dev.aisha", subtext: "Suggested for you" },
   { id: "3", username: "kartik.ui", subtext: "New to WorldLoop" },
   { id: "4", username: "meera_ux", subtext: "Followed by abhaydev" },
@@ -22,7 +27,7 @@ function MainLayout() {
             <Outlet />
           </main>
 
-          <aside className="sticky top-6 hidden h-fit w-[320px] shrink-0 py-6 xl:block">
+          {/* <aside className="sticky top-6 hidden h-fit w-[320px] shrink-0 py-6 xl:block">
             <div className="mb-4 flex items-center gap-3 px-2">
               <Avatar name="Abhay Sharma" size={44} />
               <div className="min-w-0 flex-1">
@@ -57,7 +62,8 @@ function MainLayout() {
                 </li>
               ))}
             </ul>
-          </aside>
+          </aside> */}
+          
         </div>
       </div>
 

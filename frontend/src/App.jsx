@@ -6,6 +6,7 @@ import Feed from "./features/feed/Feed"
 import PrivateRoutes from "./app/router/PrivateRoutes"
 import MainLayout from "./app/layouts/MainLayout"
 import ExplorePage from "./features/explore/pages/ExplorePage"
+import MessagesPage from "./features/messages/pages/MessagePage"
 
 const routes = [
   {
@@ -27,6 +28,7 @@ const routes = [
         children: [
           { path: "", element: <Feed /> },
           { path: "explore", element: <ExplorePage /> },
+          { path: "messages", element: <MessagesPage /> },
         ],
       },
     ],

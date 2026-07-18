@@ -3,6 +3,7 @@ import PostCard from "../../components/custom/PostCard"
 import { POSTS, STORIES } from "../../components/utils/componentsUtils"
 import StoryAvatar from "../../components/custom/StoryAvatar"
 import OwnStory from "../../components/custom/OwnStory"
+import SuggestionsPanel from "@/components/custom/SuggestionsPanel"
 
 /**
  * WorldLoop — Home Feed
@@ -24,7 +25,7 @@ function Feed() {
   useFonts()
 
   return (
-    <section className="w-full">
+    <section className="w-full flex gap-12">
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -42,6 +43,8 @@ function Feed() {
           <PostCard key={post.id} post={post} />
         ))}
       </div>
+
+      <SuggestionsPanel />
 
     
     </section>
