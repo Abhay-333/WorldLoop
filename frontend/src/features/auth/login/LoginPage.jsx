@@ -189,7 +189,7 @@ export default function LoginPage() {
             <Button
               type="button"
               variant="outline"
-              className="h-11 w-full cursor-pointer border-[#EFE7E1] text-[#1F1B24] focus-visible:ring-[#FF5C7A]"
+              className="h-11 w-full cursor-pointer border-[#EFE7E1] text-[#1F1B24] "
             >
               <GoogleIcon className="mr-2 h-4 w-4 text-[#8A8390]" />
               Continue with Google
