@@ -9,7 +9,7 @@ import ConnectionGraph from "../components/ConnectionGraph"
 import GoogleIcon from "../components/GoogleIcon"
 import { Link } from "react-router"
 import { useForm, Controller } from "react-hook-form"
-import apiInstance, { registerApi } from "../api/apiInstance"
+import { registerApi } from "../api/apiInstance"
 import { toast } from "react-hot-toast"
 import { useNavigate } from "react-router"
 
@@ -274,7 +274,7 @@ export default function RegisterPage() {
             <Button
               type="button"
               variant="outline"
-              className="h-11 w-full cursor-pointer border-[#EFE7E1] text-[#1F1B24] hover:bg-[#FAF7F4]"
+              className="h-11 w-full cursor-pointer border-[#EFE7E1] text-[#1F1B24]"
             >
               <GoogleIcon className="mr-2 h-4 w-4 text-[#8A8390]" />
               Continue with Google
