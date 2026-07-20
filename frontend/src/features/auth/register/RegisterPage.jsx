@@ -273,7 +273,7 @@ export default function RegisterPage() {
 
             <Button
               type="button"
-              // variant="outline"
+              variant="outline"
               className="h-11 w-full cursor-pointer border-[#EFE7E1] text-[#1F1B24] hover:bg-[#FAF7F4]"
             >
               <GoogleIcon className="mr-2 h-4 w-4 text-[#8A8390]" />
