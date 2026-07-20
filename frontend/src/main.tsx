@@ -1,14 +1,19 @@
+import "./styles/global.css"
+import App from "./App"
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
-
-import "./index.css"
-import App from "./App.tsx"
-import { ThemeProvider } from "@/components/theme-provider.tsx"
+import { Toaster } from "react-hot-toast"
+import { ThemeProvider } from "./app/theme-provider"
+import { Provider } from "react-redux"
+import { store } from "./app/store/store.js"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider>
+        <Toaster />
+        <App />
+      </ThemeProvider>
+    </Provider>
   </StrictMode>
 )

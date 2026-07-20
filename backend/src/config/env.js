@@ -8,6 +8,7 @@ const envSchema = z.object({
   PORT: z.coerce.number(),
   MONGO_URI: z.string(),
   NODE_ENV: z.string(),
+  CORS_ORIGIN: z.string(),
 
   MORGAN_LOGGER: z.string().default(appConstant.MORGAN_LOGGER),
   LOGGER_LEVEL: z.string().default(appConstant.LOGGER_LEVEL),
@@ -22,7 +23,8 @@ const envSchema = z.object({
   MAIL_APP_PASSWORD: z.string(), // Google App password
   MAIL_FROM: z.string(), // In Email to show the "From: " field
   CLIENT_URL: z.string(), // After the forget-password user will be redirected to this url
-
+  SERVER_URL: z.string(), // Base URL for the server
+  VERIFICATION_SERVER_URL: z.string(), // Base URL for email verification
   /**
    * @description Google Credentials
    */

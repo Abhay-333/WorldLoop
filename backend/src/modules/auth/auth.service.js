@@ -68,7 +68,6 @@ export default class AuthService {
     }
 
     const accessToken = generateAccessToken(user._id);
-
     const refreshToken = generateRefreshToken(user._id);
 
     user.refreshToken = refreshToken;
@@ -92,18 +91,24 @@ export default class AuthService {
       throw new NotFoundError("User not found.");
     }
 
-    if (user.refreshToken !== oldRefreshToken)
-      throw new UnauthorizeError("Invalid refresh Token.");
+    if (!user.isEmailVerified) {
+      throw new UnauthorizeError(
+        "Please verify your email first. Check your mailbox",
+      );
+    }
 
     const accessToken = generateAccessToken(user._id);
     const newRefreshToken = generateRefreshToken(user._id);
+
+    if (user.refreshToken !== oldRefreshToken)
+      throw new UnauthorizeError("Invalid refresh Token.");
 
     user.refreshToken = newRefreshToken;
     await user.save();
 
     return {
       accessToken,
-      newRefreshToken,
+      refreshToken: newRefreshToken,
     };
   }
 
@@ -205,6 +210,7 @@ export default class AuthService {
       emailVerificationToken: hashedToken,
       emailVerificationExpires: { $gt: Date.now() },
     });
+    console.log(user)
 
     if (!user) throw new UnauthorizeError("Token is invalid or expired");
 
