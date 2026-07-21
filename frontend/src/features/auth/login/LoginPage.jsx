@@ -11,6 +11,7 @@ import { useForm, Controller } from "react-hook-form"
 import { loginApi } from "../api/auth.api"
 import toast from "react-hot-toast"
 import useAuth from "../hooks/useAuth"
+
 /**
  * WorldLoop — Sign In
  *
@@ -29,6 +30,9 @@ import useAuth from "../hooks/useAuth"
 export default function LoginPage() {
   useFonts()
   const [showPassword, setShowPassword] = useState(false)
+  const { useLogin } = useAuth()
+  const { mutate, isPending, isError, error, isSuccess, data } = useLogin()
+
   const navigate = useNavigate()
   const {
     handleSubmit,
@@ -42,7 +46,9 @@ export default function LoginPage() {
     },
   })
 
-  const { handleLoginFormSubmit } = useAuth()
+  const handleFormSubmit = (formData) => {
+    mutate({ email: formData.email, password: formData.password })
+  }
 
   return (
     <div
@@ -81,7 +87,7 @@ export default function LoginPage() {
             <form
               method="POST"
               className="mt-7 space-y-4 text-left"
-              onSubmit={handleSubmit(handleLoginFormSubmit)}
+              onSubmit={handleSubmit(handleFormSubmit)}
             >
               <div className="space-y-1.5">
                 <Label

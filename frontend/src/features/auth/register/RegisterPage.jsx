@@ -22,6 +22,9 @@ export default function RegisterPage() {
   useFonts()
   const [showPassword, setShowPassword] = useState(false)
 
+  const { useRegister } = useAuth()
+  const { mutate, isPending, isError, error, isSuccess, data } = useRegister()
+
   const {
     handleSubmit,
     register,
@@ -36,7 +39,14 @@ export default function RegisterPage() {
     },
   })
 
-  const { handleRegisterFormSubmit } = useAuth()
+  const handleFormSubmit = (formData) => {
+    mutate({
+      username: formData.username,
+      email: formData.email,
+      password: formData.password,
+    })
+  }
+
   return (
     <div
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
@@ -74,7 +84,7 @@ export default function RegisterPage() {
             <form
               method="POST"
               className="mt-4 space-y-4 text-left"
-              onSubmit={handleSubmit(handleRegisterFormSubmit)}
+              onSubmit={handleSubmit(handleFormSubmit)}
               noValidate
             >
               {/* Username */}
