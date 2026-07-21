@@ -24,6 +24,19 @@ const registerApi = async (userData) => {
   }
 }
 
+const verifyEmail = async (token) => {
+  try {
+    const response = await apiClient.get("/auth/verify-email", token)
+    return response.data
+  } catch (error) {
+    console.error(
+      "Email Verification Error:",
+      error.response?.data.message || error.message
+    )
+    throw error
+  }
+}
+
 const getMe = async () => {
   try {
     const response = await apiClient.get("/auth/me")
@@ -47,4 +60,4 @@ const logout = async () => {
   }
 }
 
-export { loginApi, registerApi, getMe, logout }
+export { loginApi, registerApi, verifyEmail, getMe, logout }
