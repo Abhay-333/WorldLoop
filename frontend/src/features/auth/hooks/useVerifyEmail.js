@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { verifyEmail } from "../api/auth.api"
 
-const useVerifyEmail = () => {
+const useVerifyEmail = (token) => {
   return useQuery({
     queryKey: ["auth", "verify-email", token],
     queryFn: () => verifyEmail(token),
