@@ -37,6 +37,19 @@ const verifyEmail = async (token) => {
   }
 }
 
+const resendEmailVerification = async (userData) => {
+  try {
+    const response = await apiClient.post("/auth/resend-verification", userData)
+    return response.data
+  } catch (error) {
+    console.error(
+      "Resend Verification Error:",
+      error.response?.data.message || error.message
+    )
+    throw error
+  }
+}
+
 const getMe = async () => {
   try {
     const response = await apiClient.get("/auth/me")
@@ -60,4 +73,11 @@ const logout = async () => {
   }
 }
 
-export { loginApi, registerApi, verifyEmail, getMe, logout }
+export {
+  loginApi,
+  registerApi,
+  verifyEmail,
+  resendEmailVerification,
+  getMe,
+  logout,
+}

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useSearchParams, useLocation, useNavigate } from "react-router"
 import { MailCheck, CheckCircle2, XCircle, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useVerifyEmail } from "../hooks/useVerifyEmail"
+import useVerifyEmail from "../hooks/useVerifyEmail"
 import useResendVerification from "../hooks/useResendVerification"
 
 const RESEND_COOLDOWN = 30 // seconds
@@ -103,7 +103,7 @@ function VerifyEmailPage() {
           </>
         )}
 
-        <Button className="w-full" onClick={() => navigate("/login")}>
+        <Button className="w-full" onClick={() => navigate("/")}>
           Back to Login
         </Button>
       </div>

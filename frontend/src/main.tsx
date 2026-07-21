@@ -11,8 +11,8 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
       <Providers>
-        <Toaster />
         <App />
+        <Toaster />
       </Providers>
     </Provider>
   </StrictMode>
