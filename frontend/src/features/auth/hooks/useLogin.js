@@ -1,11 +1,11 @@
-import { useMutation } from "@tanstack/react-query"
-import { queryClient } from "@/app/query-client"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useNavigate } from "react-router"
 import { loginApi } from "../api/auth.api"
 import toast from "react-hot-toast"
 
 const useLogin = () => {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   return useMutation({
     mutationFn: loginApi,
     onSuccess: (data) => {
