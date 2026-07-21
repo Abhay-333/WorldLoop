@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router"
 import ConnectionGraph from "../components/ConnectionGraph"
 import GoogleIcon from "../components/GoogleIcon"
 import { useForm, Controller } from "react-hook-form"
-import { loginApi } from "../api/apiInstance"
+import { loginApi } from "../api/auth.api"
 import toast from "react-hot-toast"
 
 /**

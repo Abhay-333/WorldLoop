@@ -24,4 +24,27 @@ const registerApi = async (userData) => {
   }
 }
 
-export { loginApi, registerApi }
+const getMe = async () => {
+  try {
+    const response = await apiClient.get("/auth/me")
+    return response.data
+  } catch (error) {
+    console.error("getMe Error:", error.response?.data.message || error.message)
+    throw error
+  }
+}
+
+const logout = async () => {
+  try {
+    const response = await apiClient.get("/auth/logout")
+    return response.data
+  } catch (error) {
+    console.error(
+      "Logout Error:",
+      error.response?.data.message || error.message
+    )
+    throw error
+  }
+}
+
+export { loginApi, registerApi, getMe, logout }
