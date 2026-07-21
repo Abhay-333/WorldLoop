@@ -9,7 +9,7 @@ import ConnectionGraph from "../components/ConnectionGraph"
 import GoogleIcon from "../components/GoogleIcon"
 import { Link } from "react-router"
 import { useForm, Controller } from "react-hook-form"
-import { registerApi } from "../api/apiInstance"
+import { registerApi } from "../api/auth.api"
 import { toast } from "react-hot-toast"
 import { useNavigate } from "react-router"
 

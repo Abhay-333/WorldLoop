@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WorldLoop — Project Plan & Development Timeline</title>
+<style>
+  :root {
+    --primary: #4C1D95;
+    --accent: #0A66A6;
+    --dark: #1F1B24;
+    --gray: #6B7280;
+    --light-bg: #F5F3FF;
+    --border: #E5E1EC;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--dark);
+    background: #ffffff;
+    line-height: 1.6;
+  }
+
+  .page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+  }
+
+  /* ---------- Cover ---------- */
+  .cover {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.12) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(0, 162, 230, 0.10) 0%, transparent 50%);
+    z-index: 0;
+  }
+
+  .cover > * { position: relative; z-index: 1; }
+
+  .cover h1 {
+    font-size: 56px;
+    font-weight: 800;
+    color: var(--primary);
+    margin: 0 0 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .cover .subtitle {
+    font-size: 22px;
+    color: var(--dark);
+    margin: 0 0 6px;
+  }
+
+  .cover .codename {
+    font-style: italic;
+    color: var(--gray);
+    font-size: 15px;
+    margin: 0 0 40px;
+  }
+
+  .cover .stack-tag {
+    display: inline-block;
+    background: var(--light-bg);
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    margin-bottom: 60px;
+  }
+
+  .cover .meta {
+    color: var(--gray);
+    font-size: 14px;
+  }
+
+  /* ---------- Headings ---------- */
+  h2 {
+    color: var(--primary);
+    font-size: 26px;
+    font-weight: 800;
+    margin: 56px 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  h2:first-of-type { margin-top: 0; }
+
+  h3 {
+    color: var(--dark);
+    font-size: 18px;
+    font-weight: 700;
+    margin: 28px 0 12px;
+  }
+
+  p { margin: 0 0 14px; font-size: 15px; color: #333; }
+
+  ul { margin: 0 0 16px; padding-left: 20px; }
+  li { margin-bottom: 6px; font-size: 15px; color: #333; }
+
+  /* ---------- Tables ---------- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 28px;
+    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  thead th {
+    background: var(--primary);
+    color: #ffffff;
+    text-align: left;
+    padding: 10px 14px;
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  tbody tr:nth-child(even) { background: var(--light-bg); }
+  tbody tr:hover { background: #EFEAFB; }
+
+  td.phase-col { font-weight: 600; color: var(--primary); white-space: nowrap; }
+  td.week-col { white-space: nowrap; color: var(--accent); font-weight: 600; }
+
+  /* ---------- Milestone badges ---------- */
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+
+  /* ---------- Print ---------- */
+  @media print {
+    .cover { min-height: 100vh; page-break-after: always; }
+    h2 { page-break-after: avoid; }
+    table { page-break-inside: avoid; }
+  }
+
+  @media (max-width: 640px) {
+    .page { padding: 24px 16px 64px; }
+    .cover h1 { font-size: 38px; }
+    table { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ============ COVER ============ -->
+  <section class="cover">
+    <h1>WorldLoop</h1>
+    <p class="subtitle">Project Plan &amp; Development Timeline</p>
+    <p class="codename">Formerly codenamed "NEXUS"</p>
+    <span class="stack-tag">MERN · React · TypeScript · Node.js · MongoDB</span>
+    <div class="meta">
+      Document Version 1.0<br />
+      Prepared for: Abhay Sharma
+    </div>
+  </section>
+
+  <div class="page">
+
+    <!-- ============ 1. OVERVIEW ============ -->
+    <h2>1. Project Overview</h2>
+    <p>
+      WorldLoop is a full-stack social media platform built on the MERN stack
+      (MongoDB, Express, React, Node.js), with a Vite + TypeScript frontend and a
+      layered Node.js backend. The project was internally developed under the
+      codename "NEXUS" and has since been renamed WorldLoop across product-facing
+      documentation.
+    </p>
+    <p>
+      Development is organized into two major releases: <strong>V1.0</strong>,
+      which establishes the core social experience (auth, profiles, posts, feed,
+      engagement, notifications, search), and <strong>V2.0</strong>, which layers
+      on real-time messaging, ephemeral stories, algorithmic feed ranking, and
+      platform-scale infrastructure.
+    </p>
+
+    <!-- ============ 2. ARCHITECTURE ============ -->
+    <h2>2. Architecture Summary</h2>
+
+    <h3>2.1 Frontend</h3>
+    <ul>
+      <li>Feature-Based Architecture (FBA) — each feature is a self-contained vertical slice (components, hooks, api, store, types) exposing a public barrel via <code>index.ts</code></li>
+      <li>Stack: React 18, Vite, TypeScript, TanStack Query (server state), Redux Toolkit (UI state), Tailwind CSS, shadcn/ui, Socket.io client</li>
+    </ul>
+
+    <h3>2.2 Backend</h3>
+    <ul>
+      <li>Layered Architecture — strict one-way flow: Route → Controller → Service → Repository</li>
+      <li>Stack: Node.js 20, Express 5, TypeScript, MongoDB/Mongoose, Redis, JWT authentication, BullMQ job queues, Socket.io server</li>
+    </ul>
+
+    <!-- ============ 3. ROADMAP ============ -->
+    <h2>3. Release Roadmap</h2>
+    <p>
+      The roadmap below reflects a phased build order: foundational infrastructure
+      first, followed by core social loops, then real-time and scale features.
+      Durations are estimated in working weeks and assume a single full-stack
+      developer; adjust proportionally if timeline needs revisiting for a team.
+    </p>
+
+    <h3>3.1 V1.0 — Core Platform Timeline</h3>
+    <table>
+      <thead>
+        <tr><th>Phase</th><th>Feature Area</th><th>Weeks</th><th>Key Deliverables</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="phase-col">Phase 0</td><td>Project Setup &amp; Foundations</td><td class="week-col">Wk 1</td><td>Repo scaffolding, FBA/layered folder structure, CI basics, theme system, design tokens</td></tr>
+        <tr><td class="phase-col">Phase 1</td><td>Auth &amp; Authorization</td><td class="week-col">Wk 2–3</td><td>JWT access/refresh flow, Google OAuth, RBAC, protected routes</td></tr>
+        <tr><td class="phase-col">Phase 2</td><td>User Profiles</td><td class="week-col">Wk 4</td><td>Avatar/cover upload, privacy settings, follow counts, profile edit</td></tr>
+        <tr><td class="phase-col">Phase 3</td><td>Posts &amp; Media</td><td class="week-col">Wk 5–6</td><td>Multi-image/video upload, captions with hashtags/mentions, visibility levels, edit/pin</td></tr>
+        <tr><td class="phase-col">Phase 4</td><td>Feed &amp; Explore</td><td class="week-col">Wk 7–8</td><td>Chronological cursor-paginated feed, Explore grid, masonry layout</td></tr>
+        <tr><td class="phase-col">Phase 5</td><td>Likes &amp; Comments</td><td class="week-col">Wk 9</td><td>Idempotent like toggle, threaded comments (one reply level)</td></tr>
+        <tr><td class="phase-col">Phase 6</td><td>Follow System</td><td class="week-col">Wk 10</td><td>Public/private accounts, follow requests, follower/following lists</td></tr>
+        <tr><td class="phase-col">Phase 7</td><td>Notifications</td><td class="week-col">Wk 11–12</td><td>Real-time notifications via Socket.io, BullMQ fanout, 90-day TTL</td></tr>
+        <tr><td class="phase-col">Phase 8</td><td>Search</td><td class="week-col">Wk 13</td><td>MongoDB text search across users, posts, hashtags</td></tr>
+        <tr><td class="phase-col">Phase 9</td><td>Hardening &amp; QA</td><td class="week-col">Wk 14–16</td><td>Jest/Supertest + Vitest/RTL coverage, Playwright E2E, performance pass, V1.0 release</td></tr>
+      </tbody>
+    </table>
+
+    <h3>3.2 V2.0 — Messaging, Scale &amp; Advanced Features Timeline</h3>
+    <table>
+      <thead>
+        <tr><th>Phase</th><th>Feature Area</th><th>Weeks</th><th>Key Deliverables</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="phase-col">Phase 10</td><td>Direct Messaging</td><td class="week-col">Wk 17–19</td><td>1:1 and group chats via Socket.io rooms, conversation/message schema, delivery/read receipts</td></tr>
+        <tr><td class="phase-col">Phase 11</td><td>Stories</td><td class="week-col">Wk 20–21</td><td>24-hour TTL stories, viewer tracking, story ring UI</td></tr>
+        <tr><td class="phase-col">Phase 12</td><td>Feed Ranking Algorithm</td><td class="week-col">Wk 22–23</td><td>Scored/ranked feed replacing pure chronological ordering</td></tr>
+        <tr><td class="phase-col">Phase 13</td><td>Search Upgrade</td><td class="week-col">Wk 24</td><td>Migration to Elasticsearch for improved relevance and speed</td></tr>
+        <tr><td class="phase-col">Phase 14</td><td>Video Pipeline</td><td class="week-col">Wk 25–26</td><td>HLS transcoding via FFmpeg + BullMQ for uploaded video posts</td></tr>
+        <tr><td class="phase-col">Phase 15</td><td>Push Notifications</td><td class="week-col">Wk 27</td><td>Web Push / FCM integration for out-of-app alerts</td></tr>
+        <tr><td class="phase-col">Phase 16</td><td>Admin Analytics</td><td class="week-col">Wk 28–29</td><td>Admin dashboard: engagement, growth, moderation metrics</td></tr>
+        <tr><td class="phase-col">Phase 17</td><td>Deployment &amp; Scale</td><td class="week-col">Wk 30–32</td><td>Kubernetes deployment, load testing (k6), production hardening, V2.0 release</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ============ 4. MILESTONES ============ -->
+    <h2>4. Milestone Summary</h2>
+    <table>
+      <thead>
+        <tr><th>Milestone</th><th>Target</th><th>Definition of Done</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="badge">M1</span> Foundations Complete</td><td>End of Wk 1</td><td>Project scaffolding, theming, and provider setup finished</td></tr>
+        <tr><td><span class="badge">M2</span> Auth Live</td><td>End of Wk 3</td><td>Users can sign up, log in, and authenticate via Google</td></tr>
+        <tr><td><span class="badge">M3</span> Core Social Loop</td><td>End of Wk 10</td><td>Users can post, follow, like, and comment end-to-end</td></tr>
+        <tr><td><span class="badge">M4</span> V1.0 Release</td><td>End of Wk 16</td><td>Full core platform tested and deployed</td></tr>
+        <tr><td><span class="badge">M5</span> Real-Time Messaging Live</td><td>End of Wk 19</td><td>DMs and group chats functional</td></tr>
+        <tr><td><span class="badge">M6</span> V2.0 Release</td><td>End of Wk 32</td><td>Full platform live with messaging, stories, ranking, and scale infra</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ============ 5. DB COLLECTIONS ============ -->
+    <h2>5. Database Collections (Reference)</h2>
+    <ul>
+      <li><strong>users</strong> — profile data, auth provider, privacy settings</li>
+      <li><strong>posts</strong> — media, caption, visibility, hashtags/mentions</li>
+      <li><strong>follows</strong> — follower/following relationships, request status</li>
+      <li><strong>likes</strong> — idempotent like records per post</li>
+      <li><strong>comments</strong> — threaded, one reply level</li>
+      <li><strong>notifications</strong> — 90-day TTL, BullMQ-driven fanout</li>
+      <li><strong>conversations / messages</strong> — introduced in V2.0 for DMs and group chats</li>
+    </ul>
+
+    <!-- ============ 6. ASSUMPTIONS ============ -->
+    <h2>6. Assumptions &amp; Notes</h2>
+    <ul>
+      <li>Timeline assumes one full-stack developer working at a standard pace; compress or extend phases as team size or velocity changes.</li>
+      <li>Phases within each version can run partially in parallel where frontend and backend work are independent (e.g., UI scaffolding while API contracts are finalized).</li>
+      <li>V2.0 phases are sequenced by dependency risk — messaging and stories first (highest user-facing value), infrastructure/scale last.</li>
+      <li>This document should be revisited and updated as actual velocity data becomes available after Phase 1–2.</li>
+    </ul>
+
+  </div>
+</body>
+</html>
