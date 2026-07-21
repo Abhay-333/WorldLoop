@@ -10,7 +10,7 @@ import GoogleIcon from "../components/GoogleIcon"
 import { useForm, Controller } from "react-hook-form"
 import { loginApi } from "../api/auth.api"
 import toast from "react-hot-toast"
-
+import useAuth from "../hooks/useAuth"
 /**
  * WorldLoop — Sign In
  *
@@ -42,28 +42,7 @@ export default function LoginPage() {
     },
   })
 
-  const handleFormSubmit = async (data) => {
-    try {
-      console.log(data)
-      const result = await loginApi(
-        {
-          email: data.email,
-          password: data.password,
-        },
-        { withCredentials: true }
-      )
-      toast.success("Login successful!")
-      navigate("/home")
-    } catch (error) {
-      console.error(
-        "Login error:",
-        error.response?.data.message || error.message
-      )
-      toast.error(
-        `Login failed. ${error.response?.data.message || error.message}`
-      )
-    }
-  }
+  const { handleLoginFormSubmit } = useAuth()
 
   return (
     <div
@@ -102,7 +81,7 @@ export default function LoginPage() {
             <form
               method="POST"
               className="mt-7 space-y-4 text-left"
-              onSubmit={handleSubmit(handleFormSubmit)}
+              onSubmit={handleSubmit(handleLoginFormSubmit)}
             >
               <div className="space-y-1.5">
                 <Label
@@ -189,7 +168,7 @@ export default function LoginPage() {
             <Button
               type="button"
               variant="outline"
-              className="h-11 w-full cursor-pointer border-[#EFE7E1] text-[#1F1B24] "
+              className="h-11 w-full cursor-pointer border-[#EFE7E1] text-[#1F1B24]"
             >
               <GoogleIcon className="mr-2 h-4 w-4 text-[#8A8390]" />
               Continue with Google

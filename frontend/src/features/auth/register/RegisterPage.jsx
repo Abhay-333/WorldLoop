@@ -8,11 +8,8 @@ import { useFonts } from "../../../styles/hooks/useFonts"
 import ConnectionGraph from "../components/ConnectionGraph"
 import GoogleIcon from "../components/GoogleIcon"
 import { Link } from "react-router"
-import { useForm, Controller } from "react-hook-form"
-import { registerApi } from "../api/auth.api"
-import { toast } from "react-hot-toast"
-import { useNavigate } from "react-router"
-
+import useAuth from "../hooks/useAuth"
+import { Controller, useForm } from "react-hook-form"
 /**
  * WorldLoop — Register
  *
@@ -24,7 +21,7 @@ import { useNavigate } from "react-router"
 export default function RegisterPage() {
   useFonts()
   const [showPassword, setShowPassword] = useState(false)
-  const navigate = useNavigate()
+
   const {
     handleSubmit,
     register,
@@ -39,32 +36,7 @@ export default function RegisterPage() {
     },
   })
 
-  const handleFormSubmit = async (data) => {
-    try {
-      console.log(data)
-      const result = await registerApi(
-        {
-          email: data.email,
-          password: data.password,
-          username: data.username,
-        },
-        { withCredentials: true }
-      )
-      toast.success(
-        "Registration successful! Please check your email to verify your account."
-      )
-      navigate("/")
-    } catch (error) {
-      console.error(
-        "Registration error:",
-        error.response?.data.message || error.message
-      )
-      toast.error(
-        `Registration failed. ${error.response?.data.message || error.message}`
-      )
-    }
-  }
-
+  const { handleRegisterFormSubmit } = useAuth()
   return (
     <div
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
@@ -102,7 +74,7 @@ export default function RegisterPage() {
             <form
               method="POST"
               className="mt-4 space-y-4 text-left"
-              onSubmit={handleSubmit(handleFormSubmit)}
+              onSubmit={handleSubmit(handleRegisterFormSubmit)}
               noValidate
             >
               {/* Username */}
