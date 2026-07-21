@@ -1,16 +1,18 @@
-import env from "../config/env.js";
-import jwt from "jsonwebtoken";
+import UserModel from "../models/user.model.js";
+import { NotFoundError, UnauthorizeError } from "../utils/Errors/app-errors.js";
+import { verifyAccessToken } from "../utils/Token.js";
 
-
-const authMiddleware = (req, res, next) => {
+const authenticate = async (req, res, next) => {
   const { accessToken } = req.cookies;
+  if (!accessToken) throw new UnauthorizeError("Token is missing.");
 
-  if (!accessToken) throw new UnauthorizedError("Access Token not found.");
-  const decoded = jwt.verify(accessToken, env.ACCESS_TOKEN_SECRET);
+  const decode = verifyAccessToken(accessToken);
 
-  req.decoded = decoded;
+  const user = await UserModel.findById(decode.id);
+  if (!user) throw new NotFoundError("User not Found.");
 
+  req.user = user;
   next();
 };
 
-export default authMiddleware;
+export default authenticate;

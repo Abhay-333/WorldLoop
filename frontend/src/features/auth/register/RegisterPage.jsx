@@ -8,11 +8,8 @@ import { useFonts } from "../../../styles/hooks/useFonts"
 import ConnectionGraph from "../components/ConnectionGraph"
 import GoogleIcon from "../components/GoogleIcon"
 import { Link } from "react-router"
-import { useForm, Controller } from "react-hook-form"
-import apiInstance, { registerApi } from "../api/apiInstance"
-import { toast } from "react-hot-toast"
-import { useNavigate } from "react-router"
-
+import useAuth from "../hooks/useAuth"
+import { Controller, useForm } from "react-hook-form"
 /**
  * WorldLoop — Register
  *
@@ -24,7 +21,10 @@ import { useNavigate } from "react-router"
 export default function RegisterPage() {
   useFonts()
   const [showPassword, setShowPassword] = useState(false)
-  const navigate = useNavigate()
+
+  const { useRegister } = useAuth()
+  const { mutate, isPending, isError, error, isSuccess, data } = useRegister()
+
   const {
     handleSubmit,
     register,
@@ -39,30 +39,12 @@ export default function RegisterPage() {
     },
   })
 
-  const handleFormSubmit = async (data) => {
-    try {
-      console.log(data)
-      const result = await registerApi(
-        {
-          email: data.email,
-          password: data.password,
-          username: data.username,
-        },
-        { withCredentials: true }
-      )
-      toast.success(
-        "Registration successful! Please check your email to verify your account."
-      )
-      navigate("/")
-    } catch (error) {
-      console.error(
-        "Registration error:",
-        error.response?.data.message || error.message
-      )
-      toast.error(
-        `Registration failed. ${error.response?.data.message || error.message}`
-      )
-    }
+  const handleFormSubmit = (formData) => {
+    mutate({
+      username: formData.username,
+      email: formData.email,
+      password: formData.password,
+    })
   }
 
   return (
@@ -274,7 +256,7 @@ export default function RegisterPage() {
             <Button
               type="button"
               variant="outline"
-              className="h-11 w-full cursor-pointer border-[#EFE7E1] text-[#1F1B24] hover:bg-[#FAF7F4]"
+              className="h-11 w-full cursor-pointer border-[#EFE7E1] text-[#1F1B24]"
             >
               <GoogleIcon className="mr-2 h-4 w-4 text-[#8A8390]" />
               Continue with Google

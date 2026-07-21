@@ -11,6 +11,7 @@ import env from "../../config/env.js";
 import {
   generateAccessToken,
   generateRefreshToken,
+  verifyAccessToken,
   verifyRefreshToken,
 } from "../../utils/Token.js";
 import sendEmail from "../../utils/sendMail.js";
