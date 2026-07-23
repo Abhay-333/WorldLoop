@@ -26,7 +26,7 @@ const registerApi = async (userData) => {
 
 const verifyEmail = async (token) => {
   try {
-    const response = await apiClient.get("/auth/verify-email", token)
+    const response = await apiClient.get(`/auth/verify-email/${token}`)
     return response.data
   } catch (error) {
     console.error(
@@ -39,7 +39,7 @@ const verifyEmail = async (token) => {
 
 const resendEmailVerification = async (userData) => {
   try {
-    const response = await apiClient.post("/auth/resend-verification", userData)
+    const response = await apiClient.post("/auth/resend-verification", userData.email)
     return response.data
   } catch (error) {
     console.error(
@@ -62,7 +62,7 @@ const getMe = async () => {
 
 const logout = async () => {
   try {
-    const response = await apiClient.get("/auth/logout")
+    const response = await apiClient.post("/auth/logout")
     return response.data
   } catch (error) {
     console.error(

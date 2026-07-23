@@ -16,7 +16,7 @@ const routes = [
     children: [
       { path: "", element: <LoginPage /> },
       { path: "register", element: <RegisterPage /> },
-      { path: "verify-email", element: <VerifyEmailPage /> },
+      { path: "verify-email/:token", element: <VerifyEmailPage /> },
     ],
   },
 
