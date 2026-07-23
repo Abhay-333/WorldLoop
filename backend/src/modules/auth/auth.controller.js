@@ -11,7 +11,6 @@ import env from "../../config/env.js";
 import { sendVerifyLink } from "../../utils/sendVerifyLink.js";
 import { SuccessResponse } from "../../utils/SuccessResponse/SuccessResponse.js";
 
-
 export default class AuthController {
   constructor() {
     this.authService = new AuthService();
@@ -151,7 +150,7 @@ export default class AuthController {
     const { user, verificationToken, message } =
       await this.authService.resendVerificationService(email);
 
-    const verifyLink = `${env.CLIENT_URL}/verify-email/${verificationToken}`;
+    const verifyLink = `${env.VERIFICATION_SERVER_URL}/verify-email/${verificationToken}`;
 
     await sendVerifyLink(user, verifyLink);
     return res

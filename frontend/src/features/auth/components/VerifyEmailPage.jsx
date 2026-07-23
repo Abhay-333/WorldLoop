@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useSearchParams, useLocation, useNavigate } from "react-router"
+import { useLocation, useNavigate, useParams } from "react-router"
 import { MailCheck, CheckCircle2, XCircle, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import useVerifyEmail from "../hooks/useVerifyEmail"
@@ -8,11 +8,11 @@ import useResendVerification from "../hooks/useResendVerification"
 const RESEND_COOLDOWN = 30 // seconds
 
 function VerifyEmailPage() {
-  const [searchParams] = useSearchParams()
+  const { token } = useParams()
   const location = useLocation()
   const navigate = useNavigate()
 
-  const token = searchParams.get("token")
+  console.log(token)
   const email = location.state?.email
 
   const { isLoading, isSuccess, isError } = useVerifyEmail(token)
