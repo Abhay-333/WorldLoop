@@ -210,7 +210,6 @@ export default class AuthService {
       emailVerificationToken: hashedToken,
       emailVerificationExpires: { $gt: Date.now() },
     });
-    console.log(user)
 
     if (!user) throw new UnauthorizeError("Token is invalid or expired");
 
@@ -233,7 +232,6 @@ export default class AuthService {
 
     const verificationToken = crypto.randomBytes(32).toString("hex");
 
-    user.isEmailVerified = true;
     user.emailVerificationToken = crypto
       .createHash("sha256")
       .update(verificationToken)
