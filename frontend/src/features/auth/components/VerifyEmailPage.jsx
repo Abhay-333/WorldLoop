@@ -27,7 +27,7 @@ function VerifyEmailPage() {
 
   const handleResend = () => {
     if (!email || cooldown > 0) return
-    resend(email)
+    resend({email})
     setCooldown(RESEND_COOLDOWN)
   }
 

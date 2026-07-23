@@ -39,7 +39,7 @@ const verifyEmail = async (token) => {
 
 const resendEmailVerification = async (userData) => {
   try {
-    const response = await apiClient.post("/auth/resend-verification", userData.email)
+    const response = await apiClient.post("/auth/resend-verification", userData)
     return response.data
   } catch (error) {
     console.error(

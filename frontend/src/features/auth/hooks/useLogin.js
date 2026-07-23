@@ -9,7 +9,7 @@ const useLogin = () => {
   return useMutation({
     mutationFn: loginApi,
     onSuccess: (data) => {
-      queryClient.setQueryData(["auth", "me"], data.user)
+      queryClient.setQueryData(["auth", "me"], data.data.user)
       navigate("/home")
     },
     onError: (error) => {

@@ -20,7 +20,7 @@ export default class AuthController {
     const { accessToken, refreshToken, newUser, verificationToken } =
       await this.authService.registerService(req.body);
 
-    const verifyLink = `${env.VERIFICATION_SERVER_URL}/verify-email/${verificationToken}`;
+    const verifyLink = `${env.CLIENT_URL}/verify-email/${verificationToken}`;
     await sendVerifyLink(newUser, verifyLink);
 
     res.cookie("refreshToken", refreshToken, appConfig.cookie.refreshToken);
