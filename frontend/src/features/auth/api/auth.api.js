@@ -73,6 +73,19 @@ const logout = async () => {
   }
 }
 
+const googleAuthApi = async () => {
+  try {
+    const response = await apiClient.post("/auth/google")
+    return response.data
+  } catch (error) {
+    console.error(
+      "Google Login Error:",
+      error.response?.data.message || error.message
+    )
+    throw error
+  }
+}
+
 export {
   loginApi,
   registerApi,
@@ -80,4 +93,5 @@ export {
   resendEmailVerification,
   getMe,
   logout,
+  googleAuthApi,
 }
