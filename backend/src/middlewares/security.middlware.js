@@ -7,13 +7,13 @@ import cookieParser from "cookie-parser";
 import env from "../config/env.js";
 
 const securityMiddleware = (app) => {
+  app.use(cookieParser());
   app.use(cors({ origin: env.CORS_ORIGIN, credentials: true }));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(helmet());
   app.use(hpp());
   app.use(compression());
-  app.use(cookieParser());
 };
 
 export default securityMiddleware;

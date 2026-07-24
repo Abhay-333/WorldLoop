@@ -11,7 +11,7 @@ import { useForm, Controller } from "react-hook-form"
 import { loginApi } from "../api/auth.api"
 import toast from "react-hot-toast"
 import useAuth from "../hooks/useAuth"
-
+import {env} from "@/config/env"
 /**
  * WorldLoop — Sign In
  *
@@ -32,7 +32,6 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const { useLogin } = useAuth()
   const { mutate, isPending, isError, error, isSuccess, data } = useLogin()
-
   const navigate = useNavigate()
   const {
     handleSubmit,
@@ -174,10 +173,11 @@ export default function LoginPage() {
             <Button
               type="button"
               variant="outline"
-              className="h-11 w-full cursor-pointer border-[#EFE7E1] text-[#1F1B24]"
+              onClick={() => window.location.href = `${env.VITE_API_BASE_URL}/auth/google`}
+              className="h-11 w-full cursor-pointer border-[#EFE7E1] bg-gray-700 text-[#1F1B24] hover:!text-[#1F1B24]"
             >
               <GoogleIcon className="mr-2 h-4 w-4 text-[#8A8390]" />
-              Continue with Google
+              {isPending ? "Signing in..." : "Continue with Google"}
             </Button>
 
             <p className="mt-6 text-sm text-[#8A8390]">
