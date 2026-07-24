@@ -75,7 +75,7 @@ const logout = async () => {
 
 const googleAuthApi = async () => {
   try {
-    const response = await apiClient.post("/auth/google")
+    const response = await apiClient.get("/auth/google")
     return response.data
   } catch (error) {
     console.error(

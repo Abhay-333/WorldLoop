@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import env from "./env.js";
+import crypto from "crypto";
 import UserModel from "../models/user.model.js";
 
 passport.use(
@@ -10,11 +11,27 @@ passport.use(
       clientSecret: env.GOOGLE_CLIENT_SECRET,
       callbackURL: env.GOOGLE_CALLBACK_URL,
     },
-    async (accessToken, refresh, profile, done) => {
+    async (accessToken, refreshToken, profile, done) => {
       try {
-        // Yahan aap profile.id se user ko apne MongoDB database mein check/save kar sakte hain
-        // const user = await User.findOneAndUpdate({ googleId: profile.id }, { name: profile.displayName, email: profile.emails[0].value }, { upsert: true, new: true });
-        return done(null, profile);
+        const email = profile.emails?.[0]?.value;
+        if (!email) return done(new Error("Google profile has no email"), null);
+
+        let user = await UserModel.findOne({ email });
+        if (!user) {
+          const username = (profile.displayName || email.split("@")[0])
+            .replace(/\s+/g, "")
+            .toLowerCase();
+          const password = crypto.randomBytes(16).toString("hex");
+          user = await UserModel.create({
+            username,
+            email,
+            password,
+            isEmailVerified: true,
+            avatar: { url: profile.photos?.[0]?.value || undefined },
+          });
+        }
+
+        return done(null, user);
       } catch (err) {
         return done(err, null);
       }
@@ -22,14 +39,14 @@ passport.use(
   ),
 );
 
-// Session handling ke liye
-// serializeUser (Login ke waqt)
-passport.serializeUser((user, done) => done(null, user.id)); // Sirf user.id ko session mein store karo
+// Session handling
+passport.serializeUser((user, done) => done(null, user._id?.toString() || user.id));
 
-//  deserializeUser (Har request ke waqt)
-// Session se ID lo aur DB se pura user dhundo
-passport.deserializeUser((id, done) =>
-  UserModel.findById(id, (err, user) => {
-    done(err, user);
-  }),
-);
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await UserModel.findById(id);
+    done(null, user);
+  } catch (error) {
+    done(error, null);
+  }
+});
