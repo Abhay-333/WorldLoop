@@ -12,6 +12,7 @@ import { loginApi } from "../api/auth.api"
 import toast from "react-hot-toast"
 import useAuth from "../hooks/useAuth"
 import {env} from "@/config/env"
+import Loading from "@/components/custom/Loading"
 /**
  * WorldLoop — Sign In
  *
@@ -47,6 +48,10 @@ export default function LoginPage() {
 
   const handleFormSubmit = (formData) => {
     mutate({ email: formData.email, password: formData.password })
+  }
+
+  if (isPending) {
+    return <Loading label="Signing you in..." />
   }
 
   return (
