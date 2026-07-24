@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router"
-import LoginPage from "@/features/auth/login/LoginPage"
-import RegisterPage from "./features/auth/register/RegisterPage"
+import LoginPage from "@/features/auth/pages/login/LoginPage"
+import RegisterPage from "./features/auth/pages/register/RegisterPage"
 import PublicRoutes from "./app/router/PublicRoutes"
 import Feed from "./features/feed/Feed"
 import PrivateRoutes from "./app/router/PrivateRoutes"

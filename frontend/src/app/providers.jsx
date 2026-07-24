@@ -1,9 +1,9 @@
 import { QueryClientProvider } from "@tanstack/react-query"
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { GoogleOAuthProvider } from "@react-oauth/google"
 import { ThemeProvider } from "./theme-provider.js"
 import { queryClient } from "./query-client.js"
-import { env } from "../config/env.js"
+import env from "../config/env.js"
 
 export function Providers({ children }) {
   return (
