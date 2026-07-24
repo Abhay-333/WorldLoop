@@ -38,7 +38,7 @@ export default class AuthController {
   }
 
   async loginController(req, res) {
-    const { accessToken, user } = await this.authService.loginService(req.body);
+    const { user, accessToken } = await this.authService.loginService(req.body);
     const refreshToken = user.refreshToken;
 
     res.cookie("refreshToken", refreshToken, appConfig.cookie.refreshToken);
@@ -160,7 +160,7 @@ export default class AuthController {
 
   async getMeController(req, res) {
     const user = await this.authService.userRepo.findById(req.user.id);
-
+    console.log(req.cookies)
     res
       .status(StatusCodes.OK)
       .json(
