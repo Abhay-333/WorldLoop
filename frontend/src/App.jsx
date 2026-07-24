@@ -7,7 +7,7 @@ import PrivateRoutes from "./app/router/PrivateRoutes"
 import MainLayout from "./app/layouts/MainLayout"
 import ExplorePage from "./features/explore/pages/ExplorePage"
 import MessagesPage from "./features/messages/pages/MessagePage"
-import VerifyEmailPage from "./features/auth/components/VerifyEmailPage"
+import VerifyEmailPage from "./features/auth/pages/VerifyEmailPage"
 
 const routes = [
   {
