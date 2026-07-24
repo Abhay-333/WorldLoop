@@ -10,6 +10,8 @@ import GoogleIcon from "../components/GoogleIcon"
 import { Link } from "react-router"
 import useAuth from "../hooks/useAuth"
 import { Controller, useForm } from "react-hook-form"
+import Loading from "@/components/custom/Loading"
+
 /**
  * WorldLoop — Register
  *
@@ -45,6 +47,10 @@ export default function RegisterPage() {
       email: formData.email,
       password: formData.password,
     })
+  }
+
+  if (isPending) {
+    return <Loading label="Creating your account..." />
   }
 
   return (
