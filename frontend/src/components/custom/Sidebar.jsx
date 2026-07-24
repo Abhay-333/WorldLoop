@@ -17,7 +17,7 @@ function Sidebar() {
   const navigate = useNavigate()
 
   return (
-    <aside className="group fixed top-0 left-0 hidden h-screen w-20 flex-col justify-between overflow-hidden border-r border-border bg-card px-4 py-6 text-card-foreground transition-[width] duration-300 ease-in-out hover:w-64 md:flex">
+    <aside className="group fixed top-0 left-0 z-50 hidden h-screen w-20 flex-col justify-between overflow-hidden border-r border-border bg-card px-4 py-6 text-card-foreground transition-[width] duration-300 ease-in-out hover:w-64 md:flex">
       <div>
         <div className="mb-8 flex items-center gap-2 px-2">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sidebar">

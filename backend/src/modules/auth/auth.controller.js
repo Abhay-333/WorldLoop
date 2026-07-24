@@ -160,7 +160,6 @@ export default class AuthController {
 
   async getMeController(req, res) {
     const user = await this.authService.userRepo.findById(req.user.id);
-    console.log(req.cookies)
     res
       .status(StatusCodes.OK)
       .json(
