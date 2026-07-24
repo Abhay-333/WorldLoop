@@ -60,7 +60,7 @@ const getMe = async () => {
   }
 }
 
-const logout = async () => {
+const logoutApi = async () => {
   try {
     const response = await apiClient.post("/auth/logout")
     return response.data
@@ -92,6 +92,6 @@ export {
   verifyEmail,
   resendEmailVerification,
   getMe,
-  logout,
+  logoutApi,
   googleAuthApi,
 }

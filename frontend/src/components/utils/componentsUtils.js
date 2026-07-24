@@ -5,7 +5,8 @@ import {
   Heart,
   PlusSquare,
   User,
-} from "lucide-react"
+  LogOut,
+} from "lucide-react";
 
 const SUGGESTIONS = [
   { username: "rohit.dev", subtitle: "Followed by karan.designs" },
@@ -22,6 +23,7 @@ const NAV_ITEMS = [
   { icon: Heart, label: "Notifications", navigateTo: "/home/notifications" },
   { icon: PlusSquare, label: "Create", navigateTo: "/home/create" },
   { icon: User, label: "Profile", navigateTo: "/home/profile" },
+  { icon: LogOut, label: "Logout", action: "logout" },
 ]
 
 const AVATAR_COLORS = [

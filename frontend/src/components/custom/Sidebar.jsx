@@ -11,10 +11,34 @@ import { Avatar } from "./Avatar"
 import { NAV_ITEMS } from "../utils/componentsUtils"
 import ThemeSwitch from "../../features/theme/ThemeSwitch"
 import { useNavigate } from "react-router"
+import { logout } from "@/features/auth/authSlice"
+import { useDispatch } from "react-redux"
+import { logoutApi } from "@/features/auth/api/auth.api"
+import { useQueryClient } from "@tanstack/react-query"
+import toast from "react-hot-toast"
 
 function Sidebar() {
   const [active, setActive] = useState("Home")
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const queryClient = useQueryClient()
+
+  const handleLogout = async () => {
+    const response = await logoutApi()
+    toast.success(response.message)
+    dispatch(logout())
+    queryClient.clear()
+    navigate("/", { replace: true })
+  }
+
+  const handleClick = (item) => {
+    if (item.action === "logout") {
+      handleLogout()
+    } else {
+      navigate(item.navigateTo)
+    }
+    setActive(item.label)
+  }
 
   return (
     <aside className="group fixed top-0 left-0 z-50 hidden h-screen w-20 flex-col justify-between overflow-hidden border-r border-border bg-card px-4 py-6 text-card-foreground transition-[width] duration-300 ease-in-out hover:w-64 md:flex">
@@ -28,25 +52,25 @@ function Sidebar() {
           </span>
         </div>
         <nav className="space-y-1">
-          {NAV_ITEMS.map(({ icon: Icon, label, navigateTo }) => (
-            <button
-              key={label}
-              onClick={() => {
-                setActive(label)
-                navigate(navigateTo)
-              }}
-              className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors ${
-                active === label
-                  ? "bg-accent font-semibold text-primary"
-                  : "text-foreground hover:bg-muted"
-              }`}
-            >
-              <Icon className="h-5 w-5 shrink-0" />
-              <span className="whitespace-nowrap opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                {label}
-              </span>
-            </button>
-          ))}
+          {NAV_ITEMS.map((item) => {
+            const { icon: Icon, label } = item
+            return (
+              <button
+                key={label}
+                onClick={() => handleClick(item)}
+                className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors ${
+                  active === label
+                    ? "bg-accent font-semibold text-primary"
+                    : "text-foreground hover:bg-muted"
+                }`}
+              >
+                <Icon className="h-5 w-5 shrink-0" />
+                <span className="whitespace-nowrap opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                  {label}
+                </span>
+              </button>
+            )
+          })}
         </nav>
       </div>
 
