@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import useVerifyEmail from "../hooks/useVerifyEmail"
 import useResendVerification from "../hooks/useResendVerification"
 import { useFonts } from "../../../styles/hooks/useFonts"
-import ConnectionGraph from "./ConnectionGraph"
+import ConnectionGraph from "../components/ConnectionGraph"
 
 const RESEND_COOLDOWN = 30 // seconds
 
