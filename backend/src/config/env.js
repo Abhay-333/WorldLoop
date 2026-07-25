@@ -23,6 +23,7 @@ const envSchema = z.object({
   MAIL_APP_PASSWORD: z.string(), // Google App password
   MAIL_FROM: z.string(), // In Email to show the "From: " field
   CLIENT_URL: z.string(), // After the forget-password user will be redirected to this url
+  CLIENT_HOME_PAGE: z.string(), // After the forget-password user will be redirected to this url
   SERVER_URL: z.string(), // Base URL for the server
   VERIFICATION_SERVER_URL: z.string(), // Base URL for email verification
   /**

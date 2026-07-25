@@ -58,7 +58,22 @@ authRouter.get(
 
 authRouter.get(
   "/google/callback",
-  passport.authenticate("google", { failureRedirect: env.FAILURE_REDIRECT }),
+  (req, res, next) => {
+    console.log("✅ CALLBACK HIT");
+    next();
+  },
+  passport.authenticate("google", {
+    failureRedirect: env.FAILURE_REDIRECT,
+    session: true,
+  }),
+  (req, res) => {
+    console.log("✅ LOGIN SUCCESS");
+    res.redirect(env.CLIENT_HOME_PAGE);
+    res.json({
+      success: true,
+      user: req.user,
+    });
+  },
 );
 
 /**
