@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useSelector } from "react-redux"
 import { Link } from "react-router"
 import { Mail, ArrowLeft, CheckCircle2 } from "lucide-react"
+import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -21,18 +22,25 @@ import useForgotPassword from "../hooks/useForgotPassword"
  */
 const ForgotPasswordPage = () => {
   useFonts()
-  const [email, setEmail] = useState("")
   const [submittedEmail, setSubmittedEmail] = useState("")
   const theme = useSelector((state) => state.theme?.theme || "light")
   const isDark = theme === "dark"
-  const { mutate: sendResetLink, isPending, error } = useForgotPassword()
+  const { mutate: forgotPassword, isPending, error } = useForgotPassword()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: "rdha2209@gmail.com",
+    },
+  })
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    sendResetLink(
-      { email },
+  const handleFormSubmit = (formData) => {
+    forgotPassword(
+      { email: formData.email },
       {
-        onSuccess: () => setSubmittedEmail(email),
+        onSuccess: () => setSubmittedEmail(formData.email),
       }
     )
   }
@@ -48,9 +56,11 @@ const ForgotPasswordPage = () => {
     >
       <div className="w-full max-w-md">
         <Link
-          to="/login"
+          to="/"
           className={`mb-6 inline-flex items-center gap-1.5 text-sm transition-colors ${
-            isDark ? "text-slate-300 hover:text-white" : "text-muted-foreground hover:text-foreground"
+            isDark
+              ? "text-slate-300 hover:text-white"
+              : "text-muted-foreground hover:text-foreground"
           }`}
         >
           <ArrowLeft className="h-4 w-4" />
@@ -77,16 +87,20 @@ const ForgotPasswordPage = () => {
             {!isSent ? (
               <>
                 <div className="mb-8 text-center">
-                  <h1 className={`text-2xl font-semibold tracking-tight ${isDark ? "text-white" : "text-foreground"}`}>
+                  <h1
+                    className={`text-2xl font-semibold tracking-tight ${isDark ? "text-white" : "text-foreground"}`}
+                  >
                     Forgot your password?
                   </h1>
-                  <p className={`mt-2 text-sm ${isDark ? "text-slate-300" : "text-muted-foreground"}`}>
+                  <p
+                    className={`mt-2 text-sm ${isDark ? "text-slate-300" : "text-muted-foreground"}`}
+                  >
                     Enter the email linked to your account and we'll send you a
                     link to reset it.
                   </p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
                   <div className="space-y-2">
                     <Label
                       htmlFor="email"
@@ -99,12 +113,26 @@ const ForgotPasswordPage = () => {
                       type="email"
                       autoComplete="email"
                       placeholder="you@example.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
                       autoFocus
-                      className={isDark ? "border-white/10 bg-[#241f31] text-white placeholder:text-slate-400" : ""}
+                      aria-invalid={Boolean(errors.email)}
+                      {...register("email", {
+                        required: "Email is required",
+                        pattern: {
+                          value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                          message: "Enter a valid email address",
+                        },
+                      })}
+                      className={
+                        isDark
+                          ? "border-white/10 bg-[#241f31] text-white placeholder:text-slate-400"
+                          : ""
+                      }
                     />
+                    {errors.email && (
+                      <p className="text-sm text-destructive">
+                        {errors.email.message}
+                      </p>
+                    )}
                   </div>
 
                   {error && (
@@ -128,18 +156,26 @@ const ForgotPasswordPage = () => {
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                   <CheckCircle2 className="h-6 w-6 text-primary" />
                 </div>
-                <h1 className={`text-2xl font-semibold tracking-tight ${isDark ? "text-white" : "text-foreground"}`}>
+                <h1
+                  className={`text-2xl font-semibold tracking-tight ${isDark ? "text-white" : "text-foreground"}`}
+                >
                   Check your inbox
                 </h1>
-                <p className={`mt-2 text-sm ${isDark ? "text-slate-300" : "text-muted-foreground"}`}>
+                <p
+                  className={`mt-2 text-sm ${isDark ? "text-slate-300" : "text-muted-foreground"}`}
+                >
                   If an account exists for{" "}
-                  <span className={`font-medium ${isDark ? "text-white" : "text-foreground"}`}>
+                  <span
+                    className={`font-medium ${isDark ? "text-white" : "text-foreground"}`}
+                  >
                     {submittedEmail}
                   </span>
                   , we've sent a link to reset your password.
                 </p>
 
-                <div className={`mt-6 flex items-center justify-center gap-1.5 text-xs ${isDark ? "text-slate-400" : "text-muted-foreground"}`}>
+                <div
+                  className={`mt-6 flex items-center justify-center gap-1.5 text-xs ${isDark ? "text-slate-400" : "text-muted-foreground"}`}
+                >
                   <Mail className="h-3.5 w-3.5" />
                   <span>Didn't get it? Check your spam folder.</span>
                 </div>
