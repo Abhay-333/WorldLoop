@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux"
 import { logoutApi } from "@/features/auth/api/auth.api"
 import { useQueryClient } from "@tanstack/react-query"
 import toast from "react-hot-toast"
+import { changeTheme } from "@/features/theme/themeSlice"
 
 function Sidebar() {
   const [active, setActive] = useState("Home")
@@ -24,11 +25,18 @@ function Sidebar() {
   const queryClient = useQueryClient()
 
   const handleLogout = async () => {
-    const response = await logoutApi()
-    toast.success(response.message)
-    dispatch(logout())
-    queryClient.clear()
-    navigate("/", { replace: true })
+    try {
+      const response = await logoutApi()
+      toast.success(response.message)
+    } catch (error) {
+      console.error("Logout failed", error)
+    } finally {
+      localStorage.setItem("worldloop-ui-theme", "light")
+      dispatch(changeTheme("light"))
+      dispatch(logout())
+      queryClient.clear()
+      navigate("/", { replace: true })
+    }
   }
 
   const handleClick = (item) => {
