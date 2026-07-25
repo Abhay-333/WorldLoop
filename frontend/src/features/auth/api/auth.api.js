@@ -86,6 +86,18 @@ const googleAuthApi = async () => {
   }
 }
 
+const forgetPasswordApi = async (email) => {
+  try {
+    const response = await apiClient.post("/auth/forgot-password", email)
+    return response.data
+  } catch (error) {
+    console.error(
+      "Forget Password error:",
+      error.response?.data.message || error.message
+    )
+    throw error
+  }
+}
 export {
   loginApi,
   registerApi,
@@ -94,4 +106,5 @@ export {
   getMe,
   logoutApi,
   googleAuthApi,
+  forgetPasswordApi,
 }

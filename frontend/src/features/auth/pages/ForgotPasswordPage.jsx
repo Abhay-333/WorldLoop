@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { Link } from 'react-router';
-import { Mail, ArrowLeft, CheckCircle2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useForgotPassword } from '../hooks/useForgotPassword';
+import { useState } from "react"
+import { Link } from "react-router"
+import { Mail, ArrowLeft, CheckCircle2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import useForgotPassword from "../hooks/useForgotPassword"
 
 /**
  * ForgotPasswordPage
@@ -18,21 +18,21 @@ import { useForgotPassword } from '../hooks/useForgotPassword';
  * emails are registered (user enumeration).
  */
 const ForgotPasswordPage = () => {
-  const [email, setEmail] = useState('');
-  const [submittedEmail, setSubmittedEmail] = useState('');
-  const { mutate: sendResetLink, isPending, error } = useForgotPassword();
+  const [email, setEmail] = useState("")
+  const [submittedEmail, setSubmittedEmail] = useState("")
+  const { mutate: sendResetLink, isPending, error } = useForgotPassword()
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     sendResetLink(
       { email },
       {
         onSuccess: () => setSubmittedEmail(email),
       }
-    );
-  };
+    )
+  }
 
-  const isSent = Boolean(submittedEmail);
+  const isSent = Boolean(submittedEmail)
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -52,8 +52,8 @@ const ForgotPasswordPage = () => {
                 Forgot your password?
               </h1>
               <p className="mt-2 text-sm text-muted-foreground">
-                Enter the email linked to your account and we'll send you a
-                link to reset it.
+                Enter the email linked to your account and we'll send you a link
+                to reset it.
               </p>
             </div>
 
@@ -75,12 +75,12 @@ const ForgotPasswordPage = () => {
               {error && (
                 <p className="text-sm text-destructive">
                   {error?.response?.data?.message ??
-                    'Something went wrong. Please try again.'}
+                    "Something went wrong. Please try again."}
                 </p>
               )}
 
               <Button type="submit" className="w-full" disabled={isPending}>
-                {isPending ? 'Sending link...' : 'Send reset link'}
+                {isPending ? "Sending link..." : "Send reset link"}
               </Button>
             </form>
           </>
@@ -93,7 +93,7 @@ const ForgotPasswordPage = () => {
               Check your inbox
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
-              If an account exists for{' '}
+              If an account exists for{" "}
               <span className="font-medium text-foreground">
                 {submittedEmail}
               </span>
@@ -108,7 +108,7 @@ const ForgotPasswordPage = () => {
             <Button
               variant="ghost"
               className="mt-6 w-full"
-              onClick={() => setSubmittedEmail('')}
+              onClick={() => setSubmittedEmail("")}
             >
               Use a different email
             </Button>
@@ -116,7 +116,7 @@ const ForgotPasswordPage = () => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ForgotPasswordPage;
+export default ForgotPasswordPage

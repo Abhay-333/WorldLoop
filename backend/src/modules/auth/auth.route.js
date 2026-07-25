@@ -32,7 +32,7 @@ authRouter.post(
 );
 
 authRouter.post(
-  "/forget-password",
+  "/forgot-password",
   authController.forgetPasswordController.bind(authController),
 );
 
