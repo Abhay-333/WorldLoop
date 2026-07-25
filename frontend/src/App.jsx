@@ -8,6 +8,7 @@ import MainLayout from "./app/layouts/MainLayout"
 import ExplorePage from "./features/explore/pages/ExplorePage"
 import MessagesPage from "./features/messages/pages/MessagePage"
 import VerifyEmailPage from "./features/auth/pages/VerifyEmailPage"
+import ForgotPasswordPage from "./features/auth/pages/ForgotPasswordPage"
 
 const routes = [
   {
@@ -18,6 +19,7 @@ const routes = [
       { path: "register", element: <RegisterPage /> },
       { path: "verify-email", element: <VerifyEmailPage /> },
       { path: "verify-email/:token", element: <VerifyEmailPage /> },
+      { path: "forgot-password", element: <ForgotPasswordPage /> },
     ],
   },
 
