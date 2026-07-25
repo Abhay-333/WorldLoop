@@ -98,6 +98,23 @@ const forgetPasswordApi = async (email) => {
     throw error
   }
 }
+
+const resetPasswordApi = async ({token, password}) => {
+  try {
+    const response = await apiClient.post(
+      `/auth/reset-password/${token}`,
+      {password}
+    )
+    return response.data
+  } catch (error) {
+    console.error(
+      "Reset Password error:",
+      error.response?.data.message || error.message
+    )
+    throw error
+  }
+}
+
 export {
   loginApi,
   registerApi,
@@ -107,4 +124,5 @@ export {
   logoutApi,
   googleAuthApi,
   forgetPasswordApi,
+  resetPasswordApi,
 }
