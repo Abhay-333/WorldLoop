@@ -1,12 +1,13 @@
 import { useState } from "react"
-import { useSearchParams, Link, useNavigate } from "react-router"
+import { Link, useNavigate, useParams } from "react-router"
 import { CheckCircle2, XCircle, Eye, EyeOff } from "lucide-react"
+import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import useResetPassword from "../hooks/useResetPassword"
 
-const MIN_PASSWORD_LENGTH = 8
+const MIN_PASSWORD_LENGTH = 6
 
 /**
  * ResetPasswordPage
@@ -18,18 +19,27 @@ const MIN_PASSWORD_LENGTH = 8
  *  - "success" : password updated -> CTA to log in
  *  - error from mutation (e.g. expired/invalid token) shown inline on the form
  */
-const ResetPasswordPage = () => {
-  const [searchParams] = useSearchParams()
-  const navigate = useNavigate()
-  const token = searchParams.get("token")
 
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
+const ResetPasswordPage = () => {
+  const { token } = useParams()
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
-  const [formError, setFormError] = useState("")
   const [isSuccess, setIsSuccess] = useState(false)
 
   const { mutate: resetPassword, isPending, error } = useResetPassword()
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      password: "",
+      confirmPassword: "",
+    },
+  })
+
+  const passwordValue = watch("password")
 
   if (!token) {
     return (
@@ -52,22 +62,16 @@ const ResetPasswordPage = () => {
     )
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setFormError("")
-
-    if (password.length < MIN_PASSWORD_LENGTH) {
-      setFormError(
-        `Password must be at least ${MIN_PASSWORD_LENGTH} characters.`
-      )
-      return
-    }
-    if (password !== confirmPassword) {
-      setFormError("Passwords do not match.")
-      return
-    }
-
-    resetPassword({ token, password }, { onSuccess: () => setIsSuccess(true) })
+  const handleResetForm = (formData) => {
+    resetPassword(
+      {
+        token,
+        password: formData.password,
+      },
+      {
+        onSuccess: () => setIsSuccess(true),
+      }
+    )
   }
 
   if (isSuccess) {
@@ -84,7 +88,7 @@ const ResetPasswordPage = () => {
             Your password has been reset. You can now log in with your new
             password.
           </p>
-          <Button className="mt-6 w-full" onClick={() => navigate("/login")}>
+          <Button className="mt-6 w-full" onClick={() => navigate("/")}>
             Go to log in
           </Button>
         </div>
@@ -108,7 +112,7 @@ const ResetPasswordPage = () => {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit(handleResetForm)} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="password">New password</Label>
             <div className="relative">
@@ -116,10 +120,15 @@ const ResetPasswordPage = () => {
                 id="password"
                 type={showPassword ? "text" : "password"}
                 autoComplete="new-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
                 autoFocus
+                aria-invalid={Boolean(errors.password)}
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: MIN_PASSWORD_LENGTH,
+                    message: `Password must be at least ${MIN_PASSWORD_LENGTH} characters.`,
+                  },
+                })}
               />
               <button
                 type="button"
@@ -142,15 +151,22 @@ const ResetPasswordPage = () => {
               id="confirmPassword"
               type={showPassword ? "text" : "password"}
               autoComplete="new-password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
+              aria-invalid={Boolean(errors.confirmPassword)}
+              {...register("confirmPassword", {
+                required: "Please confirm your password",
+                validate: (value) =>
+                  value === passwordValue || "Passwords do not match.",
+              })}
             />
           </div>
 
-          {(formError || mutationErrorMessage) && (
+          {(errors.password ||
+            errors.confirmPassword ||
+            mutationErrorMessage) && (
             <p className="text-sm text-destructive">
-              {formError || mutationErrorMessage}
+              {errors.password?.message ||
+                errors.confirmPassword?.message ||
+                mutationErrorMessage}
             </p>
           )}
 
