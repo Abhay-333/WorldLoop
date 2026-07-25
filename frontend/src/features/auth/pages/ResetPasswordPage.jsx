@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { useSearchParams, Link, useNavigate } from 'react-router-dom';
-import { CheckCircle2, XCircle, Eye, EyeOff } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useResetPassword } from '../hooks/useResetPassword';
+import { useState } from "react"
+import { useSearchParams, Link, useNavigate } from "react-router"
+import { CheckCircle2, XCircle, Eye, EyeOff } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import useResetPassword from "../hooks/useResetPassword"
 
-const MIN_PASSWORD_LENGTH = 8;
+const MIN_PASSWORD_LENGTH = 8
 
 /**
  * ResetPasswordPage
@@ -19,17 +19,17 @@ const MIN_PASSWORD_LENGTH = 8;
  *  - error from mutation (e.g. expired/invalid token) shown inline on the form
  */
 const ResetPasswordPage = () => {
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const token = searchParams.get('token');
+  const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
+  const token = searchParams.get("token")
 
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [formError, setFormError] = useState('');
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
+  const [formError, setFormError] = useState("")
+  const [isSuccess, setIsSuccess] = useState(false)
 
-  const { mutate: resetPassword, isPending, error } = useResetPassword();
+  const { mutate: resetPassword, isPending, error } = useResetPassword()
 
   if (!token) {
     return (
@@ -49,27 +49,26 @@ const ResetPasswordPage = () => {
           </Button>
         </div>
       </div>
-    );
+    )
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormError('');
+    e.preventDefault()
+    setFormError("")
 
     if (password.length < MIN_PASSWORD_LENGTH) {
-      setFormError(`Password must be at least ${MIN_PASSWORD_LENGTH} characters.`);
-      return;
+      setFormError(
+        `Password must be at least ${MIN_PASSWORD_LENGTH} characters.`
+      )
+      return
     }
     if (password !== confirmPassword) {
-      setFormError('Passwords do not match.');
-      return;
+      setFormError("Passwords do not match.")
+      return
     }
 
-    resetPassword(
-      { token, password },
-      { onSuccess: () => setIsSuccess(true) }
-    );
-  };
+    resetPassword({ token, password }, { onSuccess: () => setIsSuccess(true) })
+  }
 
   if (isSuccess) {
     return (
@@ -85,16 +84,17 @@ const ResetPasswordPage = () => {
             Your password has been reset. You can now log in with your new
             password.
           </p>
-          <Button className="mt-6 w-full" onClick={() => navigate('/login')}>
+          <Button className="mt-6 w-full" onClick={() => navigate("/login")}>
             Go to log in
           </Button>
         </div>
       </div>
-    );
+    )
   }
 
-  const mutationErrorMessage = error?.response?.data?.message;
-  const isTokenInvalid = error?.response?.status === 400 || error?.response?.status === 410;
+  const mutationErrorMessage = error?.response?.data?.message
+  const isTokenInvalid =
+    error?.response?.status === 400 || error?.response?.status === 410
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -114,7 +114,7 @@ const ResetPasswordPage = () => {
             <div className="relative">
               <Input
                 id="password"
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 autoComplete="new-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -124,7 +124,7 @@ const ResetPasswordPage = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword((prev) => !prev)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 tabIndex={-1}
               >
                 {showPassword ? (
@@ -140,7 +140,7 @@ const ResetPasswordPage = () => {
             <Label htmlFor="confirmPassword">Confirm new password</Label>
             <Input
               id="confirmPassword"
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               autoComplete="new-password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -156,7 +156,7 @@ const ResetPasswordPage = () => {
 
           {isTokenInvalid && (
             <p className="text-sm text-muted-foreground">
-              Your link may have expired.{' '}
+              Your link may have expired.{" "}
               <Link to="/forgot-password" className="font-medium underline">
                 Request a new one
               </Link>
@@ -165,12 +165,12 @@ const ResetPasswordPage = () => {
           )}
 
           <Button type="submit" className="w-full" disabled={isPending}>
-            {isPending ? 'Updating password...' : 'Reset password'}
+            {isPending ? "Updating password..." : "Reset password"}
           </Button>
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ResetPasswordPage;
+export default ResetPasswordPage
