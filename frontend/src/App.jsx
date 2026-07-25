@@ -9,6 +9,7 @@ import ExplorePage from "./features/explore/pages/ExplorePage"
 import MessagesPage from "./features/messages/pages/MessagePage"
 import VerifyEmailPage from "./features/auth/pages/VerifyEmailPage"
 import ForgotPasswordPage from "./features/auth/pages/ForgotPasswordPage"
+import ResetPasswordPage from "./features/auth/pages/ResetPasswordPage"
 
 const routes = [
   {
@@ -20,6 +21,7 @@ const routes = [
       { path: "verify-email", element: <VerifyEmailPage /> },
       { path: "verify-email/:token", element: <VerifyEmailPage /> },
       { path: "forgot-password", element: <ForgotPasswordPage /> },
+      { path: "reset-password/:token", element: <ResetPasswordPage /> },
     ],
   },
 
