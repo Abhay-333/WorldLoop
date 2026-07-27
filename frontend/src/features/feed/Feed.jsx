@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react"
 import { useFonts } from "../../styles/hooks/useFonts"
 import PostCard from "../../components/custom/PostCard"
 import { POSTS, STORIES } from "../../components/utils/componentsUtils"
 import StoryAvatar from "../../components/custom/StoryAvatar"
 import OwnStory from "../../components/custom/OwnStory"
 import SuggestionsPanel from "@/components/custom/SuggestionsPanel"
+import Loading from "@/components/custom/Loading"
 
 /**
  * WorldLoop — Home Feed
@@ -23,6 +25,14 @@ import SuggestionsPanel from "@/components/custom/SuggestionsPanel"
 
 function Feed() {
   useFonts()
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setIsLoading(false), 600)
+    return () => window.clearTimeout(timer)
+  }, [])
+
+  if (isLoading) return <Loading label="Loading your feed..." />
 
   return (
     <section className="w-full flex gap-12">
