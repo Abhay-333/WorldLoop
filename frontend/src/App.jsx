@@ -10,6 +10,7 @@ import MessagesPage from "./features/messages/pages/MessagePage"
 import VerifyEmailPage from "./features/auth/pages/VerifyEmailPage"
 import ForgotPasswordPage from "./features/auth/pages/ForgotPasswordPage"
 import ResetPasswordPage from "./features/auth/pages/ResetPasswordPage"
+import ProfilePage from "./features/profile/pages/ProfilePage"
 
 const routes = [
   {
@@ -36,6 +37,7 @@ const routes = [
           { path: "", element: <Feed /> },
           { path: "explore", element: <ExplorePage /> },
           { path: "messages", element: <MessagesPage /> },
+          { path: "profile", element: <ProfilePage /> },
         ],
       },
     ],
