@@ -1,27 +1,27 @@
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import ProfileHeader from '../components/ProfileHeader';
-import ProfileTabs from '../components/ProfileTabs';
-import ProfilePostsGrid from '../components/ProfilePostsGrid';
-import { useProfile } from '../hooks/useProfile';
-import { useProfilePosts } from '../hooks/useProfilePosts';
-import { useToggleFollow } from '../hooks/useToggleFollow';
+import { useState } from "react"
+import { useParams } from "react-router"
+import ProfileHeader from "../components/ProfileHeader"
+import ProfileTabs from "../components/ProfileTabs"
+import ProfilePostsGrid from "../components/ProfilePostsGrid"
+import useProfile from "../hooks/useProfile"
+import useProfilePosts from "../hooks/useProfilePosts"
+import useToggleFollow from "../hooks/useToggleFollow"
 
 const EMPTY_LABELS = {
-  posts: 'No posts yet',
-  saved: 'Nothing saved yet',
-  tagged: 'No tagged posts',
-};
+  posts: "No posts yet",
+  saved: "Nothing saved yet",
+  tagged: "No tagged posts",
+}
 
 const ProfilePage = () => {
-  const { username } = useParams();
-  const [activeTab, setActiveTab] = useState('posts');
+  const { username } = useParams()
+  const [activeTab, setActiveTab] = useState("posts")
 
   const {
     data: profile,
     isLoading: isProfileLoading,
     isError: isProfileError,
-  } = useProfile(username);
+  } = useProfile(username)
 
   const {
     data: postsData,
@@ -29,13 +29,13 @@ const ProfilePage = () => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useProfilePosts(username, activeTab);
+  } = useProfilePosts(username, activeTab)
 
   const { mutate: toggleFollow, isPending: isFollowPending } =
-    useToggleFollow(username);
+    useToggleFollow(username)
 
   if (isProfileLoading) {
-    return <ProfileSkeleton />;
+    return <ProfileSkeleton />
   }
 
   if (isProfileError || !profile) {
@@ -46,7 +46,7 @@ const ProfilePage = () => {
           Try checking the username and searching again.
         </p>
       </div>
-    );
+    )
   }
 
   return (
@@ -74,8 +74,8 @@ const ProfilePage = () => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
 const ProfileSkeleton = () => (
   <div className="mx-auto max-w-3xl animate-pulse pb-12">
@@ -93,6 +93,6 @@ const ProfileSkeleton = () => (
       ))}
     </div>
   </div>
-);
+)
 
-export default ProfilePage;
+export default ProfilePage

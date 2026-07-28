@@ -1,10 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { Button } from '@/components/ui/button';
-import {
-  Avatar,
-  AvatarImage,
-  AvatarFallback,
-} from '@/components/ui/avatar';
+import { Avatar } from '@/components/custom/Avatar';
 import { MoreHorizontal, BadgeCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -44,17 +40,29 @@ const ProfileHeader = ({ profile, onFollowToggle, isFollowPending }) => {
       <div className="flex justify-center sm:block sm:shrink-0">
         <div
           className={cn(
-            'rounded-full p-[3px]',
+            'inline-flex rounded-full p-[3px]',
             hasActiveStory &&
               'bg-[conic-gradient(from_45deg,#f9ce34,#ee2a7b,#6228d7,#f9ce34)]'
           )}
         >
-          <Avatar className="h-24 w-24 border-2 border-background sm:h-36 sm:w-36">
-            <AvatarImage src={avatarUrl} alt={username} />
-            <AvatarFallback className="text-2xl">
-              {displayName?.[0]?.toUpperCase() ?? username?.[0]?.toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
+          {/* size is a px prop on this component (not a Tailwind class),
+              so we render two fixed sizes and toggle visibility by breakpoint */}
+          <div className="sm:hidden">
+            <Avatar
+              name={displayName ?? username}
+              src={avatarUrl}
+              size={96}
+              className="border-2 border-background"
+            />
+          </div>
+          <div className="hidden sm:block">
+            <Avatar
+              name={displayName ?? username}
+              src={avatarUrl}
+              size={144}
+              className="border-2 border-background"
+            />
+          </div>
         </div>
       </div>
 
