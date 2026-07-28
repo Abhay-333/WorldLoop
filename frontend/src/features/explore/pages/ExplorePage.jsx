@@ -1,7 +1,8 @@
 // src/features/explore/components/ExplorePage.tsx
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Search } from "lucide-react"
 import ExploreGridItem from "../components/ExploreGridItem"
+import Loading from "@/components/custom/Loading"
 
 // TODO: replace with TanStack Query hook -> GET /api/posts/explore (cursor-paginated per SRS)
 const MOCK_POSTS = [
@@ -22,6 +23,14 @@ const SPAN_PATTERN = ["row-span-1", "row-span-1", "row-span-2", "row-span-1", "r
 
 function ExplorePage() {
   const [query, setQuery] = useState("")
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setIsLoading(false), 700)
+    return () => window.clearTimeout(timer)
+  }, [])
+
+  if (isLoading) return <Loading label="Loading explore..." />
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-6">

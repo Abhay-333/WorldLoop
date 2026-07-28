@@ -68,11 +68,7 @@ authRouter.get(
   }),
   (req, res) => {
     console.log("✅ LOGIN SUCCESS");
-    res.redirect(env.CLIENT_HOME_PAGE);
-    res.json({
-      success: true,
-      user: req.user,
-    });
+    return res.redirect(env.CLIENT_HOME_PAGE);
   },
 );
 

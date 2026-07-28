@@ -9,7 +9,9 @@ const validateRequest = (req, res, next) => {
     const error = new AppError("Validation Error", StatusCodes.BAD_REQUEST, errors.array());
     return res.status(error.statusCode).json({
       success: false,
-      errors: errors.array(),
+      message: error.message,
+      details: error.details,
+      statusCode: error.statusCode,
     });
   }
 
