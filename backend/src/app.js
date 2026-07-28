@@ -17,6 +17,9 @@ const createServer = () => {
   securityMiddleware(app);
   googleOAuthMiddleware(app);
   app.use("/api/v1", indexRouter);
+  app.get("/health", (req, res) => {
+    res.json({ ok: true });
+  }); 
 
   // Error middleware should be used after all the routes
   app.use(errorMiddleware);
