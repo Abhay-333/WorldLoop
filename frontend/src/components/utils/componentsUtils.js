@@ -6,7 +6,7 @@ import {
   PlusSquare,
   User,
   LogOut,
-} from "lucide-react";
+} from "lucide-react"
 
 const SUGGESTIONS = [
   { username: "rohit.dev", subtitle: "Followed by karan.designs" },
