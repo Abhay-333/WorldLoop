@@ -6,6 +6,8 @@ import passport from "passport";
 import googleOAuthMiddleware from "../../middlewares/googleOAuth.middleware.js";
 import env from "../../config/env.js";
 import authenticateMiddleware from "../../middlewares/auth.middleware.js";
+import { generateAccessToken, generateRefreshToken } from "../../utils/Token.js";
+import { appConfig } from "../../config/app.config.js";
 const authRouter = express.Router();
 const authController = new AuthController();
 
@@ -66,8 +68,22 @@ authRouter.get(
     failureRedirect: env.FAILURE_REDIRECT,
     session: true,
   }),
-  (req, res) => {
+  async (req, res) => {
     console.log("✅ LOGIN SUCCESS");
+    const user = req.user;
+    if (!user) {
+      return res.redirect(env.FAILURE_REDIRECT);
+    }
+
+    const accessToken = generateAccessToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
+
+    user.refreshToken = refreshToken;
+    await user.save();
+
+    res.cookie("refreshToken", refreshToken, appConfig.cookie.refreshToken);
+    res.cookie("accessToken", accessToken, appConfig.cookie.accessToken);
+
     return res.redirect(env.CLIENT_HOME_PAGE);
   },
 );
