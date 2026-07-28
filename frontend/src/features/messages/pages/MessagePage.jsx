@@ -1,9 +1,10 @@
 // src/features/messages/components/MessagesPage.tsx
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Send, Image as ImageIcon, Phone, Video, Info } from "lucide-react"
 import { Avatar } from "../../../components/custom/Avatar"
 import ConversationItem from "../components/ConversationItem"
 import ChatBubble from "../components/ChatBubble"
+import Loading from "@/components/custom/Loading"
 
 // TODO: replace with TanStack Query -> GET /api/conversations (per SRS conversations collection)
 const MOCK_CONVERSATIONS = [
@@ -52,8 +53,16 @@ const MOCK_MESSAGES = [
 function MessagesPage() {
   const [activeId, setActiveId] = useState(MOCK_CONVERSATIONS[0].id)
   const [draft, setDraft] = useState("")
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setIsLoading(false), 700)
+    return () => window.clearTimeout(timer)
+  }, [])
 
   const activeConversation = MOCK_CONVERSATIONS.find((c) => c.id === activeId)
+
+  if (isLoading) return <Loading label="Loading messages..." />
 
   return (
     <div className="flex h-screen w-full">

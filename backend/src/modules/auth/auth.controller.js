@@ -17,21 +17,18 @@ export default class AuthController {
   }
 
   async registerController(req, res) {
-    const { accessToken, refreshToken, newUser, verificationToken } =
+    const { newUser, verificationToken } =
       await this.authService.registerService(req.body);
 
     const verifyLink = `${env.CLIENT_URL}/verify-email/${verificationToken}`;
     await sendVerifyLink(newUser, verifyLink);
 
-    res.cookie("refreshToken", refreshToken, appConfig.cookie.refreshToken);
-    res.cookie("accessToken", accessToken, appConfig.cookie.accessToken);
-
     return res
       .status(StatusCodes.CREATED)
       .json(
         new SuccessResponse(
-          "User registered Successfully.",
-          { newUser, accessToken, refreshToken },
+          "User registered successfully. Please verify your email before logging in.",
+          { newUser: { id: newUser._id, email: newUser.email } },
           StatusCodes.CREATED,
         ),
       );

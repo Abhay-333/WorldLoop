@@ -11,13 +11,11 @@ const useRegister = () => {
     mutationFn: registerApi,
     onSuccess: (response) => {
       const user = response.data.newUser
-      // Cache mein user ka data seedha daal do — extra GET /me call nahi lagegi
-      queryClient.setQueryData(["auth", "me"], user)
-      navigate(`/verify-email`, { state: { email: user.email } }) // navigate to verify-email after create the verification page
+      navigate(`/verify-email`, { state: { email: user.email } })
     },
     onError: (error) => {
       console.log(error)
-      toast.error(error.response?.data?.message) // error.response?.data?.message dikhana toast/form mein
+      toast.error(error.response?.data?.message)
     },
   })
 }
