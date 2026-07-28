@@ -40,7 +40,9 @@ passport.use(
 );
 
 // Session handling
-passport.serializeUser((user, done) => done(null, user._id?.toString() || user.id));
+passport.serializeUser((user, done) =>
+  done(null, user._id?.toString() || user.id),
+);
 
 passport.deserializeUser(async (id, done) => {
   try {
