@@ -84,4 +84,166 @@ const buildFakeUser = (index) => ({
 });
 
 // ---------- Random follow graph ----------
-const assignRandomFollows = async(users)=>{}
+const assignRandomFollows = async (users) => {
+  const bulkOps = [];
+  for (const user of users) {
+    const others = users.filter(
+      (u) => u._id.toString() !== user._id.toString(),
+    );
+
+    const followCount = faker.number.int({
+      min: 0,
+      max: Math.min(15, others.length),
+    });
+
+    const toFollow = faker.helpers.arrayElement(others, followCount);
+    if (followCount.length === 0) continue;
+
+    bulkOps.push({
+      updateOne: {
+        filter: { _id: user._id },
+        update: {
+          $addToSet: { following: { $each: toFollow.map((u) => u._id) } },
+        },
+      },
+    });
+
+    for (const followUser of toFollow) {
+      bulkOps.push({
+        updateOne: {
+          filter: { _id: followedUser._id },
+          update: { $addToSet: { followers: user._id } },
+        },
+      });
+    }
+  }
+
+  if (bulkOps.length > 0) {
+    await UserModel.bulkWrite(bulkOps);
+  }
+};
+
+// ---------- Posts ----------
+const buildFakePost = (author, allUsers) => {
+  const mediaCount = faker.number.int({ min: 1, max: 4 });
+  const media = Array.from({ length: mediaCount }, () => ({
+    publicId: `seed/posts/${faker.string.uuid()}`,
+    url: faker.image.url({ width: 1080, height: 1080 }),
+    type: "image",
+    width: 1080,
+    height: 1080,
+  }));
+
+  const others = allUsers.filter(
+    (u) => u._id.toString() !== author._id.toString(),
+  );
+
+  const likeCount = faker.number.int({
+    min: 0,
+    max: Math.min(40, others.length),
+  });
+
+  const likes = faker.helpers.arrayElement(others, likeCount).map((u) => u._id);
+
+  const taggedCount =
+    faker.helpers.maybe(
+      () => faker.number.int({ min: 1, max: Math.min(3, others.length) }),
+      { probability: 0.2 },
+    ) ?? 0;
+
+  const taggedUsers = faker.helpers
+    .arrayElement(others, taggedCount)
+    .map((u) => u._id);
+
+  return {
+    author: author._id,
+    caption:
+      faker.helpers.maybe(() => faker.lorem.sentence({ min: 4, max: 20 }), {
+        probability: 0.85,
+      }) ?? "",
+
+    location: faker.helpers.maybe(
+      () => ({
+        name: `${faker.location.city()}, ${faker.location.country()}`,
+        lat: Number(faker.location.latitude()),
+        lng: Number(faker.location.longitude()),
+      }),
+      { probability: 0.3 },
+    ),
+
+    taggedUsers,
+    likes,
+    commentsCount: faker.number.int({ min: 0, max: 35 }),
+    createdAt: faker.date.recent({ days: 60 }),
+  };
+};
+
+const seedPosts = async (users) => {
+  const postsData = [];
+
+  for (const author of users) {
+    const postCount = faker.number.int({ min: 0, max: MAX_POSTS_PER_USER });
+
+    for (let i = 0; i < postCount; i++) {
+      postsData.push(buildFakePost(author, users));
+    }
+  }
+
+  if (postsData.length < 0) return [];
+
+  // insertMany is safe here (unlike users) since Post has no
+  // password-hashing hook to worry about skipping
+  const createPosts = await PostModel.insertMany(postsData);
+  return createPosts;
+};
+
+// ---------- Main ----------
+const run = async () => {
+  logger.info("Connecting to MongoDB...");
+  await mongoose.connect(MONGO_URI);
+  logger.info("Connected.");
+
+  if (SHOULD_CLEAR) {
+    logger.info("Clearing existing users and posts...");
+    const { deletedCount: usersDeleted } = await UserModel.deleteMany({});
+    const { deletedCount: postsDeleted } = await PostModel.deleteMany({});
+    logger.info(`Deleted ${usersDeleted} users and ${postsDeleted} posts.`);
+  }
+
+  logger.info(`Generating ${USER_COUNT} fake users...`);
+
+  const fakeUsersData = Array.from({ length: USER_COUNT }, (_, i) =>
+    buildFakeUser(i),
+  );
+
+  // Created one-by-one (not insertMany) so the model's pre('save')
+  // password-hashing hook actually runs for each document.
+
+  const createdUsers = [];
+
+  for (const userData of fakeUsersData) {
+    const user = await UserModel.create(userData);
+    createdUsers.push(user);
+  }
+
+  logger.info(`Created ${createdUsers.length} users.`);
+  logger.info(`Assigning random follow relationships...`);
+  await assignRandomFollows(createdUsers);
+
+  logger.info(`Generating up to ${MAX_POSTS_PER_USER} posts per user...`);
+  const createdPosts = await seedPosts(createdUsers);
+  logger.info(`Created ${createdPosts.length} posts.`);
+  logger.info(`\n✅ Seed complete!`);
+  logger.info(`All seeded users share the password: "${DEFAULT_PASSWORD}"`);
+  logger.info(
+    `Sample login -> email: ${createdUsers[0].email} | password: ${DEFAULT_PASSWORD}`,
+  );
+
+  await mongoose.disconnect();
+  process.exit(0);
+};
+
+run().catch((err) => {
+  logger.error("Seeding failed:", err);
+  process.exit(1);
+});
