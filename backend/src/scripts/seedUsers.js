@@ -1,9 +1,9 @@
-import mongoose, { get, Mongoose } from "mongoose";
+import mongoose from "mongoose";
 import { faker } from "@faker-js/faker";
-import UserModel from "../models/user.model";
-import PostModel from "../models/post.model";
-import logger from "../config/logger";
-import env from "../config/env";
+import UserModel from "../models/user.model.js";
+import PostModel from "../models/post.model.js";
+import logger from "../config/logger.js";
+import env from "../config/env.js";
 
 // ---------- CLI args ----------
 const args = process.argv.slice(2);
@@ -61,7 +61,7 @@ const generateUniqueEmail = () => {
 
 const buildFakeUser = (index) => ({
   username: generateUniqueUsername(),
-  fullName: faker.internet.fullName(),
+  fullName: faker.person.fullName(),
   email: generateUniqueEmail(),
   password: DEFAULT_PASSWORD,
   bio:
@@ -96,8 +96,8 @@ const assignRandomFollows = async (users) => {
       max: Math.min(15, others.length),
     });
 
-    const toFollow = faker.helpers.arrayElement(others, followCount);
-    if (followCount.length === 0) continue;
+    const toFollow = faker.helpers.arrayElements(others, followCount);
+    if (toFollow.length === 0) continue;
 
     bulkOps.push({
       updateOne: {
@@ -111,7 +111,7 @@ const assignRandomFollows = async (users) => {
     for (const followUser of toFollow) {
       bulkOps.push({
         updateOne: {
-          filter: { _id: followedUser._id },
+          filter: { _id: followUser._id },
           update: { $addToSet: { followers: user._id } },
         },
       });
@@ -143,7 +143,9 @@ const buildFakePost = (author, allUsers) => {
     max: Math.min(40, others.length),
   });
 
-  const likes = faker.helpers.arrayElement(others, likeCount).map((u) => u._id);
+  const likes = faker.helpers
+    .arrayElements(others, likeCount)
+    .map((u) => u._id);
 
   const taggedCount =
     faker.helpers.maybe(
@@ -152,7 +154,7 @@ const buildFakePost = (author, allUsers) => {
     ) ?? 0;
 
   const taggedUsers = faker.helpers
-    .arrayElement(others, taggedCount)
+    .arrayElements(others, taggedCount)
     .map((u) => u._id);
 
   return {
@@ -162,6 +164,7 @@ const buildFakePost = (author, allUsers) => {
         probability: 0.85,
       }) ?? "",
 
+    media,
     location: faker.helpers.maybe(
       () => ({
         name: `${faker.location.city()}, ${faker.location.country()}`,
@@ -189,7 +192,7 @@ const seedPosts = async (users) => {
     }
   }
 
-  if (postsData.length < 0) return [];
+  if (postsData.length <= 0) return [];
 
   // insertMany is safe here (unlike users) since Post has no
   // password-hashing hook to worry about skipping
@@ -244,6 +247,7 @@ const run = async () => {
 };
 
 run().catch((err) => {
-  logger.error("Seeding failed:", err);
+  console.error(err);
+  logger.error({ err }, "Seeding failed");
   process.exit(1);
 });
