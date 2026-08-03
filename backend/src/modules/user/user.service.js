@@ -6,10 +6,10 @@ export default class UserService {
     this.userRepo = new UserRepo();
   }
 
-  async getUserService(username) {
+  async getUserProfileService(username) {
     if (!username) throw BadRequestError("Username is Required.");
 
-    const user = await this.userRepo.findOne(username);
+    const user = await this.userRepo.findOne({username});
     console.log(user);
 
     return user;

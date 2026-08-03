@@ -6,7 +6,7 @@ const userController = new UserController();
 
 userRouter.get(
   "/:username",
-  userController.getUserController.bind(userController),
+  userController.getUserProfileController.bind(userController),
 );
 
 export default userRouter;
