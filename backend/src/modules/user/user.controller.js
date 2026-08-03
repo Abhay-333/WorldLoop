@@ -10,12 +10,10 @@ export default class UserController {
 
   async getUserProfileController(req, res) {
     const { username } = req.params;
-    console.log(username);
     const user = await this.userService.getUserProfileService(username);
 
     if (!user) throw new NotFoundError("User not found.");
-    console.log(user);
-    
+
     return res
       .status(StatusCodes.OK)
       .json(
