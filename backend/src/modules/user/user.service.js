@@ -1,5 +1,5 @@
-import UserRepo from "../../repositories/user.repository";
-import { BadRequestError } from "../../utils/Errors/app-errors";
+import UserRepo from "../../repositories/user.repository.js";
+import { BadRequestError } from "../../utils/Errors/app-errors.js";
 
 export default class UserService {
   constructor() {
@@ -11,7 +11,7 @@ export default class UserService {
 
     const user = await this.userRepo.findOne(username);
     console.log(user);
-    
+
     return user;
   }
 }
