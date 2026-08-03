@@ -8,6 +8,7 @@ import env from "../../config/env.js";
 import authenticateMiddleware from "../../middlewares/auth.middleware.js";
 import { generateAccessToken, generateRefreshToken } from "../../utils/Token.js";
 import { appConfig } from "../../config/app.config.js";
+
 const authRouter = express.Router();
 const authController = new AuthController();
 

@@ -1,4 +1,4 @@
-export default class userController {
+export default class UserController {
   constructor() {
     this.userService = new UserService();
   }
