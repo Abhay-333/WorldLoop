@@ -5,7 +5,7 @@ const userRouter = Router();
 const userController = new UserController();
 
 userRouter.get(
-  "/users/:username",
+  "/:username",
   userController.getUserController.bind(userController),
 );
 
