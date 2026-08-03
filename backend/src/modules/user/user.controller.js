@@ -3,9 +3,9 @@ export default class UserController {
     this.userService = new UserService();
   }
 
-  async getUser(req, res) {
-    const { userId } = req;
-    const { user } = await this.userService.getUserService(userId);
+  async getUserController(req, res) {
+    const { username } = req;
+    const { user } = await this.userService.getUserService(username);
 
     console.log(user);
   }
