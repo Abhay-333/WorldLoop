@@ -9,4 +9,9 @@ userRouter.get(
   userController.getUserProfileController.bind(userController),
 );
 
+userRouter.put(
+  "/me",
+  userController.updateProfileController.bind(userController),
+);
+
 export default userRouter;
