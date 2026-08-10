@@ -22,15 +22,37 @@ export default class UserController {
   }
 
   async updateProfileController(req, res) {
-    const { username } = req.params;
-    const user = await this.userService.getUserProfileService(username);
+    const userId = req.user.id;
+    const profileData = req.body;
 
-    if (!user) throw new NotFoundError("User not found.");
+    const user = await this.userService.updateProfileService(
+      userId,
+      profileData,
+    );
 
     return res
       .status(StatusCodes.OK)
       .json(
-        new SuccessResponse("User fetched successfully.", user, StatusCodes.OK),
+        new SuccessResponse("Profile updated successfully.", user, StatusCodes.OK),
+      );
+  }
+
+  async getUserPostsController(req, res) {
+    const { username } = req.params;
+    const userPosts = await this.userService.getUserPostsService(username);
+
+    if (!userPosts) throw new NotFoundError("Posts not found.");
+    if (userPosts.length <= 0)
+      throw new NotFoundError("User has not post yet.");
+
+    return res
+      .status(StatusCodes.OK)
+      .json(
+        new SuccessResponse(
+          "User Posts fetched successfully.",
+          user,
+          StatusCodes.OK,
+        ),
       );
   }
 }
