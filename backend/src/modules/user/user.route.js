@@ -12,6 +12,7 @@ userRouter.get(
 
 userRouter.get(
   "/:username/posts",
+  authenticate,
   userController.getUserPostsController.bind(userController),
 );
 
@@ -23,6 +24,7 @@ userRouter.put(
 
 userRouter.post(
   "/me/avatar",
+  authenticate,
   userController.updateProfileController.bind(userController),
 );
 
