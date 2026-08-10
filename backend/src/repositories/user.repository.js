@@ -18,4 +18,11 @@ export default class UserRepo {
       refreshToken: token,
     });
   }
+  async updateById(userId, updates) {
+    return await UserModel.findByIdAndUpdate(
+      userId,
+      { $set: updates },
+      { new: true, runValidators: true },
+    ).select("-password -refreshToken");
+  }
 }
