@@ -33,13 +33,17 @@ export default class UserController {
     return res
       .status(StatusCodes.OK)
       .json(
-        new SuccessResponse("Profile updated successfully.", user, StatusCodes.OK),
+        new SuccessResponse(
+          "Profile updated successfully.",
+          user,
+          StatusCodes.OK,
+        ),
       );
   }
 
   async getUserPostsController(req, res) {
-    const { username } = req.params;
-    const userPosts = await this.userService.getUserPostsService(username);
+    const userId = req.user.id;
+    const userPosts = await this.userService.getUserPostsService(userId);
 
     if (!userPosts) throw new NotFoundError("Posts not found.");
     if (userPosts.length <= 0)
@@ -50,7 +54,7 @@ export default class UserController {
       .json(
         new SuccessResponse(
           "User Posts fetched successfully.",
-          user,
+          userPosts,
           StatusCodes.OK,
         ),
       );

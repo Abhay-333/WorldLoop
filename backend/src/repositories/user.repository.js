@@ -25,4 +25,12 @@ export default class UserRepo {
       { new: true, runValidators: true },
     ).select("-password -refreshToken");
   }
+  
+  async find(userId, updates) {
+    return await UserModel.findByIdAndUpdate(
+      userId,
+      { $set: updates },
+      { new: true, runValidators: true },
+    ).select("-password -refreshToken");
+  }
 }

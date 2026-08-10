@@ -33,12 +33,13 @@ export default class UserService {
     return user;
   }
 
-  async getUserPostsService(username) {
-    if (!username) throw BadRequestError("Username is Required.");
+  async getUserPostsService(userId) {
+    if (!userId) throw BadRequestError("User id is Required.");
 
-    const user = await this.userRepo.findOne({ username });
-    console.log(user);
+    const posts = await this.userRepo.findOne(userId);
+    
+    console.log(posts);
 
-    return user;
+    return posts;
   }
 }
