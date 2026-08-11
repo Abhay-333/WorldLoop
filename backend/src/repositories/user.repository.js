@@ -23,7 +23,7 @@ export default class UserRepo {
       userId,
       { $set: updates },
       { new: true, runValidators: true },
-    ).select("-password -refreshToken");
+    ).select("-password -refreshToken -passwordResetToken -emailVerificationToken");
   }
   
   async find(userId, updates) {
