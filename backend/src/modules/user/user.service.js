@@ -1,3 +1,4 @@
+import PostsRepository from "../../repositories/post.repository.js";
 import UserRepo from "../../repositories/user.repository.js";
 import {
   BadRequestError,
@@ -7,6 +8,7 @@ import {
 export default class UserService {
   constructor() {
     this.userRepo = new UserRepo();
+    this.postRepo = new PostsRepository();
   }
 
   async getUserProfileService(username) {
@@ -16,7 +18,9 @@ export default class UserService {
   }
 
   async updateProfileService(userId, profileData) {
-    const allowedFields = ["displayName", "bio", "website", "location"];
+    if (!userId) throw new BadRequestError("User id is Required.");
+    
+    const allowedFields = ["fullName", "bio", "website", "location"];
     const updates = {};
 
     for (const field of allowedFields) {
@@ -25,7 +29,7 @@ export default class UserService {
       }
     }
 
-    const user = await this.userRepo.updateById(userId);
+    const user = await this.userRepo.updateById(userId, updates);
     console.log(user);
 
     if (!user) throw new NotFoundError("User not found.");
@@ -34,12 +38,8 @@ export default class UserService {
   }
 
   async getUserPostsService(userId) {
-    if (!userId) throw BadRequestError("User id is Required.");
+    if (!userId) throw new BadRequestError("User id is Required.");
 
-    const posts = await this.userRepo.findOne(userId);
-    
-    console.log(posts);
-
-    return posts;
+    return await this.postRepo.findByAuthorId(userId);
   }
 }
