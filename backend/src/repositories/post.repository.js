@@ -1,4 +1,4 @@
-import PostModel from "../models/post.model";
+import PostModel from "../models/post.model.js";
 
 export default class PostsRepository {
   async findByAuthorId(userId) {
