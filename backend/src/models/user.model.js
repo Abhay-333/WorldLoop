@@ -38,6 +38,18 @@ const userSchema = new mongoose.Schema(
       default: "",
     },
 
+    website: {
+      type: String,
+      trim: true,
+      maxlength: 200,
+    },
+
+    location: {
+      type: String,
+      trim: true,
+      maxlength: 100,
+    },
+
     avatar: {
       publicId: String,
       url: String,

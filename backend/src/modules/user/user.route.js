@@ -16,14 +16,14 @@ userRouter.get(
   userController.getUserPostsController.bind(userController),
 );
 
-userRouter.put(
-  "/me",
+userRouter.patch(
+  "/profile",
   authenticate,
   userController.updateProfileController.bind(userController),
 );
 
 userRouter.post(
-  "/me/avatar",
+  "/profile/avatar",
   authenticate,
   userController.updateProfileController.bind(userController),
 );
