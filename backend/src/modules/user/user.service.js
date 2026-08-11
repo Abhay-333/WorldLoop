@@ -12,14 +12,17 @@ export default class UserService {
   }
 
   async getUserProfileService(username) {
-    if (!username) throw BadRequestError("Username is Required.");
+    if (!username) throw new BadRequestError("Username is Required.");
     const user = await this.userRepo.findOne({ username });
+    if (!user) {
+      throw new NotFoundError("User not found.");
+    }
     return user;
   }
 
   async updateProfileService(userId, profileData) {
     if (!userId) throw new BadRequestError("User id is Required.");
-    
+
     const allowedFields = ["fullName", "bio", "website", "location"];
     const updates = {};
 
@@ -27,6 +30,10 @@ export default class UserService {
       if (profileData[field] !== undefined) {
         updates[field] = profileData[field];
       }
+    }
+
+    if (Object.keys(updates).length === 0) {
+      throw new BadRequestError("No valid fields provided.");
     }
 
     const user = await this.userRepo.updateById(userId, updates);
