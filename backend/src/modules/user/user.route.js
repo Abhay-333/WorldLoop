@@ -54,7 +54,20 @@ userRouter.patch(
 userRouter.post(
   "/profile/avatar",
   authenticate,
-  userController.updateProfileController.bind(userController),
+  userController.updateAvatarController.bind(userController),
+);
+
+/**
+ * Reserves an endpoint for authenticated avatar.
+ * When User wants to delete his/her current avatar.
+ * Remove avatar, revert to default
+ * @route DELETE /api/v1/users/profile/avatar
+ * @access Private
+ */
+userRouter.delete(
+  "/profile/avatar",
+  authenticate,
+  userController.deleteAvatarController.bind(userController),
 );
 
 export default userRouter;

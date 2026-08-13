@@ -59,4 +59,21 @@ export default class UserController {
         ),
       );
   }
+
+  async deleteAvatarController(req, res) {
+    const userId = req.user.id;
+    const user = await this.userService.getUserPostsService(userId);
+
+    if (!user) throw new NotFoundError("User not found.");
+
+    return res
+      .status(StatusCodes.OK)
+      .json(
+        new SuccessResponse(
+          "User Avatar Removed Successfully.",
+          user,
+          StatusCodes.OK,
+        ),
+      );
+  }
 }
