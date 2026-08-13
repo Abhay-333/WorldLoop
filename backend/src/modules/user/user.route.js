@@ -51,7 +51,7 @@ userRouter.patch(
  * @route POST /api/v1/users/profile/avatar
  * @access Private
  */
-userRouter.post(
+userRouter.patch(
   "/profile/avatar",
   authenticate,
   userController.updateAvatarController.bind(userController),

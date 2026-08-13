@@ -37,7 +37,6 @@ export default class UserService {
     }
 
     const user = await this.userRepo.updateById(userId, updates);
-    console.log(user);
 
     if (!user) throw new NotFoundError("User not found.");
 
@@ -48,5 +47,17 @@ export default class UserService {
     if (!userId) throw new BadRequestError("User id is Required.");
 
     return await this.postRepo.findByAuthorId(userId);
+  }
+
+  async updateAvatarService(userId, file) {
+    if (!userId) {
+      throw new BadRequestError("User id is Required.");
+    }
+
+    const user = await this.userRepo.findById(userId);
+
+    if (!user) throw new NotFoundError("User not found.");
+
+    
   }
 }

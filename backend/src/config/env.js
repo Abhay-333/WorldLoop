@@ -26,15 +26,21 @@ const envSchema = z.object({
   CLIENT_HOME_PAGE: z.string(), // After the forget-password user will be redirected to this url
   SERVER_URL: z.string(), // Base URL for the server
   VERIFICATION_SERVER_URL: z.string(), // Base URL for email verification
+
   /**
    * @description Google Credentials
    */
-
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
   GOOGLE_CALLBACK_URL: z.string(),
   SESSION_SECRET: z.string(),
   FAILURE_REDIRECT: z.string(),
+
+  /**
+   * @description Cloudinary Credentials
+   */
+  DEFAULT_AVATAR_PUBLIC_ID: z.string(),
+  DEFAULT_AVATAR_URL: z.string(),
 });
 
 const parsed = envSchema.safeParse(process.env);

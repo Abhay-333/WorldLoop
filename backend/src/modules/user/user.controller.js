@@ -60,6 +60,23 @@ export default class UserController {
       );
   }
 
+  async updateAvatarController(req, res) {
+    const userId = req.user.id;
+    const user = await this.userService.updateAvatarService(userId, req.file);
+
+    if (!user) throw new NotFoundError("User not found.");
+
+    return res
+      .status(StatusCodes.OK)
+      .json(
+        new SuccessResponse(
+          "User Avatar Removed Successfully.",
+          user,
+          StatusCodes.OK,
+        ),
+      );
+  }
+
   async deleteAvatarController(req, res) {
     const userId = req.user.id;
     const user = await this.userService.getUserPostsService(userId);
