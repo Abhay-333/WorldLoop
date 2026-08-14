@@ -37,10 +37,17 @@ const envSchema = z.object({
   FAILURE_REDIRECT: z.string(),
 
   /**
-   * @description Cloudinary Credentials
+   * @description Default images/avatar/cover
    */
   DEFAULT_AVATAR_PUBLIC_ID: z.string(),
   DEFAULT_AVATAR_URL: z.string(),
+
+  /**
+   * @description Cloudinary Credentials
+   */
+  CLOUDINARY_CLOUD_NAME: z.string(),
+  CLOUDINARY_API_KEY: z.string(),
+  CLOUDINARY_API_SECRET: z.string(),
 });
 
 const parsed = envSchema.safeParse(process.env);

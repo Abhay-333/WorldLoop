@@ -5,8 +5,8 @@ import {
   NotFoundError,
 } from "../../utils/Errors/app-errors.js";
 import env from "../../config/env.js";
-import cloudinary from "cloudinary";
 import uploadToCloudinary from "../../utils/cloudinary.js";
+import cloudinary from "../../config/cloudinary.js";
 
 export default class UserService {
   constructor() {
