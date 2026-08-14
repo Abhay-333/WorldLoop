@@ -1,6 +1,7 @@
 import { Router } from "express";
 import UserController from "./user.controller.js";
 import authenticate from "../../middlewares/auth.middleware.js";
+import upload from "../../middlewares/multer.middleware.js";
 
 const userRouter = Router();
 const userController = new UserController();
@@ -54,6 +55,7 @@ userRouter.patch(
 userRouter.patch(
   "/profile/avatar",
   authenticate,
+  upload.single("avatar"),
   userController.updateAvatarController.bind(userController),
 );
 
