@@ -107,4 +107,16 @@ export default class UserService {
 
     return updatedUser;
   }
+
+  async updatePrivacyService(userId) {
+    const user = await this.userRepo.findById(userId);
+
+    if (!user) throw new NotFoundError("User not found.");
+
+    const updatedUser = await this.userRepo.updateById(userId, {
+      isPrivateAccount: !user.isPrivateAccount,
+    });
+
+    return updatedUser;
+  }
 }

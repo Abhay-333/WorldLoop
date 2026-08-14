@@ -72,4 +72,17 @@ userRouter.delete(
   userController.deleteAvatarController.bind(userController),
 );
 
+/**
+ * Reserves an endpoint for authenticated avatar.
+ * When User wants to change his/her privacy.
+ * to private or public
+ * @route patch /api/v1/users/profile/avatar
+ * @access Private
+ */
+userRouter.patch(
+  "/profile/privacy",
+  authenticate,
+  userController.updatePrivacyController.bind(userController),
+);
+
 export default userRouter;

@@ -101,4 +101,19 @@ export default class UserController {
         ),
       );
   }
+
+  async updatePrivacyController(req, res) {
+    const userId = req.user.id;
+    const user = await this.userService.updatePrivacyService(userId);
+
+    return res
+      .status(StatusCodes.OK)
+      .json(
+        new SuccessResponse(
+          `Account is now ${user.isPrivateAccount ? "private" : "public"}.`,
+          user,
+          StatusCodes.OK,
+        ),
+      );
+  }
 }
