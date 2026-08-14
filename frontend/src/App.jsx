@@ -12,6 +12,13 @@ import ForgotPasswordPage from "./features/auth/pages/ForgotPasswordPage"
 import ResetPasswordPage from "./features/auth/pages/ResetPasswordPage"
 import ProfilePage from "./features/profile/pages/ProfilePage"
 
+/**
+ * Client route tree.
+ *
+ * Public routes redirect signed-in users to the app. Routes nested under
+ * `/home` require a successful authenticated-user lookup before rendering
+ * the shared application layout.
+ */
 const routes = [
   {
     path: "/",
@@ -44,6 +51,7 @@ const routes = [
   },
 ]
 
+/** Creates the browser router once so route state is retained across renders. */
 const router = createBrowserRouter(routes)
 
 function App() {
