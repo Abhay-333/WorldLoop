@@ -89,7 +89,10 @@ export default class UserController {
     const userId = req.user.id;
     const user = await this.userService.deleteAvatarService(userId);
 
-    if (!user) throw new NotFoundError("User not found.");
+    const user = await this.userService.updateProfileService(
+      userId,
+      profileData,
+    );
 
     return res
       .status(StatusCodes.OK)
