@@ -1,5 +1,8 @@
 import { StatusCodes } from "http-status-codes";
-import { NotFoundError } from "../../utils/Errors/app-errors.js";
+import {
+  BadRequestError,
+  NotFoundError,
+} from "../../utils/Errors/app-errors.js";
 import { SuccessResponse } from "../../utils/SuccessResponse/SuccessResponse.js";
 import UserService from "./user.service.js";
 
@@ -55,6 +58,45 @@ export default class UserController {
         new SuccessResponse(
           "User Posts fetched successfully.",
           userPosts,
+          StatusCodes.OK,
+        ),
+      );
+  }
+
+  async updateAvatarController(req, res) {
+    const userId = req.user.id;
+
+    if (!req.file) throw new BadRequestError("Avatar image not found.");
+    const user = await this.userService.updateAvatarService(userId, req.file);
+
+    const user = await this.userService.updateProfileService(
+      userId,
+      profileData,
+    );
+
+    return res
+      .status(StatusCodes.OK)
+      .json(
+        new SuccessResponse(
+          "User Avatar updated Successfully.",
+          user,
+          StatusCodes.OK,
+        ),
+      );
+  }
+
+  async deleteAvatarController(req, res) {
+    const userId = req.user.id;
+    const user = await this.userService.deleteAvatarService(userId);
+
+    if (!user) throw new NotFoundError("User not found.");
+
+    return res
+      .status(StatusCodes.OK)
+      .json(
+        new SuccessResponse(
+          "User Avatar Removed Successfully.",
+          user,
           StatusCodes.OK,
         ),
       );
