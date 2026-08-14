@@ -55,9 +55,9 @@ const userSchema = new mongoose.Schema(
       url: String,
     },
 
-    coverImage: {
-      publicId: String,
-      url: String,
+    isPrivateAccount: {
+      type: Boolean,
+      default: false,
     },
 
     followers: [
@@ -77,19 +77,16 @@ const userSchema = new mongoose.Schema(
     refreshToken: {
       type: String,
       default: null,
-      // select: false,
     },
 
     passwordResetToken: {
       type: String,
       default: null,
-      // select: false,
     },
 
     passwordResetExpires: {
       type: Date,
       default: null,
-      // select: false,
     },
 
     lastSeen: {
@@ -102,8 +99,15 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
 
-    emailVerificationToken: { type: String, default: null },
-    emailVerificationExpires: { type: Date, default: null },
+    emailVerificationToken: {
+      type: String,
+      default: null,
+    },
+
+    emailVerificationExpires: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,
@@ -112,6 +116,7 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre("save", function () {
   if (!this.isModified("password")) return;
+
   this.password = bcrypt.hashSync(this.password, 10);
 });
 
