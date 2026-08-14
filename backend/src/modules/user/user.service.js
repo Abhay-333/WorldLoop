@@ -4,6 +4,9 @@ import {
   BadRequestError,
   NotFoundError,
 } from "../../utils/Errors/app-errors.js";
+import env from "../../config/env.js";
+import cloudinary from "cloudinary";
+import uploadToCloudinary from "../../utils/cloudinary.js";
 
 export default class UserService {
   constructor() {
@@ -53,11 +56,29 @@ export default class UserService {
     if (!userId) {
       throw new BadRequestError("User id is Required.");
     }
-
+    // 1. Find user
     const user = await this.userRepo.findById(userId);
 
     if (!user) throw new NotFoundError("User not found.");
 
-    
+    // 2. Delete old avatar if it exists
+    if (
+      user.avatar?.publicId &&
+      user.avatar.publicId !== env.DEFAULT_AVATAR_PUBLIC_ID
+    ) {
+      await cloudinary.uploader.destroy(user.avatar.publicId);
+    }
+
+    // 3. Upload new avatar
+    const uploadResult = await uploadToCloudinary(file.buffer, "avatars");
+
+    // 4. Update MongoDB
+    const updatedUser = await this.userRepo.updateById(userId, {
+      avatar: {
+        publicId: uploadResult.public_id,
+        url: uploadResult.secure_url,
+      },
+    });
+    return updatedUser;
   }
 }
