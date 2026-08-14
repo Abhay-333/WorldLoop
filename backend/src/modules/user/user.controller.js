@@ -84,7 +84,7 @@ export default class UserController {
 
   async deleteAvatarController(req, res) {
     const userId = req.user.id;
-    const user = await this.userService.getUserPostsService(userId);
+    const user = await this.userService.deleteAvatarService(userId);
 
     if (!user) throw new NotFoundError("User not found.");
 

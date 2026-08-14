@@ -81,4 +81,28 @@ export default class UserService {
     });
     return updatedUser;
   }
+
+  async deleteAvatarService(userId) {
+    // 1. Find user
+    const user = await this.userRepo.findById(userId);
+
+    if (!user) throw new NotFoundError("User not found.");
+
+    // 2. Delete old avatar if it exists
+    if (
+      user.avatar?.publicId &&
+      user.avatar.publicId !== env.DEFAULT_AVATAR_PUBLIC_ID
+    ) {
+      await cloudinary.uploader.destroy(user.avatar.publicId);
+    }
+
+    const updatedUser = await this.userRepo.updateById(userId, {
+      avatar: {
+        publicId: env.DEFAULT_AVATAR_PUBLIC_ID,
+        url: env.DEFAULT_AVATAR_URL,
+      },
+    });
+
+    return updatedUser;
+  }
 }
