@@ -1,5 +1,4 @@
-import { apiClient } from "@/shared/lib/apiClient"
-import toast from "react-hot-toast"
+import { apiClient } from "@/shared/lib/apiClient.js"
 
 const updateAvatarApi = async () => {
   try {

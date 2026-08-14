@@ -1,7 +1,7 @@
 import multer from "multer";
-import { BadRequestError } from "../utils/Errors/app-errors";
+import { BadRequestError } from "../utils/Errors/app-errors.js";
 
-const stroage = multer.memoryStorage();
+const storage = multer.memoryStorage();
 
 const upload = multer({
   storage,
