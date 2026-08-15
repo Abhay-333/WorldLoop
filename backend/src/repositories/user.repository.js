@@ -23,9 +23,11 @@ export default class UserRepo {
       userId,
       { $set: updates },
       { new: true, runValidators: true },
-    ).select("-password -refreshToken -passwordResetToken -emailVerificationToken");
+    ).select(
+      "-password -refreshToken -passwordResetToken -emailVerificationToken",
+    );
   }
-  
+
   async find(userId, updates) {
     return await UserModel.findByIdAndUpdate(
       userId,
@@ -33,4 +35,12 @@ export default class UserRepo {
       { new: true, runValidators: true },
     ).select("-password -refreshToken");
   }
+
+  async findFollowersByUsername(username) {
+    return await UserModel.findOne({username}).populate(
+      "followers",
+      "username fullName avatar",
+    );
+  }
+
 }

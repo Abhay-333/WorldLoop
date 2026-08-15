@@ -119,4 +119,20 @@ export default class UserController {
         ),
       );
   }
+
+  async getUserFollowersController(req, res) {
+    const { username } = req.params;
+    console.log(username) 
+    const followers = await this.userService.getUserFollowersService(username);
+
+    return res
+      .status(StatusCodes.OK)
+      .json(
+        new SuccessResponse(
+          `Followers fetched successfully.`,
+          followers,
+          StatusCodes.OK,
+        ),
+      );
+  }
 }
