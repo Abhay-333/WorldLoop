@@ -6,6 +6,15 @@ import upload from "../../middlewares/multer.middleware.js";
 const userRouter = Router();
 const userController = new UserController();
 
+/**
+ * Returns the following of a used identified by username.
+ * @route GET /api/v1/users/:username/following
+ * @access Public
+ */
+userRouter.get(
+  "/:username/following",
+  userController.getUserFollowingController.bind(userController),
+);
 
 /**
  * Returns the followers of a user identified by username.

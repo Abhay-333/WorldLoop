@@ -122,7 +122,6 @@ export default class UserController {
 
   async getUserFollowersController(req, res) {
     const { username } = req.params;
-    console.log(username) 
     const followers = await this.userService.getUserFollowersService(username);
 
     return res
@@ -131,6 +130,22 @@ export default class UserController {
         new SuccessResponse(
           `Followers fetched successfully.`,
           followers,
+          StatusCodes.OK,
+        ),
+      );
+  }
+
+  async getUserFollowingController(req, res) {
+    const { username } = req.params;
+    const following =
+      await this.userService.getFollowing(username);
+
+    return res
+      .status(StatusCodes.OK)
+      .json(
+        new SuccessResponse(
+          `Following Users fetched successfully.`,
+          following,
           StatusCodes.OK,
         ),
       );
