@@ -43,4 +43,11 @@ export default class UserRepo {
     );
   }
 
+  async findFollowingByUsername(username) {
+    return await UserModel.findOne({username}).populate(
+      "following",
+      "username fullName avatar",
+    );
+  }
+
 }

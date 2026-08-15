@@ -125,9 +125,18 @@ export default class UserService {
       throw new BadRequestError("Username is required.");
     }
     const user = await this.userRepo.findFollowersByUsername(username);
-    console.log(user);
     if (!user) throw new NotFoundError("User not found.");
 
     return user.followers;
+  }
+
+  async getFollowing(username) {
+    if (!username) {
+      throw new BadRequestError("Username is required.");
+    }
+    const user = await this.userRepo.findFollowingByUsername(username);
+    if (!user) throw new NotFoundError("User not found.");
+
+    return user.following;
   }
 }
