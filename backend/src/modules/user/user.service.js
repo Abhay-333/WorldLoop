@@ -119,4 +119,15 @@ export default class UserService {
 
     return updatedUser;
   }
+
+  async getUserFollowersService(username) {
+    if (!username) {
+      throw new BadRequestError("Username is required.");
+    }
+    const user = await this.userRepo.findFollowersByUsername(username);
+    console.log(user);
+    if (!user) throw new NotFoundError("User not found.");
+
+    return user.followers;
+  }
 }
