@@ -9,7 +9,7 @@ import { apiClient } from "@/shared/lib/apiClient.js"
  */
 export const getProfileApi = async () => {
   try {
-    const result = apiClient.get("/users/:username")
+    const result = await apiClient.get("/users/:username")
     return result.data
   } catch (error) {
     console.error("Error fetching user profile:", error.response || error.message)
@@ -28,7 +28,7 @@ export const getProfileApi = async () => {
  */
 export const updateProfileApi = async () => {
   try {
-    const result = apiClient.patch("/users/profile")
+    const result = await apiClient.patch("/users/profile")
     return result.data
   } catch (error) {
     console.error(
@@ -49,7 +49,7 @@ export const updateProfileApi = async () => {
  */
 export const updateAvatarApi = async () => {
   try {
-    const result = apiClient.patch("/users/profile/avatar")
+    const result = await apiClient.patch("/users/profile/avatar")
     return result.data
   } catch (error) {
     console.error("Error updating avatar:", error.response || error.message)
@@ -67,7 +67,7 @@ export const updateAvatarApi = async () => {
  */
 export const deleteAvatarApi = async () => {
   try {
-    const result = apiClient.delete("/users/profile/avatar")
+    const result = await apiClient.delete("/users/profile/avatar")
     return result.data
   } catch (error) {
     console.error(
@@ -88,7 +88,7 @@ export const deleteAvatarApi = async () => {
  */
 export const updatePrivacyApi = async () => {
   try {
-    const result = apiClient.patch("/users/profile/privacy")
+    const result = await apiClient.patch("/users/profile/privacy")
     return result.data
   } catch (error) {
     console.error(
@@ -109,7 +109,7 @@ export const updatePrivacyApi = async () => {
  */
 export const getPostsApi = async () => {
   try {
-    const result = apiClient.get("/users/:username/posts")
+    const result = await apiClient.get("/users/:username/posts")
     return result.data
   } catch (error) {
     console.error(
@@ -130,7 +130,7 @@ export const getPostsApi = async () => {
  */
 export const getFollowersApi = async () => {
   try {
-    const result = apiClient.get("/users/:username/followers")
+    const result = await apiClient.get("/users/:username/followers")
     return result.data
   } catch (error) {
     console.error(
@@ -151,7 +151,7 @@ export const getFollowersApi = async () => {
  */
 export const getFollowingUsersApi = async () => {
   try {
-    const result = apiClient.get("/users/:username/following")
+    const result = await apiClient.get("/users/:username/following")
     return result.data
   } catch (error) {
     console.error(
