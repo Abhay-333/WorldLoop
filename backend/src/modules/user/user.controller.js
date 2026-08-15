@@ -66,13 +66,8 @@ export default class UserController {
   async updateAvatarController(req, res) {
     const userId = req.user.id;
 
-    if (!req.file) throw new BadRequestError("Avatar image not found.");
+    if (!req.file) throw new BadRequestError("Avatar image is Required.");
     const user = await this.userService.updateAvatarService(userId, req.file);
-
-    const user = await this.userService.updateProfileService(
-      userId,
-      profileData,
-    );
 
     return res
       .status(StatusCodes.OK)
