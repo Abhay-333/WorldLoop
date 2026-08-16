@@ -12,7 +12,10 @@ export const getProfileApi = async () => {
     const result = await apiClient.get("/users/:username")
     return result.data
   } catch (error) {
-    console.error("Error fetching user profile:", error.response || error.message)
+    console.error(
+      "Error fetching user profile:",
+      error.response || error.message
+    )
     throw error
   }
 }
@@ -70,10 +73,7 @@ export const deleteAvatarApi = async () => {
     const result = await apiClient.delete("/users/profile/avatar")
     return result.data
   } catch (error) {
-    console.error(
-      "Error deleting avatar:",
-      error.response || error.message
-    )
+    console.error("Error deleting avatar:", error.response || error.message)
     throw error
   }
 }
@@ -107,15 +107,14 @@ export const updatePrivacyApi = async () => {
  * @returns {Promise<Object>} Array of posts created by the user.
  * @throws {Error} If the API request fails or user not found.
  */
-export const getPostsApi = async () => {
+export const getPostsApi = async ({ username, cursor, limit = 12 }) => {
   try {
-    const result = await apiClient.get("/users/:username/posts")
+    const { data } = await apiClient.get(`/users/${username}/posts`, {
+      params: { cursor, limit },
+    })
     return result.data
   } catch (error) {
-    console.error(
-      "Error fetching user posts:",
-      error.response || error.message
-    )
+    console.error("Error fetching user posts:", error.response || error.message)
     throw error
   }
 }
@@ -133,10 +132,7 @@ export const getFollowersApi = async () => {
     const result = await apiClient.get("/users/:username/followers")
     return result.data
   } catch (error) {
-    console.error(
-      "Error fetching followers:",
-      error.response || error.message
-    )
+    console.error("Error fetching followers:", error.response || error.message)
     throw error
   }
 }
