@@ -50,10 +50,19 @@ export default class UserService {
     return user;
   }
 
-  async getUserPostsService(userId) {
-    if (!userId) throw new BadRequestError("User id is Required.");
+  async getUserPostsService({ username, cursor, limit, viewerId }) {
+    const user = await this.userRepo.findByUsername(username);
 
-    return await this.postRepo.findByAuthorId(userId);
+    if (!user) throw new NotFoundError("User not Found.");
+
+    const result = await this.postRepo.findPostsByUsername({
+      userId: user._id,
+      cursor,
+      limit,
+      viewerId,
+    });
+    
+    return result;
   }
 
   async updateAvatarService(userId, file) {
