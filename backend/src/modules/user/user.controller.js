@@ -45,19 +45,25 @@ export default class UserController {
   }
 
   async getUserPostsController(req, res) {
-    const userId = req.user.id;
-    const userPosts = await this.userService.getUserPostsService(userId);
+    const { username } = req.params;
+    const { cursor, limit = 12 } = req.query;
+    const viewerId = req.user.id;
 
-    if (!userPosts) throw new NotFoundError("Posts not found.");
-    if (userPosts.length <= 0)
-      throw new NotFoundError("User has not post yet.");
+    const result = await this.userService.getUserPostsService({
+      username,
+      cursor,
+      limit: Number(limit),
+      viewerId,
+    });
+
+    if (!result) throw new NotFoundError("Posts not found.");
 
     return res
       .status(StatusCodes.OK)
       .json(
         new SuccessResponse(
           "User Posts fetched successfully.",
-          userPosts,
+          result,
           StatusCodes.OK,
         ),
       );
@@ -132,8 +138,7 @@ export default class UserController {
 
   async getUserFollowingController(req, res) {
     const { username } = req.params;
-    const following =
-      await this.userService.getFollowing(username);
+    const following = await this.userService.getFollowing(username);
 
     return res
       .status(StatusCodes.OK)
