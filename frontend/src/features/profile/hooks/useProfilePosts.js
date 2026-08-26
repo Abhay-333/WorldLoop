@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { getProfileApi } from "../api/profile.api"
 
-const useProfilePosts = () => {
+const useProfilePosts = (username, activeTab) => {
   return useInfiniteQuery({
     queryKey: ["user-posts", username],
     queryFn: ({ pageParam }) =>

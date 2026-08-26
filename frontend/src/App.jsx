@@ -45,6 +45,7 @@ const routes = [
           { path: "explore", element: <ExplorePage /> },
           { path: "messages", element: <MessagesPage /> },
           { path: "profile", element: <ProfilePage /> },
+          { path: "profile/:username", element: <ProfilePage /> },
         ],
       },
     ],

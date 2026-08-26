@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import { getProfileApi } from "../api/profile.api"
 import toast from "react-hot-toast"
 
-const useProfile = () => {
+const useProfile = (username) => {
   return useQuery({
     queryKey: ["profile", username],
     queryFn: () => getProfileApi(username),
