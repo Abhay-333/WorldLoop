@@ -31,8 +31,8 @@ const ProfilePage = () => {
     isFetchingNextPage,
   } = useProfilePosts(username, activeTab)
 
-  const { mutate: toggleFollow, isPending: isFollowPending } =
-    useToggleFollow(username)
+  // const { mutate: toggleFollow, isPending: isFollowPending } =
+  //   useToggleFollow(username)
 
   if (isProfileLoading) {
     return <ProfileSkeleton />
