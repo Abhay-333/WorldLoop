@@ -7,9 +7,9 @@ import { apiClient } from "@/shared/lib/apiClient.js"
  * @returns {Promise<Object>} The user profile data including username, bio, avatar, etc.
  * @throws {Error} If the API request fails or the user is not found.
  */
-export const getProfileApi = async () => {
+export const getProfileApi = async (username) => {
   try {
-    const result = await apiClient.get("/users/:username")
+    const result = await apiClient.get(`/users/${username}`)
     return result.data
   } catch (error) {
     console.error(
