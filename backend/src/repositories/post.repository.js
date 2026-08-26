@@ -28,8 +28,8 @@ export default class PostsRepository {
 
     const hasNextPage = posts.length > limit;
 
-    if (hasNextPage) {  
-      posts.pop();  //Remove the extra post
+    if (hasNextPage) {
+      posts.pop(); //Remove the extra post
     }
 
     const nextCursor = hasNextPage
