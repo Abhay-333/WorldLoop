@@ -112,7 +112,7 @@ export const getPostsApi = async ({ username, cursor, limit = 12 }) => {
     const { data } = await apiClient.get(`/users/${username}/posts`, {
       params: { cursor, limit },
     })
-    return result.data
+    return data.data
   } catch (error) {
     console.error("Error fetching user posts:", error.response?.data || error.message)
     throw error
