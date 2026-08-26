@@ -6,6 +6,7 @@ import ProfilePostsGrid from "../components/ProfilePostsGrid"
 import useProfile from "../hooks/useProfile"
 import useProfilePosts from "../hooks/useProfilePosts"
 import useToggleFollow from "../hooks/useToggleFollow"
+import { useSelector } from "react-redux"
 
 const EMPTY_LABELS = {
   posts: "No posts yet",
@@ -14,9 +15,9 @@ const EMPTY_LABELS = {
 }
 
 const ProfilePage = () => {
-  const { username } = useParams();
+  const { username: routeUsername } = useParams()
   const [activeTab, setActiveTab] = useState("posts")
-  
+  const currentUser = useSelector((state) => state.auth.user)
   const {
     data: profile,
     isLoading: isProfileLoading,
