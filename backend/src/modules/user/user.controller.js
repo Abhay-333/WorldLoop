@@ -89,12 +89,7 @@ export default class UserController {
   async deleteAvatarController(req, res) {
     const userId = req.user.id;
     const user = await this.userService.deleteAvatarService(userId);
-
-    const user = await this.userService.updateProfileService(
-      userId,
-      profileData,
-    );
-
+    
     return res
       .status(StatusCodes.OK)
       .json(
