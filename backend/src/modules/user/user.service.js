@@ -61,7 +61,7 @@ export default class UserService {
       limit,
       viewerId,
     });
-    
+
     return result;
   }
 
