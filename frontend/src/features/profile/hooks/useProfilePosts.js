@@ -1,11 +1,13 @@
 import { useInfiniteQuery } from "@tanstack/react-query"
-import { getProfileApi } from "../api/profile.api"
+import { getPostsApi } from "../api/profile.api"
+
+const POSTS_PER_PAGE = 12
 
 const useProfilePosts = (username, activeTab) => {
   return useInfiniteQuery({
     queryKey: ["user-posts", username],
     queryFn: ({ pageParam }) =>
-      getProfileApi({ username, cursor: pageParam, limit: POSTS_PER_PAGE }),
+      getPostsApi({ username, cursor: pageParam, limit: POSTS_PER_PAGE }),
     initialPageParam: null,
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
     enabled: Boolean(username),
