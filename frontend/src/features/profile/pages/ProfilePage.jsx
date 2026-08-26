@@ -5,7 +5,6 @@ import ProfileTabs from "../components/ProfileTabs"
 import ProfilePostsGrid from "../components/ProfilePostsGrid"
 import useProfile from "../hooks/useProfile"
 import useProfilePosts from "../hooks/useProfilePosts"
-import useToggleFollow from "../hooks/useToggleFollow"
 import { useSelector } from "react-redux"
 import useMe from "@/app/hooks/useMe"
 
@@ -23,10 +22,24 @@ const ProfilePage = () => {
   const currentUser = useSelector((state) => state.auth.user)
   const username = routeUsername || currentUser?.username
   const {
-    data: profile,
+    data: profileResponse,
     isLoading: isProfileLoading,
     isError: isProfileError,
   } = useProfile(username)
+  const profileData = profileResponse?.data
+  const profile = profileData
+    ? {
+        ...profileData,
+        displayName: profileData.fullName,
+        avatarUrl: profileData.avatar?.url,
+        websiteUrl: profileData.website,
+        postsCount: profileData.postsCount ?? 0,
+        followersCount: profileData.followers?.length ?? 0,
+        followingCount: profileData.following?.length ?? 0,
+        isOwnProfile: profileData.username === currentUser?.username,
+        isFollowedByMe: false,
+      }
+    : null
 
   const {
     data: postsData,
@@ -35,9 +48,6 @@ const ProfilePage = () => {
     fetchNextPage,
     isFetchingNextPage,
   } = useProfilePosts(username, activeTab)
-
-  // const { mutate: toggleFollow, isPending: isFollowPending } =
-  //   useToggleFollow(username)
 
   if (isMeLoading && !currentUser) {
     return <ProfileSkeleton />
@@ -62,8 +72,6 @@ const ProfilePage = () => {
     <div className="mx-auto max-w-3xl pb-12">
       <ProfileHeader
         profile={profile}
-        isFollowPending={isFollowPending}
-        onFollowToggle={() => toggleFollow(profile.isFollowedByMe)}
       />
 
       <ProfileTabs
