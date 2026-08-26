@@ -114,7 +114,7 @@ export const getPostsApi = async ({ username, cursor, limit = 12 }) => {
     })
     return result.data
   } catch (error) {
-    console.error("Error fetching user posts:", error.response || error.message)
+    console.error("Error fetching user posts:", error.response?.data || error.message)
     throw error
   }
 }
