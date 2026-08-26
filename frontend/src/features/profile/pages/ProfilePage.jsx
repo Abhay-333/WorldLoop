@@ -7,6 +7,7 @@ import useProfile from "../hooks/useProfile"
 import useProfilePosts from "../hooks/useProfilePosts"
 import useToggleFollow from "../hooks/useToggleFollow"
 import { useSelector } from "react-redux"
+import useMe from "@/app/hooks/useMe"
 
 const EMPTY_LABELS = {
   posts: "No posts yet",
@@ -17,7 +18,10 @@ const EMPTY_LABELS = {
 const ProfilePage = () => {
   const { username: routeUsername } = useParams()
   const [activeTab, setActiveTab] = useState("posts")
+
+  const { isLoading: isMeLoading } = useMe()
   const currentUser = useSelector((state) => state.auth.user)
+  const username = routeUsername || currentUser?.username
   const {
     data: profile,
     isLoading: isProfileLoading,
@@ -34,6 +38,10 @@ const ProfilePage = () => {
 
   // const { mutate: toggleFollow, isPending: isFollowPending } =
   //   useToggleFollow(username)
+
+  if (isMeLoading && !currentUser) {
+    return <ProfileSkeleton />
+  }
 
   if (isProfileLoading) {
     return <ProfileSkeleton />
