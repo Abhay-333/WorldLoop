@@ -14,9 +14,9 @@ const EMPTY_LABELS = {
 }
 
 const ProfilePage = () => {
-  const { username } = useParams()
+  const { username } = useParams();
   const [activeTab, setActiveTab] = useState("posts")
-
+  
   const {
     data: profile,
     isLoading: isProfileLoading,
