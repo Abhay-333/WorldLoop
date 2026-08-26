@@ -1,43 +1,22 @@
 import { useSelector } from "react-redux"
 
 function Loading({ label = "Loading WorldLoop..." }) {
-  const theme = useSelector((state) => state.theme.theme)
-  const isDark = theme === "dark"
+  useSelector((state) => state.theme.theme)
 
   return (
-    <div
-      className={`flex min-h-screen items-center justify-center px-4 ${
-        isDark ? "bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-950"
-      }`}
-    >
+    <div className="flex min-h-screen items-center justify-center bg-background px-4 text-foreground">
       <div
-        className={`w-full max-w-sm overflow-hidden rounded-[28px] border shadow-[0_20px_60px_-15px_rgba(31,27,36,0.15)] ${
-          isDark
-            ? "border-slate-800 bg-slate-900"
-            : "border-[#F0E9E3] bg-white"
-        }`}
+        className="w-full max-w-sm overflow-hidden rounded-[28px] border border-border bg-card shadow-[0_20px_60px_-15px_rgba(31,27,36,0.15)]"
       >
         <div
-          className={`relative h-24 overflow-hidden ${
-            isDark
-              ? "bg-gradient-to-r from-pink-700 via-orange-700 to-yellow-600"
-              : "bg-gradient-to-r from-pink-500 via-orange-500 to-yellow-300"
-          }`}
+          className="relative h-24 overflow-hidden bg-gradient-to-r from-pink-500 via-orange-500 to-yellow-300 dark:from-pink-700 dark:via-orange-700 dark:to-yellow-600"
         />
 
         <div className="flex flex-col items-center px-8 py-8 text-center">
           <div
-            className={`mb-5 flex h-16 w-16 items-center justify-center rounded-full border-4 shadow-lg ${
-              isDark
-                ? "border-slate-900 bg-slate-800"
-                : "border-white bg-primary"
-            }`}
+            className="mb-5 flex h-16 w-16 items-center justify-center rounded-full border-4 border-card bg-primary shadow-lg"
           >
-            <span
-              className={`text-2xl font-extrabold ${
-                isDark ? "text-white" : "text-primary-foreground"
-              }`}
-            >
+            <span className="text-2xl font-extrabold text-primary-foreground">
               W
             </span>
           </div>
@@ -59,3 +38,4 @@ function Loading({ label = "Loading WorldLoop..." }) {
 }
 
 export default Loading
+  
