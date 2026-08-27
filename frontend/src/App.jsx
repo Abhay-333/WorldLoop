@@ -11,6 +11,7 @@ import VerifyEmailPage from "./features/auth/pages/VerifyEmailPage"
 import ForgotPasswordPage from "./features/auth/pages/ForgotPasswordPage"
 import ResetPasswordPage from "./features/auth/pages/ResetPasswordPage"
 import ProfilePage from "./features/profile/pages/ProfilePage"
+import NotificationsPage from "./features/notifications/pages/NotificationPage"
 
 /**
  * Client route tree.
@@ -44,6 +45,7 @@ const routes = [
           { path: "", element: <Feed /> },
           { path: "explore", element: <ExplorePage /> },
           { path: "messages", element: <MessagesPage /> },
+          { path: "notifications", element: <NotificationsPage /> },
           { path: "profile", element: <ProfilePage /> },
           { path: "profile/:username", element: <ProfilePage /> },
         ],
