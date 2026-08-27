@@ -174,6 +174,106 @@ const MOCK_PEOPLE = [
   { id: "p4", name: "rohan.dev", initials: "RD", tone: "#6C5CE7" },
 ];
 
+const TYPE_META = {
+  like: { icon: Heart, bg: "bg-red-100 dark:bg-red-950", fg: "text-red-600 dark:text-red-400" },
+  comment: { icon: MessageCircle, bg: "bg-blue-100 dark:bg-blue-950", fg: "text-blue-600 dark:text-blue-400" },
+  follow: { icon: UserPlus, bg: "bg-emerald-100 dark:bg-emerald-950", fg: "text-emerald-600 dark:text-emerald-400" },
+  mention: { icon: AtSign, bg: "bg-violet-100 dark:bg-violet-950", fg: "text-violet-600 dark:text-violet-400" },
+  tag: { icon: Tag, bg: "bg-violet-100 dark:bg-violet-950", fg: "text-violet-600 dark:text-violet-400" },
+};
+
+const MOCK_DATA = {
+  New: [
+    {
+      id: "n1",
+      type: "like",
+      unread: true,
+      user: { name: "priya.codes", initials: "PC", tone: "coral" },
+      timestamp: "2m",
+      preview: "liked your post",
+      postThumb: true,
+    },
+    {
+      id: "n2",
+      type: "follow",
+      unread: true,
+      user: { name: "arjun_builds", initials: "AB", tone: "teal" },
+      timestamp: "14m",
+      preview: "started following you",
+      followState: "none",
+    },
+    {
+      id: "n3",
+      type: "comment",
+      unread: true,
+      user: { name: "meera.designs", initials: "MD", tone: "sky" },
+      timestamp: "26m",
+      preview: "\u201cthis loop transition is so smooth\u201d",
+      postThumb: true,
+    },
+  ],
+  Today: [
+    {
+      id: "n4",
+      type: "mention",
+      unread: false,
+      user: { name: "rohan.dev", initials: "RD", tone: "indigo" },
+      timestamp: "3h",
+      preview: "mentioned you in a comment",
+      postThumb: true,
+    },
+    {
+      id: "n5",
+      type: "follow",
+      unread: false,
+      user: { name: "kavya_writes", initials: "KW", tone: "rose" },
+      timestamp: "5h",
+      preview: "requested to follow you",
+      followState: "requested",
+    },
+    {
+      id: "n6",
+      type: "like",
+      unread: false,
+      user: { name: "dev.aditi", initials: "DA", tone: "amber" },
+      timestamp: "7h",
+      preview: "and 12 others liked your post",
+      postThumb: true,
+    },
+  ],
+  "This week": [
+    {
+      id: "n7",
+      type: "tag",
+      unread: false,
+      user: { name: "sameer.k", initials: "SK", tone: "teal" },
+      timestamp: "Mon",
+      preview: "tagged you in a photo",
+      postThumb: true,
+    },
+    {
+      id: "n8",
+      type: "follow",
+      unread: false,
+      user: { name: "ishaan_ux", initials: "IU", tone: "sky" },
+      timestamp: "Sun",
+      preview: "started following you",
+      followState: "following",
+    },
+  ],
+  Earlier: [
+    {
+      id: "n9",
+      type: "comment",
+      unread: false,
+      user: { name: "nisha.p", initials: "NP", tone: "coral" },
+      timestamp: "Aug 19",
+      preview: "\u201cwhere was this shot?\u201d",
+      postThumb: true,
+    },
+  ],
+};
+
 export {
   SUGGESTIONS,
   NAV_ITEMS,
@@ -184,4 +284,6 @@ export {
   SPAN_PATTERN,
   MOCK_GALLERY,
   MOCK_PEOPLE,
+  TYPE_META,
+  MOCK_DATA,
 }
