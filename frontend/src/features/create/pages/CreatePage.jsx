@@ -9,6 +9,8 @@ import {
   Eye,
   MessageSquareOff,
 } from "lucide-react";
+import StepRing from "../components/StepRing";
+import MediaTile from "../components/MediaTile";
 
 /**
  * WorldLoop — Create post
@@ -23,66 +25,6 @@ import {
 
 // Signature: an open arc on step 1, a closed loop on step 2 — the post
 // "completes the loop" the moment it's ready to share.
-
-function StepRing({ step }) {
-  const size = 28;
-  const r = 11;
-  const c = 2 * Math.PI * r;
-  const arc = step === 1 ? c * 0.65 : c;
-  return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ transform: "rotate(-90deg)" }}>
-      <defs>
-        <linearGradient id="ring-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#6C5CE7" />
-          <stop offset="100%" stopColor="#FF6B4A" />
-        </linearGradient>
-      </defs>
-      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="currentColor" strokeOpacity="0.2" strokeWidth="2" />
-      <circle
-        cx={size / 2}
-        cy={size / 2}
-        r={r}
-        fill="none"
-        stroke="url(#ring-grad)"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeDasharray={`${arc} ${c - arc}`}
-      />
-    </svg>
-  );
-}
-
-function MediaTile({ item, index, onToggle }) {
-  return (
-    <button
-      onClick={() => onToggle(item.id)}
-      className="relative aspect-square"
-      style={{ background: `linear-gradient(135deg, ${item.tone}66, #151517)` }}
-    >
-      {index !== null && (
-        <div
-          className="absolute top-1.5 right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[11px] font-medium text-primary-foreground"
-        >
-          {index + 1}
-        </div>
-      )}
-    </button>
-  );
-}
-
-function Toggle({ checked, onChange }) {
-  return (
-    <button
-      onClick={() => onChange(!checked)}
-      className={`relative h-5 w-9 shrink-0 rounded-full transition-colors ${checked ? "bg-primary" : "bg-muted"}`}
-      aria-pressed={checked}
-    >
-      <span
-        className={`absolute top-0.5 h-4 w-4 rounded-full bg-primary-foreground transition-all ${checked ? "left-4.5" : "left-0.5"}`}
-      />
-    </button>
-  );
-}
 
 export default function CreatePostPage() {
   const [step, setStep] = useState(1);
