@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Heart, MessageCircle, UserPlus, AtSign, Tag } from "lucide-react";
-import { Avatar } from "@/components/custom/Avatar";
 import GroupHeader from "../components/GroupHeader";
 import ActivityRow from "../components/ActivityRow";
 import { MOCK_DATA } from "@/components/utils/componentsUtils";
