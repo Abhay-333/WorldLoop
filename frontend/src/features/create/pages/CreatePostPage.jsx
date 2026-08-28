@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import StepRing from "../components/StepRing";
 import MediaTile from "../components/MediaTile";
+import { MOCK_GALLERY } from "@/components/utils/componentsUtils";
 
 /**
  * WorldLoop — Create post

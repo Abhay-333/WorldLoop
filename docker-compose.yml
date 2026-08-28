@@ -8,6 +8,7 @@ services:
       - "${FRONTEND_PORT:-5173}:5173"
     environment:
       - VITE_API_URL_SERVER=${VITE_API_URL_SERVER}
+      - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -25,6 +26,7 @@ services:
     environment:
       - PORT=${BACKEND_PORT:-5000}
       - MONGO_URI=mongodb://mongodb:27017/${MONGO_DB_NAME}
+    command: ["npm", "run", "dev", "--", "--legacy-watch"]
     volumes:
       - ./backend:/app
       - /app/node_modules
