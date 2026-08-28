@@ -1,7 +1,7 @@
-import { Avatar } from "radix-ui"
 import TypeBadge from "./TypeBadge"
 import FollowButton from "./FollowButton"
 import { TYPE_META } from "@/components/utils/componentsUtils"
+import { Avatar } from "@/components/custom/Avatar"
 
 function ActivityRow({ item }) {
   const meta = TYPE_META[item.type]
