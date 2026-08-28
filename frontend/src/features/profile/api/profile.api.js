@@ -127,9 +127,9 @@ export const getPostsApi = async ({ username, cursor, limit = 12 }) => {
  * @returns {Promise<Object>} Array of user profiles who follow the specified user.
  * @throws {Error} If the API request fails or user not found.
  */
-export const getFollowersApi = async () => {
+export const getFollowersApi = async (username) => {
   try {
-    const result = await apiClient.get("/users/:username/followers")
+    const result = await apiClient.get(`/users/${username}/followers`)
     return result.data
   } catch (error) {
     console.error("Error fetching followers:", error.response || error.message)
@@ -145,9 +145,9 @@ export const getFollowersApi = async () => {
  * @returns {Promise<Object>} Array of user profiles that the specified user is following.
  * @throws {Error} If the API request fails or user not found.
  */
-export const getFollowingUsersApi = async () => {
+export const getFollowingUsersApi = async (username) => {
   try {
-    const result = await apiClient.get("/users/:username/following")
+    const result = await apiClient.get(`/users/${username}/following`)
     return result.data
   } catch (error) {
     console.error(

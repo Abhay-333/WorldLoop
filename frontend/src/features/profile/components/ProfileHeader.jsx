@@ -18,7 +18,12 @@ import { cn } from '@/lib/utils';
  * is true — same visual language a Stories feature (V2) would reuse,
  * so this component won't need to change when that phase lands.
  */
-const ProfileHeader = ({ profile, onFollowToggle, isFollowPending }) => {
+const ProfileHeader = ({
+  profile,
+  onFollowToggle,
+  isFollowPending,
+  onConnectionsOpen,
+}) => {
   const {
     username,
     displayName,
@@ -100,8 +105,8 @@ const ProfileHeader = ({ profile, onFollowToggle, isFollowPending }) => {
         {/* Stats */}
         <div className="mt-4 hidden gap-8 sm:flex">
           <StatItem label="posts" value={postsCount} />
-          <StatItem label="followers" value={followersCount} to={`/${username}/followers`} />
-          <StatItem label="following" value={followingCount} to={`/${username}/following`} />
+          <StatItem label="followers" value={followersCount} onClick={() => onConnectionsOpen('followers')} />
+          <StatItem label="following" value={followingCount} onClick={() => onConnectionsOpen('following')} />
         </div>
 
         {/* Bio */}
@@ -132,15 +137,15 @@ const ProfileHeader = ({ profile, onFollowToggle, isFollowPending }) => {
         {/* Stats (mobile, below bio, IG puts these under bio on small screens) */}
         <div className="mt-4 flex justify-between border-y py-3 sm:hidden">
           <StatItem label="posts" value={postsCount} stacked />
-          <StatItem label="followers" value={followersCount} to={`/${username}/followers`} stacked />
-          <StatItem label="following" value={followingCount} to={`/${username}/following`} stacked />
+          <StatItem label="followers" value={followersCount} onClick={() => onConnectionsOpen('followers')} stacked />
+          <StatItem label="following" value={followingCount} onClick={() => onConnectionsOpen('following')} stacked />
         </div>
       </div>
     </div>
   );
 };
 
-const StatItem = ({ label, value, to, stacked }) => {
+const StatItem = ({ label, value, onClick, stacked }) => {
   const content = (
     <div className={cn(stacked ? 'flex flex-col items-center gap-0.5' : 'flex items-center gap-1')}>
       <span className="font-semibold">{formatCount(value)}</span>
@@ -150,12 +155,12 @@ const StatItem = ({ label, value, to, stacked }) => {
     </div>
   );
 
-  if (!to) return content;
+  if (!onClick) return content;
 
   return (
-    <Link to={to} className="transition-opacity hover:opacity-70">
+    <button type="button" onClick={onClick} className="transition-opacity hover:opacity-70">
       {content}
-    </Link>
+    </button>
   );
 };
 
