@@ -12,6 +12,7 @@ import ForgotPasswordPage from "./features/auth/pages/ForgotPasswordPage"
 import ResetPasswordPage from "./features/auth/pages/ResetPasswordPage"
 import ProfilePage from "./features/profile/pages/ProfilePage"
 import NotificationsPage from "./features/notifications/pages/NotificationPage"
+import CreatePostPage from "./features/create/pages/CreatePostPage"
 
 /**
  * Client route tree.
@@ -46,6 +47,7 @@ const routes = [
           { path: "explore", element: <ExplorePage /> },
           { path: "messages", element: <MessagesPage /> },
           { path: "notifications", element: <NotificationsPage /> },
+          { path: "create", element: <CreatePostPage /> },
           { path: "profile", element: <ProfilePage /> },
           { path: "profile/:username", element: <ProfilePage /> },
         ],

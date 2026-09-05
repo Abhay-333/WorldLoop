@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 function FollowButton({ state: initialState }) {
   const [state, setState] = useState(initialState)
 

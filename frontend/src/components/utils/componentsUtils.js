@@ -6,6 +6,9 @@ import {
   PlusSquare,
   User,
   LogOut,
+  UserPlus,
+  AtSign,
+  Tag,
 } from "lucide-react"
 
 const SUGGESTIONS = [
