@@ -7,6 +7,7 @@ import useProfile from "../hooks/useProfile"
 import useProfilePosts from "../hooks/useProfilePosts"
 import { useSelector } from "react-redux"
 import useMe from "@/app/hooks/useMe"
+import ConnectionsDialog from "../components/ConnectionsDialog"
 
 const EMPTY_LABELS = {
   posts: "No posts yet",
@@ -17,6 +18,7 @@ const EMPTY_LABELS = {
 const ProfilePage = () => {
   const { username: routeUsername } = useParams()
   const [activeTab, setActiveTab] = useState("posts")
+  const [connectionsType, setConnectionsType] = useState(null)
 
   const { isLoading: isMeLoading } = useMe()
   const currentUser = useSelector((state) => state.auth.user)
@@ -72,6 +74,14 @@ const ProfilePage = () => {
     <div className="mx-auto max-w-3xl pb-12">
       <ProfileHeader
         profile={profile}
+        onConnectionsOpen={setConnectionsType}
+      />
+
+      <ConnectionsDialog
+        username={username}
+        type={connectionsType}
+        open={Boolean(connectionsType)}
+        onClose={() => setConnectionsType(null)}
       />
 
       <ProfileTabs

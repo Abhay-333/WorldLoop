@@ -1,3 +1,5 @@
+import { TYPE_META } from "@/components/utils/componentsUtils"
+
 function TypeBadge({ type }) {
   if (!type) return null
   const meta = TYPE_META[type]
